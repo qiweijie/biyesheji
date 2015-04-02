@@ -17,7 +17,7 @@ urlpatterns += patterns('tradding.views.person',
 	url(r'^shopping_cart/add_pro', 'add_pro'),
 	url(r'^shopping_cart$', 'shopping_cart'),
 	url(r'^favorite/add_fav', 'add_fav'),
-	# url(r'^favorite$', 'favorite'),
+	url(r'^favorite$', 'favorite'),
 )
 # personal center
 urlpatterns += patterns('tradding.views.person',

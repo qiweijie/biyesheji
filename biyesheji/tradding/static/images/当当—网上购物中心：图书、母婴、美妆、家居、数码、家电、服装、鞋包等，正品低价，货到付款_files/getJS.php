@@ -1,1 +1,0 @@
-document.write('<script type="text/javascript" src="http://a.dangdang.com/adall.min.js?1417422208"></script>');

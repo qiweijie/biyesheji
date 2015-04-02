@@ -15,15 +15,7 @@ class User(models.Model):
 		self.password=new_password
 	def check_password(self,pwd):
 		return self.password==pwd
-	
-class Favorite_shop(models.Model):
-	"""Favorite shops or products"""
-	#用户
-	customer_id = models.ForeignKey(User,related_name="favorite_customer_name")
-	#喜欢的商店对应的用户id
-	shop_id = models.ForeignKey(User,related_name="favorite_shop_name")
-	#auto_now无论是你添加还是修改对象，时间为你添加或者修改的时间。auto_now_add为添加时的时间，更新对象时不会有变动。
-	time = models.DateField(auto_now_add=True)
+
 		
 class Customer(User):
 	""" docstring for Customer,browse products,buy something,and so after-sales service
@@ -71,4 +63,12 @@ class Customer(User):
 	#delete favorite_shops
 	def delete_favorite_shops(self,favorite_shop_id):
 		self.favorite_shops = self.favorite_shops.replace(str(favorite_shop_id)+"*", '')
-		
+	
+class Favorite_shop(models.Model):
+	"""Favorite shops or products"""
+	#用户
+	customer_id = models.ForeignKey(Customer,related_name="favorite_customer_name")
+	#喜欢的商店对应的用户id
+	shop_id = models.ForeignKey(Customer,related_name="favorite_shop_name")
+	#auto_now无论是你添加还是修改对象，时间为你添加或者修改的时间。auto_now_add为添加时的时间，更新对象时不会有变动。
+	time = models.DateField(auto_now_add=True)		

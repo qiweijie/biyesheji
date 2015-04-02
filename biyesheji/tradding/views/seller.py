@@ -168,10 +168,10 @@ def products_detail(request,object_id=1):
 		if not customer.recent_browse:
 			customer.recent_browse="*"
 			customer.save()
-		if customer.recent_browse.find("*"+str(object_id)+"*")!=-1:
-			#aready add
-			pass
-		else:
+		try:
+			b_r = BrowseRecord.objects.get(customer_id=user,goods_id=g)
+			b_r.save()
+		except:
 			b = BrowseRecord()
 			b.customer_id = user
 			b.goods_id = g

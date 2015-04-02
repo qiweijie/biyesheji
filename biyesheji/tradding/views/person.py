@@ -111,7 +111,30 @@ def add_fav(request):
 			return HttpResponse("")
 	else:
 		return HttpResponse("ok")
-
+def favorite(request):
+	if request.session.get('login',False):
+		user = Customer.objects.get(username=request.session['username'])
+		favorite_shops = user.favorite_shops.split("*")
+		items =[]
+		for f_s in favorite_shops:
+			if f_s:
+				items.append(Favorite_shop.objects.get(pk=f_s))
+		return render_to_response("person/favorites.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'user':user,'items':items})
+	else :
+		return HttpResponseRedirect('/tradding/login?url=personal_center')
+def shopping_cart(request):
+	if request.session.get('login',False):
+		user = Customer.objects.get(username=request.session['username'])
+		shopping_carts = user.shopping_cart.split("*")
+		items =[]
+		for f_s in shopping_carts:
+			if f_s:
+				items.append(ShoppingCartItem.objects.get(pk=f_s))
+		return render_to_response("person/shopping_cart.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'user':user,'items':items})
+	else :
+		return HttpResponseRedirect('/tradding/login?url=personal_center')
 def add_pro(request):
 	data = request.POST['add_pro'] if 'add_pro' in request.POST else ''
 	if data:
@@ -123,10 +146,11 @@ def add_pro(request):
 			if not customer.shopping_cart:
 				customer.shopping_cart="*"
 				customer.save()
-			if customer.shopping_cart.find("*"+str(goods_id)+"*")!=-1:
-				#aready add,refresh the time
-				pass
-			else:
+			try:
+				#是否已经存在该购物车项s_c
+				s_c = ShoppingCartItem.objects.get(customer_id=customer,goods_id=goods)
+				s_c.save()
+			except :
 				c = ShoppingCartItem()
 				c.customer_id = customer
 				c.goods_id = goods 

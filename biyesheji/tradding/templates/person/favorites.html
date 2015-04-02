@@ -1,29 +1,29 @@
-<!-- shopping_cart.html -->
+<!-- favorites.html -->
 {% extends "base_person.html" %}
 {% load staticfiles %}
-{% block title %}我的购物车{% endblock %}
+{% block title %}收藏的商店{% endblock %}
 {% block css_js %}
 <link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
 <script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
 {% endblock %}
-{% block cart %}<a class="selected" href="/tradding/personal_center">{% endblock %}
+{% block favorites %}<a class="selected" href="/tradding/personal_center">{% endblock %}
 {% block body %}
 <div class="account-body">
   <div class="account-wrap">
   <div class="acc-tab-content">
           <div id="customer-address-list" class="customer-unit">
-            <h2>购物车中的宝贝
+            <h2>收藏的商店
             </h2>
             <hr>
             <table class="tab-address">
                 <tbody id="saveAddress">
               <tr > 
                 <td class="address-icon" style="width:300px;">
-                  标题
+                  店名
                   </td>
-                <td class="address-icon" style="width:400px;">详细描述
+                <td class="address-icon" style="width:400px;">店家地址
                 </td>
                   <td  class="address-icon" style="width:200px;">操作
                 </td>
@@ -32,19 +32,20 @@
               <tr > 
                 <td class="address-icon" style="width:300px;">
                   <div >
-                    <a href="{{favorite.goods_id.goods_photo.all.0.get_absolute_url}}" title="" target="blank"><img src="{{favorite.goods_id.goods_photo.all.0.image.thumb_url}}" alt=""></a><br>
-                        <p><a href="{{favorite.goods_id.get_absolute_url}}" target="_blank" class="se_a">{{favorite.goods_id.title}}</a></p>
-                    <input type="text" id="goods_id{{favorite.goods_id.goods_id}}" value="{{favorite.goods_id.goods_id}}" style="display:none">
+					 <a class="tb-seller-name" href={{favorite.shop_id.get_absolute_url}}>
+					 {{favorite.shop_id.nickname}}
+					 </a>
                   </div></td>
                 <td class="address-icon" style="width:400px;">
                   <div>
-                    <span class="address-detail">{{favorite.goods_id.special}}</span>
+                    <span class="address-detail">{% for address in favorite.shop_id.address_user.all %}
+                    {% if address.bool_default %}{{address.address}}{% endif %}{% endfor %}</span>
                   </div>
                 </td>
                   <td  class="address-icon" style="width:200px;">
-                  <a class="modify-address" href="/tradding/products/edit?goods_id={{favorite.goods_id.goods_id}}">编辑</a>
-                  <a class="modify-address" href="#customer-address-list" onclick="offsale_goods('{{favorite.goods_id.goods_id}}');">下架</a>
-                  <a class="delete-address" href="#customer-address-list" onclick="delete_goods('{{favorite.goods_id.goods_id}}');">删除</a>
+                  <a class="modify-address" href="/tradding/products/edit?goods_id={{goods.goods_id}}">编辑</a>
+                  <a class="modify-address" href="#customer-address-list" onclick="offsale_goods('{{goods.goods_id}}');">下架</a>
+                  <a class="delete-address" href="#customer-address-list" onclick="delete_goods('{{goods.goods_id}}');">删除</a>
                 </td>
               </tr>
             {% endfor %}
