@@ -1,0 +1,71 @@
+<!-- history_products.html -->
+{% extends "base_seller.html" %}
+{% load staticfiles %}
+{% block title %}宝贝管理-卖家中心{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'release_products.js' %} type="text/javascript" charset="utf-8" async defer></script>
+
+{% endblock %}
+{% block favorites %}<a class="selected" href="/tradding/products">{% endblock %}
+{% block body %}
+<div class="account-body">
+  <div class="account-wrap">
+    <div class="acc-tab-top">
+      <ul class="acc-tab-menu">
+        <li><a  class="first" href="/tradding/products">发布宝贝</a></li>
+        <li><a href="/tradding/products/selling_products">出售中的宝贝</a></li>
+        <li><a href="/tradding/products/warehousing_products">仓库中的宝贝</a></li>
+        <li><a class="active"  href="/tradding/products/history_products">历史宝贝记录</a></li>
+      </ul>
+    </div>
+  <div class="acc-tab-content">
+          <div id="customer-address-list" class="customer-unit">
+            <h2>出售中的宝贝
+            </h2>
+            <hr>
+            <table class="tab-address">
+                <tbody id="saveAddress">
+              <tr > 
+                <td class="address-icon" style="width:300px;">
+                  标题
+                  </td>
+                <td class="address-icon" style="width:400px;">详细描述
+                </td>
+                  <td  class="address-icon" style="width:200px;">操作
+                </td>
+              </tr>
+            {% for goods in all_goods %}
+              <tr > 
+                <td class="address-icon" style="width:300px;">
+                  <div >
+                    <a href="{{goods.goods_photo.all.0.get_absolute_url}}" title="" target="blank"><img src="{{goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br>
+                        <p><a href="{{goods.get_absolute_url}}" target="_blank" class="se_a">{{goods.title}}</a></p>
+                    <input type="text" id="goods_id{{goods.goods_id}}" value="{{goods.goods_id}}" style="display:none">
+                  </div></td>
+                <td class="address-icon" style="width:400px;">
+                  <div>
+                    <span class="address-detail">{{goods.special}}</span>
+                  </div>
+                </td>
+                  <td  class="address-icon" style="width:200px;">
+                  <a class="modify-address" href="/tradding/products/edit?goods_id={{goods.goods_id}}" style="display:none;">编辑</a>
+                  <a class="modify-address" href="#customer-address-list" onclick="onsale_goods('{{goods.goods_id}}');"  style="display:none;">上架</a>
+                  <a class="delete-address" href="#customer-address-list" onclick="resale_goods('{{goods.goods_id}}');">恢复</a>
+                </td>
+              </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+          </div>
+
+        </div>
+
+  </div>
+</div>
+
+<div class="overlayer png-fixed" style="display: none;"></div>
+{% endblock %}

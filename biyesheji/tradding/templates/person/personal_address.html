@@ -1,0 +1,148 @@
+<!-- personal_address.html -->
+{% extends "base_person.html" %}
+{% load staticfiles %}
+{% block title %}个人中心-地址{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
+<script src={% static 'person_address.js' %} type="text/javascript" charset="utf-8" async defer></script>
+{% endblock %}
+{% block setting %}<a class="selected" href="/tradding/personal_address">{% endblock %}
+{% block body %}
+<div class="account-body">
+  <div class="account-wrap">
+    <div class="acc-tab-top">
+      <ul class="acc-tab-menu">
+        <li><a class="first" href="/tradding/personal_center">账号信息</a></li>
+        <li><a class="active"  href="/tradding/personal_address">收货地址</a></li>
+      </ul>
+    </div>
+	<div class="acc-tab-content">
+    	    <div id="customer-address-list" class="customer-unit">
+        		<h2>收货地址
+              <span>
+                （最多保存 20 个有效地址,您还可以添加 
+                <strong class="strong-orange j-add-surplus">
+                                      {{num}}
+                                  </strong> 
+                个收货地址）
+              </span>
+            </h2>
+            <hr>
+        		<table class="tab-address">
+        		    <tbody id="saveAddress">
+            			<tr class="hide">
+                      <td class="address-icon"></td>
+            			    <td class="address-name"></td>
+            			    <td>
+                				<p class="setaddress hide">默认地址</p>
+                				<p class="setaddress"><a class="setdefault" href="#">设为默认地址</a></p>
+            			    </td>
+            			    <td>
+                				<a class="modify-address" href="#">编辑</a>
+                				<a class="delete-address" href="#">删除</a>
+            			    </td>
+            			</tr>
+        		{% for address in addresses %}
+        			<tr {% if address.bool_default %} class="default" {% else %}  onmouseenter="show(this);" {% endif %}>	
+                        <td class="address-icon"><i class="png-fixed"></i>
+        				<input type="text" id="addr_id{{address.address_id}}" value="{{address.address_id}}" style="display:none"></td>
+	    			    <td>
+	                        <span class="default-bold address-realname">{{address.name}}</span>
+	                        <span>(手机/电话：<label class="address-phone">{{address.phone_number}}</label>)</span><br>
+	                        <span class="address-detail">{{address.address}}</span>
+	                      </td>
+	    			    <td>
+	    			      <p class="setaddress">
+	    			      {% if address.bool_default %}<span>默认地址</span>
+	    			      {% else %}<a  class="setdefault" href="#customer-address-list" onclick="set_default('{{address.address_id}}');">设为默认地址</a>
+	    			      {% endif %}
+	    			      </p>
+	    			    </td>
+	    			    <td class="fn-text-align-center">
+	        				<a class="modify-address" href="#customer-address-list" onclick="edit('addr_id{{address.address_id}}');">编辑</a>
+	        				<a class="delete-address" href="#customer-address-list" onclick="delete_addr('{{address.address_id}}');">删除</a>
+	    			    </td>
+        			</tr>
+        		{% endfor %}
+                  <tr class="add-address-ctrl">
+                    <td colspan="4" class="fn-text-align-center png-fixed">
+                      <a class="add-address-item" href="#new-address-form" onclick="show_add();">
+                        <i class="circle-add"></i>
+                        添加新收货地址
+                      </a>
+                    </td>
+                  </tr>
+                  <tr id="new-address-form" class="fn-hide">
+                    <td colspan="4">
+                      <form id="j-create-address">
+                        <div class="customer-unit">
+                          <div class="infobox" style="border:none">
+                            <ul class="info-list address-list">
+                              <li>
+                                <label class="label" for="username">*收货人姓名：</label>
+                                <input id="username" name="realname" class="txtfield" type="text" onblur="check_username(this);">
+                                <span class="warn"></span>
+                              </li>
+                              <li>
+                                <label class="label" for="telnum">*联系方式：</label>
+                                <input id="telnum" name="telephone" class="txtfield" type="text" onblur="check_tel(this);">
+                                <span class="warn"></span>
+                              </li>
+                              <li>
+                                <label class="label" for="address">*详细地址：</label>
+                                <input id="address" name="address" class="txtfield" placeholder="具体填写省/市/区" style="width:550px;" type="text" onblur="check_addr(this);">
+                                <span class="warn textwarn"></span>
+                              </li>
+                              <li>
+                                <input id="isDefault" class="isDefault-address" name="isDefault" type="checkbox">
+                                <label for="isDefault">设置为默认地址</label>
+                              </li>
+                            </ul>
+                            <input class="btn btn-success address-btn" type="button" value="保存收货人信息" onclick="add_addr();">
+                            <a class="btn btn-white btn-nickname-cancle" href="#cancle_add" id="cancle_add" onclick="cancleadd();">取消</a>
+                          </div>
+                        </div>
+                      </form>
+                    </td>
+                  </tr>
+        		    </tbody>
+        		</table>
+    	    </div>
+
+        </div>
+  </div>
+</div>
+<div id="popup-address" class="popup" style="margin-top: -131.5px; margin-left: -410px; display: none;">
+    <h3>修改收货地址<a class="popup-close" href="#customer-address-list" title="关闭" onclick="close_edit();">×</a></h3> 
+<tr id="new-address-form" class="fn-hide">
+<td colspan="4">
+  <form id="j-create-address">
+    <div class="customer-unit">
+      <div class="infobox" style="border:none">
+		<input type="text" id="address_id" value="" style="display:none">
+        <ul class="info-list address-list">
+          <li>
+            <label class="label" for="username">*收货人姓名：</label>
+            <input id="edit_username" name="realname" class="txtfield" type="text" onblur="check_username(this);">
+            <span class="warn"></span>
+          </li>
+          <li>
+            <label class="label" for="telnum">*联系方式：</label>
+            <input id="edit_telnum" name="telephone" class="txtfield" type="text" onblur="check_tel(this);">
+            <span class="warn"></span>
+          </li>
+          <li>
+            <label class="label" for="address">*详细地址：</label>
+            <input id="edit_address" name="address" class="txtfield" placeholder="具体填写省/市/区" style="width:550px;" type="text" onblur="check_addr(this);">
+            <span class="warn textwarn"></span>
+          </li>
+        </ul>
+        <input class="btn btn-success address-btn" type="button" value="保存修改" onclick="save_edit();">
+      </div>
+    </div>
+  </form>
+</td>
+</tr>
+</div>
+<div class="overlayer png-fixed" style="display: none;"></div>
+{% endblock %}

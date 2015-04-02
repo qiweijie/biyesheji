@@ -1,0 +1,52 @@
+<!-- temp_pic.html -->
+{% load staticfiles %}
+                <div id="J_Multimage" class="fieldset multimage">
+    			        <div class="fields-box">
+      			 			<div class="multimage-wrapper">
+      				            <div class="multimage-tabs">
+      				                <div data-type="local" class="tab actived">本地上传</div> <!-- 
+      				                <div data-type="remote-image" class="tab">图片空间</div>
+              								<div data-type="remote-video" class="tab">视频中心</div> -->
+      				            </div>
+      				            <div class="multimage-panels">
+                  				<div class="panel local-panel">
+      			                    <div class="upload-field">
+      			                        <label for="J_MultimageField">选择本地图片：</label>
+                                         <img src={% static 'images/addfile.jpg' %} onclick="getElementById('inputfile').click()" title="点击添加图片" alt="点击添加图片" style="height:28px;">
+                                        <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile" onchange="submit_photo();" />
+      			                    </div>
+      			                    <div class="multimage-tips">
+      			                        <div class="tip-title">提示：</div>
+      			                        <ol>
+                  										<li>本地上传图片大小不能超过<span class="bright">500K</span>。</li>
+                  										<li>本类目下您最多可以上传<span class="bright"> 6 </span>张图片。</li>	
+                                      {% for event in request %}{{event}}{% endfor %}
+                                    </ol>
+      			                    </div>
+      				            </div>
+      			                </div>
+      	                        <div class="multimage-info ">
+      				                <div class="info-wrapper">
+      									<div class="msg">
+      										<span class="bright">700*700</span>
+      										以上的图片可以在宝贝详情页主图提供图片放大功能
+      									</div>
+      				                <div class="multimage-gallery">
+					                    <ul>
+					                    	{% for pic in all_pic %}
+		      					                    <li class=" has-img" data-index={{forloop.counter}}>
+		      											<input name="image_pos" type="hidden" value={{forloop.counter}}>
+		      					                        <div class="preview">
+		      				                                <input type="hidden" class="hideimageurl" name="picUrl1" value={{pic.image.url}}>
+		      												<img src={{pic.image.thumb_url}}>
+		      											</div>
+		      										</li>
+		      								{% endfor %}
+      									</ul>
+      				                </div>
+      				                </div>
+      				            </div>
+      				        </div>
+
+         					</div>
+      			    </div>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+	<title>{% block title %}交易系统{% endblock %}</title>
+	<meta name="description" content="基于django实现的网络交易系统，主要是开发一个网络交易系统的模板，为毕业设计开发，尽大学之所学，做自己能做的最好的app">
+	<meta name="author" content="戚伟杰">
+	<meta name="keywords" content="网络交易系统,戚伟杰">
+	<meta name="generator" content="django">
+	<meta name="robots" content="all">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="content-language" content="utf-8">
+	<meta http-equiv="windows-target" content="_top">
+	<link rel="stylesheet" href={% static 'header.css' %}>
+	<link rel="stylesheet" href={% static "middle.css" %}>
+<script src={% static 'jquery.min.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<link rel="stylesheet" type="text/css" href={% static 'person.css' %}>
+	{% block css_js %}{% endblock %}
+</head>
+<body><div id="hd">
+	<div id="tools">
+		<div class="tools">
+		    <div class="ddnewhead_operate" dd_name="顶链接">
+		        <ul class="ddnewhead_operate_nav">
+		        <li class="ddnewhead_cart"><a href="/tradding/shopping_cart" name="购物车" dd_name="购物车"><i class="icon_card"></i>购物车<b id="cart_items_count"></b></a></li>
+		        <li><a target="_blank" href="/tradding/order_list" name="我的订单" dd_name="我的订单" rel="nofollow">我的订单</a></li>
+		        <li class="my_dd"><a class="menu_btn" target="_blank" href="/tradding/personal_center" name="我的" dd_name="我的" id="a_myddchannel">我的主页</a>
+		            <ul class="ddnewhead_gcard_list" id="__ddnav_mydd" style="display: none; width: 86px;">
+		                <li><a ></a></li>
+		            </ul>
+		        </li>
+		        <li><a class="menu_btn" href="/tradding/seller_center" name="qycg" id="seller_center">商家中心</a>
+		            <ul class="ddnewhead_gcard_list" id="__ddnav_qycg"style="display: none; width: 82px;">
+		            </ul>
+		        </li>
+		        <li class="hover "><a class="menu_btn" href="javascript:void(0);" style="cursor:default;" name="ddkf_0" dd_name="客户服务" id="a_bzzxchannel" >客户服务</a>
+		            <ul class="ddnewhead_gcard_list" id="__ddnav_bzzx" >
+		                <li><a target="_blank" href="http://help.dangdang.com/index" name="ddkf_2" dd_name="帮助中心">帮助中心</a></li>
+		                <li><a target="_blank" href="http://help.dangdang.com/details/page206" name="ddkf_4" dd_name="联系客服">联系客服</a></li>
+		                <li><a target="_blank" href="http://help.dangdang.com/email_contact" name="tsjy_1" dd_name="我要投诉" rel="nofollow">我要投诉</a></li>
+		                <li><a target="_blank" href="http://help.dangdang.com/email_contact" name="tsjy_2" dd_name="意见建议" rel="nofollow">意见建议</a></li>
+		            </ul>
+		        </li>
+		        </ul>
+		        <div class="ddnewhead_welcome" display="none;">
+		        	<input id="user_id" type="text" value="{{user.user_id}}" style="display:none">
+		            <span id="nickname">{% if user_name %}
+		            <span class="hi">Hi,<a href="" target="_blank" class="login_link">{{user_name}}</a>
+		            <b><a href="{{logout_url}}" target="_self">[退出]</a></b></span>
+		            {% else %}欢迎光临本站&nbsp;
+		            <a dd_name="登录" href="/tradding/login" target="_self" rel="nofollow" class="login_link">登录</a>
+		            <a dd_name="免费注册" href="/tradding/register" target="_self" rel="nofollw">免费注册</a></span>
+		            {% endif %}
+		        </div>
+		        <div class="new_head_znx" id="znx_content" style="display:none;"></div>
+		    </div>
+		</div>
+		</div>
+	<div style="position:relative;" class="logo_line_out">
+		<div class="logo_line" dd_name="搜索框">
+		    <div class="logo">
+		    	<a href="/" title=""><img src={% static "images/logo.png" %} usemap="#logo_link"></a>
+		    </div>
+		    <div class="search">
+		        <form action="http://search.dangdang.com" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
+		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">新常态改变中</label>
+		            <input type="text" class="text" name="key" id="key_S" autocomplete="off" onclick="key_onclick();" onfocus="this.className='text';" onblur="key_onblur();" onbeforepaste="onpaste_search();">
+		            <input type="submit" id="search_btn" style="display:none">
+		            <input type="button" class="button" dd_name="搜索按钮" onclick="javascript:document.getElementById('search_btn').click();">
+		        </form>
+		    </div>
+		    <div class="search_bottom">
+		        <div class="search_hot">热搜: 
+			        <a href="http://search.dangdang.com/?key=%BB%C4%D2%B0%C7%F3%C9%FA" name="hotword" target="_blank">荒野求生</a>
+			        <a href="http://search.dangdang.com/?key=%B6%F9%CD%AF%D3%F0%C8%DE%B7%FE" name="hotword" target="_blank">儿童羽绒服</a>
+			        <a href="http://search.dangdang.com/?key=%B5%B1%B5%B1%D7%D4%D3%AA%D0%C2%B0%B2%E2%F9" name="hotword" target="_blank">新安怡</a>
+			        <a href="http://search.dangdang.com/?key=%D1%FD%BE%AB%B5%C4%BF%DA%B4%FC" name="hotword" target="_blank">妖精的口袋</a>
+			        <a href="http://search.dangdang.com/?key=%C9%AD%C2%ED" name="hotword" target="_blank">森马</a>
+		        </div>
+		        <a href="http://search.dangdang.com/advsearch" class="search_advs" target="_blank" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
+		    </div>
+		</div>
+	</div>
+</div>
+<div class="account-header">
+  <div class="g-r">
+    <nav class="m-nav-m u-yh">
+      {% block index %}<a  href="/account/index/index">{% endblock %}
+        <i class="acc-nav-sprite nav-index png-fixed"></i>我的首页<span class="mt-arrow png-fixed"></span>
+      </a>
+      {% block order %}<a href="/account/order/index">{% endblock %}
+        <i class="acc-nav-sprite nav-order png-fixed"></i>订单中心<span class="mt-arrow png-fixed"></span>
+      </a>
+      {% block favorites %}<a href="/account/favorites/index">{% endblock %}
+        <i class="acc-nav-sprite nav-favorites png-fixed"></i>我的收藏<span class="mt-arrow png-fixed"></span>
+      </a>
+      {% block cart %}<a href="/account/red_packet/index">{% endblock %}
+        <i class="acc-nav-sprite nav-cart png-fixed"></i>我的购物车<span class="mt-arrow png-fixed"></span>
+              </a>
+      {% block point %}<a href="/vip/point/detail">{% endblock %}
+        <i class="acc-nav-sprite nav-point png-fixed"></i>最近浏览<span class="mt-arrow"></span>
+      </a>
+      {% block coupon %}<a href="/account/coupon/index">{% endblock %}
+        <i class="acc-nav-sprite nav-coupon png-fixed"></i>优惠券<span class="mt-arrow png-fixed"></span>
+              </a>
+      {% block rma %}<a href="/rma/rma/index">{% endblock %}
+        <i class="acc-nav-sprite nav-rma png-fixed"></i>退换货<span class="mt-arrow png-fixed"></span>
+      </a>
+      {% block setting %}<a href="/tradding/personal_center">{% endblock %}
+        <i class="acc-nav-sprite nav-setting png-fixed"></i>账户设置<span class="mt-arrow png-fixed"></span>
+      </a>
+    </nav>
+    <div class="userbar">
+      <a class="setup" href="/account/customer/infoedit">
+        <img id="j-user-head" class="user-head png-fixed" src="http://static.feifei.com/images/account/default_header.jpg" alt="FEIFEI.COM" width="62px" height="62px">
+      </a>
+      <div class="userbar-txt">
+        <p class="greeting">{% if greeting %}{{greeting}}{% else %}放松一刻，享受生活真滋味.{% endif %}</p>
+        <p class="account-username">{% if user_name %}{{user_name}}{% else %}用户名{% endif %}</p>
+      </div>
+    </div>
+  </div>
+</div>{% block body %}{% endblock %}</body>
+</html>

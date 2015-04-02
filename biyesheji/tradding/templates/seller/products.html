@@ -1,0 +1,135 @@
+<!-- products.html -->
+{% extends "base_seller.html" %}
+{% load staticfiles %}
+{% block title %}卖家中心-发布宝贝{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script type="text/javascript" src={% static 'tinymce/tinymce.min.js' %}></script>
+<script type="text/javascript" src={% static 'tinymce_config.js' %}></script>
+<script src={% static 'release_products.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script>
+</script>
+
+{% endblock %}
+{% block favorites %}<a class="selected" href="/tradding/products">{% endblock %}
+{% block body %}
+<div class="account-body">
+  <div class="account-wrap">
+    <div class="acc-tab-top">
+      <ul class="acc-tab-menu">
+        <li><a class="first active" href="/tradding/products">发布宝贝</a></li>
+        <li><a href="/tradding/products/selling_products" >出售中的宝贝</a></li>
+        <li><a  href="/tradding/products/warehousing_products">仓库中的宝贝</a></li>
+        <li><a href="/tradding/products/history_products" >历史宝贝记录</a></li>
+      </ul>
+    </div>
+    <div class="acc-tab-content acc-tab-content-info">
+      <form id="infoedit-form" action="" method="post">
+        <div class="customer-unit">
+          <h2>宝贝详情</h2>
+          <div class="infobox">
+            <ul class="info-list">
+                    <input type="text" id="goods_id" value="{{goods.goods_id}}" style="display:none">
+              <li>
+                    <label class="label" for="product_title">*宝贝标题：</label>
+                    <input id="product_title" name="product_title" class="txtfield" type="text" onchange="check_title(this);" style="width:400px;" value="{{goods.title}}">
+                    还可填<span class="bright">30</span>字
+              </li>
+              <li>
+                    <label class="label" for="product_special">*宝贝卖点：</label>
+                    <textarea id="product_special" name="product_special" class="txtfield" rows="3" style="width:400px;" onchange="check_special(this);" >{{goods.special}}</textarea>
+                    还可填<span class="bright">150</span>字
+              </li>
+              <li>
+                    <label class="label" for="product_price">*宝贝价格：</label>
+                    <input id="product_price" name="product_price" class="txtfield" type="text" onblur="" style="width:40px;" onchange="check_price(this);" value="{{goods.price}}"><span style="padding-left:10px;">元</span>
+                    <span class="bright"></span>
+              </li>
+              <li>
+                    <label class="label" for="product_number">*宝贝件数：</label>
+                    <input id="product_number" name="product_number" class="txtfield" type="text" onblur="" style="width:80px;" onchange="check_num(this);" value="{{goods.number}}"><span style="padding-left:10px;" >件</span>
+                    <span class="bright"></span>
+              </li>
+              <li>
+                <label class="label" for="product_number">*宝贝图片：</label>
+                <div id="J_Multimage" class="fieldset multimage">
+    			        <div class="fields-box">
+      			 			<div class="multimage-wrapper">
+      				            <div class="multimage-tabs">
+      				                <div data-type="local" class="tab actived">本地上传</div> <!-- 
+      				                <div data-type="remote-image" class="tab">图片空间</div>
+              								<div data-type="remote-video" class="tab">视频中心</div> -->
+      				            </div>
+      				            <div class="multimage-panels">
+                  				<div class="panel local-panel">
+      			                    <div class="upload-field">
+      			                        <label for="J_MultimageField">选择本地图片：</label>
+                                         <img src={% static 'images/addfile.jpg' %} onclick="getElementById('inputfile').click()" title="点击添加图片" alt="点击添加图片" style="height:28px;">
+                                        <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile" onchange="submit_photo();" />
+      			                    </div>
+      			                    <div class="multimage-tips">
+      			                        <div class="tip-title">提示：</div>
+      			                        <ol>
+                  										<li>本地上传图片大小不能超过<span class="bright">500K</span>。</li>
+                  										<li>本类目下您最多可以上传<span class="bright"> 6 </span>张图片。</li>	
+                                      {% for event in request %}{{event}}{% endfor %}
+                                    </ol>
+      			                    </div>
+      				            </div>
+      			                </div>
+      	                        <div class="multimage-info ">
+      				                <div class="info-wrapper">
+      									<div class="msg">
+      										<span class="bright">700*700</span>
+      										以上的图片可以在宝贝详情页主图提供图片放大功能
+      									</div>
+      				                <div class="multimage-gallery">
+			                    <ul>
+                                {% for pic in all_pic %}
+                                        <li class=" has-img" data-index={{forloop.counter}}>
+                                <input name="image_pos" type="hidden" value={{forloop.counter}}>
+                                            <div class="preview">
+                                                  <input type="hidden" class="hideimageurl" name="picUrl1" value={{pic.image.url}}>
+                                  <img src={{pic.image.thumb_url}}>
+                                </div>
+                              </li>
+                          {% endfor %}
+                                {% for pic in goods.goods_photo.all %}
+                                        <li class=" has-img" data-index={{forloop.counter}}>
+                                <input name="image_pos" type="hidden" value={{forloop.counter}}>
+                                            <div class="preview">
+                                                  <input type="hidden" class="hideimageurl" name="picUrl1" value={{pic.image.url}}>
+                                  <img src={{pic.image.thumb_url}}>
+                                </div>
+                              </li>
+                          {% endfor %}
+      									</ul>
+      				                </div>
+      				                </div>
+      				            </div>
+      				        </div>
+
+         					</div>
+      			    </div>
+              </li>
+              <li>
+                  <label class="label" for="product_detail">*宝贝详情：</label>
+	                <div class="fields-box" id="J_DescEditor">
+			            <div class="give-tip" style="width:600px;"><a href="http://rule.taobao.com/detail-673.htm?spm=1.7253605.a214d1d.1&amp;tag=self" target="_blank">亲，在宝贝标题、描述等处不能出现虚假宣传或夸大商品效果的信息哦，请仔细核查。</a><a class="give-close"></a></div>
+                  <textarea id="Editor_Edit_EditorBody" name="area" >{{goods.description}}</textarea>
+  		            </div>
+              </li>
+              <input id="submit_product" class="btn btn-success customer-btn" type="button" value="发布宝贝"  onclick="submit_pro();">
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<div class="overlayer png-fixed" style="display: none;"></div>
+{% endblock %}

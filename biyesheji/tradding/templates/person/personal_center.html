@@ -1,0 +1,282 @@
+<!-- personal_center.html -->
+{% extends "base_person.html" %}
+{% load staticfiles %}
+{% block title %}个人中心{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+{% endblock %}
+{% block setting %}<a class="selected" href="/tradding/personal_center">{% endblock %}
+{% block body %}
+<div class="account-body">
+  <div class="account-wrap">
+    <div class="acc-tab-top">
+      <ul class="acc-tab-menu">
+        <li><a class="first active" href="/tradding/personal_center">账号信息</a></li>
+        <li><a href="/tradding/personal_address">收货地址</a></li>
+      </ul>
+    </div>
+    <div class="acc-tab-content acc-tab-content-info">
+      <form id="infoedit-form" action="" method="post">
+        <div class="customer-unit">
+          <h2>账号信息</h2>
+          <div class="infobox">
+            <ul class="info-list">
+              <li>
+                <label class="label" for="memberUid">我的账号：</label> <strong class="strong userid" >{{user.user_id}}</strong>
+              </li>
+              <li>
+                <label class="label" for="memberUid">用户名：</label> <strong class="strong">{{user.username}}</strong>
+              </li>
+              <li>
+              <label class="label level" for="username">昵称：</label>
+                  <strong class="j-nickname nickname" id="nickname" >{{user.nickname}}</strong>
+                  <a class="verify change-nickname" id="change_nickname" href="#change_nickname" onclick="change();">修改</a>
+                  <input id="input_nickname" class="txtfield fn-hide" name="username" type="text" value="" placeholder="2-15个中英文或数字字符，不含特殊符号" style="width: 220px;" onblur="check(this);">
+                  <input class="btn btn-success btn-change-nickname fn-hide" type="button" value="提交" id="ensure_nickname" onclick="ensure();" disabled="" href="#cancle_nickname">
+                  <a class="btn btn-white btn-nickname-cancle fn-hide" href="#cancle_nickname" id="cancle_nickname" onclick="cancle();">取消</a>
+                                <i class="icon-help">
+                  <span class="detail" style="padding: 7px 9px;">
+                    <span class="arrow"></span>
+                      此昵称主要出现在商品评论中
+                  </span>
+                </i>
+                <label class="hint-error j-nick-hint"></label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!--账号安全-->
+        <div class="customer-unit">
+          <h2>账号安全</h2>
+          <div class="infobox">
+            <ul class="info-list">
+              <li>
+                <label class="label" for="username">上次登录时间：</label>
+                <strong class="strong-orange">{{last_login}}</strong>
+                                  <span class="tips">
+                    （不是您登录的？建议马上
+                    <a class="btn-modifypsw" href="#change_p" id="change_p" onclick="show();">修改密码</a>
+                    ）
+                  </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--账户安全-->
+        <div class="fn-clear"></div>
+
+        <!--安全设置-->
+        <div class="customer-unit psw-unit security-settings">
+          <h2>安全设置</h2>
+          <table class="psw-unit-tb">
+            <tbody>
+              <tr class="odd">
+                <td class="col-1">登录密码</td>
+                <td class="col-2"><span class="txt">互联网账号存在被盗风险，建议您定期更改密码。</span></td>
+                <td class="col-3">
+                    <a class="btn-modifypsw" href="#change_p" id="change_p" onclick="show();">修改密码</a>
+                                  </td>
+              </tr>
+              <tr class="even">
+                <td class="col-1">手机</td>
+                <td id="phone_number">{% if user.phone_number %}<span class="">{{user.phone_number}}</span>{% else %}
+                                      <span class="no">
+                      <i class="empty png-fixed"></i>
+                      未绑定
+                    </span>
+                                    <br>
+                  <span class="txt">绑定后的手机，可用于找回密码、登录账号、敏感操作时验证身份。</span>{% endif %}</td>
+                <td class="col-3">
+                                      <a id="verify-tel" href="#attach_phone" id="attach_phone" onclick="show_attach();">
+                      {% if user.phone_number %}<span class="">更换号码</span>{% else %}立即绑定{% endif %}
+                    </a>
+                                  </td>
+              </tr>
+              <tr class="odd">
+                <td class="col-1">邮箱</td>
+                <td id="e_mail">{% if user.email %}<span class="">{{user.email}}</span>{% else %}
+                                                            <span class="no">
+                        <i class="png-fixed"></i>
+                        未验证
+                      </span>
+                                    <br>
+                  <span class="txt">绑定后的邮箱，可用于找回密码、登录账号、敏感操作时验证身份，以及订阅更多优惠商品的促销邮件。</span>{% endif %}
+                </td>
+                <td class="col-3">
+                        <a id="verify-email" href="#bundleemail" id="bundleemail" onclick="show_email();">
+                        {% if user.email %}<span class="">更换邮箱</span>{% else %}立即验证{% endif %}</a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--安全设置-->
+      </form>
+    </div>
+
+  </div>
+</div>
+<div id="popup-modifypsw" class="popup security-popup" style="margin-top: -200px; margin-left: -390px; display: none;">
+    <h3>
+      修改密码
+      <a class="popup-close" href="#change_p" title="关闭" onclick="close_();">×</a>
+      <input type="hidden" class="is-reset-form" value="true">
+    </h3>
+    <div class="popup-body popup-body-pad-10">
+      <form class="acc-form pt50 pb85" id="normalReg_form" method="post" autocomplete="off" action="">{% csrf_token %}
+        <dl>
+        <dt>当前密码：</dt>
+          <dd>
+          <input type="password" class="ui-text" name="now_pwd" id="normalReg_password1" value="" autocomplete="off" maxlength="20" tabindex="2" onblur="checkNow(this);">
+          <span class="tip-ok-wrap hide" id="normalReg_password_icon1"><i class="tip-icon tip-ok"></i></span>
+          <div class="tip-box l clear-both">
+          <div class="input-tip" id="normalReg_password_tip1"></div>
+          <!-- safe-rank [[-->
+          <div class="safe-rank-box hide" style="display: none;">
+            <div class="safe-rank-label">安全程度：</div>
+            <div class="safe-rank" id="normalReg_password_safeRank">
+              <div class="safe-rank-bar"></div>
+              <ul><li>低</li><li>中</li><li>高</li></ul>
+            </div>
+          </div>
+          <!-- safe-rank ]]-->
+          </div>
+          </dd>
+        </dl>
+        <dl>
+        <dt>设置新密码：</dt>
+          <dd>
+          <input type="password" class="ui-text" name="password" id="normalReg_password" value="" autocomplete="off" maxlength="20" tabindex="2" onblur="checkP(this);">
+          <span class="tip-ok-wrap hide" id="normalReg_password_icon"><i class="tip-icon tip-ok"></i></span>
+          <div class="tip-box l clear-both">
+          <div class="input-tip" id="normalReg_password_tip"></div>
+          <!-- safe-rank [[-->
+          <div class="safe-rank-box hide" style="display: none;">
+            <div class="safe-rank-label">安全程度：</div>
+            <div class="safe-rank" id="normalReg_password_safeRank">
+              <div class="safe-rank-bar"></div>
+              <ul><li>低</li><li>中</li><li>高</li></ul>
+            </div>
+          </div>
+          <!-- safe-rank ]]-->
+          </div>
+          </dd>
+        </dl>
+        <dl>
+          <dt>确认新密码：</dt>
+          <dd>
+            <input type="password" class="ui-text ui-text-disabled"  name="confirmpass" id="normalReg_passwordVerify" value="" autocomplete="off" maxlength="20" tabindex="3" onblur="comfirmP(this);">
+            <!--tip-ok-->
+            <span class="tip-ok-wrap hide" id="normalReg_passwordVerify_icon"><i class="tip-icon tip-ok"></i></span>
+            <div class="tip-box">
+            <div class="input-tip c-error" id="normalReg_passwordVerify_tip"></div>
+            </div>
+          </dd>
+        </dl>
+        <input id="J-doresetpassword" class="btn btn-success customer-btn" type="button" value="修改密码" disabled="" onclick="change_pwd();">
+        <div style="padding-left:120px;">
+            <p class="reg-msg reg-msg_error hide">
+              <i class="rl-sprite2 ico_msg"></i>
+              <span id="j-result"></span>
+            </p>
+        </div>
+      </form>
+    </div>
+  </div>
+<div id="popup-modifytel" class="popup security-popup" style="margin-top: -200px; margin-left: -390px; display: none;">
+    <h3>
+      {% if user.phone_number %}<span class="">更换号码</span>{% else %}立即绑定{% endif %}
+      <a class="popup-close" href="#change_p" title="关闭" onclick="close_();">×</a>
+    </h3>
+    <div class="popup-body popup-body-pad-10">
+      <form class="acc-form pt50 pb85" id="normalReg_form" method="post" autocomplete="off" action="">{% csrf_token %}
+        <dl>
+        <dt>当前密码：</dt>
+          <dd>
+          <input type="password" class="ui-text" name="now_pwd" id="normalReg_password2" value="" autocomplete="off" maxlength="20" tabindex="2" onblur="checkNow2(this);">
+          <span class="tip-ok-wrap hide" id="normalReg_password_icon2"><i class="tip-icon tip-ok"></i></span>
+          <div class="tip-box l clear-both">
+          <div class="input-tip" id="normalReg_password_tip2"></div>
+          <!-- safe-rank [[-->
+          <div class="safe-rank-box hide" style="display: none;">
+            <div class="safe-rank-label">安全程度：</div>
+            <div class="safe-rank" id="normalReg_password_safeRank">
+              <div class="safe-rank-bar"></div>
+              <ul><li>低</li><li>中</li><li>高</li></ul>
+            </div>
+          </div>
+          <!-- safe-rank ]]-->
+          </div>
+          </dd>
+        </dl>
+        <dl class="reg-user">
+          <dt>绑定手机：</dt>
+          <dd class="auto-person">
+            <input type="text" class="ui-text" name="phonenumber" id="phonenumber" autocomplete="off" maxlength="64" tabindex="1" placeholder="手机号" onblur="check_phone(this);">
+            <span class="tip-ok-wrap hide" id="normalReg_username_icon"><i class="tip-icon tip-ok"></i></span>
+            <div class="tip-box l clear-both">
+            <div class="input-tip" id="normalReg_username_tip"></div>
+          </dd>
+        </dl>
+        <input id="doresetpassword" class="btn btn-success customer-btn" type="button" value="绑定手机" disabled="" onclick="attach_tel();">
+        <div style="padding-left:120px;">
+            <p class="reg-msg reg-msg_error hide">
+              <i class="rl-sprite2 ico_msg"></i>
+              <span id="j-result"></span>
+            </p>
+        </div>
+      </form>
+    </div>
+  </div>
+<div id="popup-modifyemail" class="popup security-popup" style="margin-top: -200px; margin-left: -390px; display: none;">
+    <h3>
+      {% if user.phone_number %}<span class="">更换邮箱</span>{% else %}立即验证{% endif %}
+      <a class="popup-close" href="#change_p" title="关闭" onclick="close_();">×</a>
+    </h3>
+    <div class="popup-body popup-body-pad-10">
+      <form class="acc-form pt50 pb85" id="normalReg_form" method="post" autocomplete="off" action="">{% csrf_token %}
+        <dl>
+        <dt>当前密码：</dt>
+          <dd>
+          <input type="password" class="ui-text" name="now_pwd" id="normalReg_password3" value="" autocomplete="off" maxlength="20" tabindex="2" onblur="checkNow3(this);">
+          <span class="tip-ok-wrap hide" id="normalReg_password_icon3"><i class="tip-icon tip-ok"></i></span>
+          <div class="tip-box l clear-both">
+          <div class="input-tip" id="normalReg_password_tip3"></div>
+          <!-- safe-rank [[-->
+          <div class="safe-rank-box hide" style="display: none;">
+            <div class="safe-rank-label">安全程度：</div>
+            <div class="safe-rank" id="normalReg_password_safeRank">
+              <div class="safe-rank-bar"></div>
+              <ul><li>低</li><li>中</li><li>高</li></ul>
+            </div>
+          </div>
+          <!-- safe-rank ]]-->
+          </div>
+          </dd>
+        </dl>
+        <dl class="reg-email" >
+          <dt>邮箱地址：</dt>
+          <dd class="auto-email">
+            <input type="text" class="ui-text" name="email" id="normalReg_email" autocomplete="off" value="" maxlength="50" tabindex="5" placeholder="用于找回密码" onblur="checkE(this);">
+            <!--tip-ok-->
+            <span class="tip-ok-wrap hide" id="normalReg_email_icon"><i class="tip-icon tip-ok"></i></span>
+            <div class="tip-box">
+            <div class="input-tip c-error" id="normalReg_email_tip"></div>
+            </div>
+            <div id="emailct" class="email-list hide" style="display: none;"></div>
+          </dd>
+        </dl>
+        <input id="email" class="btn btn-success customer-btn" type="button" value="验证邮箱" disabled="" onclick="bundle_email();">
+        <div style="padding-left:120px;">
+            <p class="reg-msg reg-msg_error hide">
+              <i class="rl-sprite2 ico_msg"></i>
+              <span id="j-result"></span>
+            </p>
+        </div>
+      </form>
+    </div>
+  </div>
+<div class="overlayer png-fixed" style="display: none;"></div>
+{% endblock %}

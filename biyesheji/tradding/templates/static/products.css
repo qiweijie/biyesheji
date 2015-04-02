@@ -1,0 +1,223 @@
+/*products.css*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+.multimage {
+  margin-right: 10px;
+}
+.fieldset {
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.fieldset .fields-box {
+  padding-left: 1px;
+  overflow: hidden;
+}
+.multimage .multimage-wrapper {
+  border: 1px solid #ececec;
+}
+.multimage .multimage-tabs {
+  padding: 10px 20px 0;
+  background-color: #f8f8f8;
+}
+.multimage .multimage-panels {
+  background-color: #fff;
+}
+.multimage .multimage-info {
+  border: 2px solid #fff;
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 10px;
+}
+.multimage .multimage-tabs .tab {
+  padding: 8px 20px 5px;
+  border: 1px solid #ececec;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.multimage .multimage-tabs .actived {
+  margin-top: 1px;
+  border-top: 2px solid #999;
+  background-color: #fff;
+  border-bottom: 1px solid #fff;
+}
+.multimage .multimage-panels .panel {
+  display: block;
+}
+.multimage .multimage-panels {
+  background-color: #fff;
+}
+.multimage .multimage-panels .local-panel {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.multimage .multimage-panels .remote-panel {
+  display: none;
+  overflow: hidden;
+  padding-top: 5px;
+  height: 205px;
+}
+.multimage .multimage-panels .local-panel .upload-field label {
+  width: 100px;
+  float: none;
+  display: inline-block;
+  padding: 0;
+}
+.multimage .multimage-panels .local-panel .upload-field .btn-default {
+  position: relative;
+  font-weight: 300;
+  font-size: 12px;
+  overflow: hidden;
+}
+.btn-default {
+  height: 25px;
+  background-position: -102px 0;
+}
+.multimage .multimage-panels .local-panel .multimage-tips {
+  margin-left: 230px;
+  color: #AAA;
+  margin-top: 25px;
+}
+.multimage .multimage-panels .local-panel .multimage-tips .tip-title {
+  width: 40px;
+  text-align: right;
+  float: left;
+}
+.multimage .multimage-panels .local-panel .multimage-tips ol {
+  overflow: hidden;
+  list-style: decimal;
+}
+.multimage .multimage-panels .local-panel .multimage-tips li {
+  list-style: decimal;
+  margin-left: 22px;
+  width: 280px;
+  vertical-align: top;
+  margin-top: 0;
+}
+.bright {
+  color: #f60;
+}
+.multimage .multimage-info {
+  border: 2px solid #fff;
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 10px;
+}
+.multimage .info-wrapper {
+  text-align: left;
+  display: inline-block;
+}
+.multimage .multimage-info .msg {
+  color: #AAA;
+}
+.multimage .multimage-gallery {
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.multimage .multimage-gallery ul {
+  font-size: 0;
+}
+.multimage .multimage-gallery li {
+  font-size: 0;
+  display: inline-block;
+  border: 1px solid #CDCDCD;
+  margin-right: 10px;
+  position: relative;
+  vertical-align: top;
+}
+.multimage .multimage-gallery .examp, .multimage .multimage-gallery .info, .multimage .multimage-gallery .mask, .multimage .multimage-gallery .preview, .multimage .multimage-gallery li {
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+}
+.form li {
+  clear: left;
+  margin-bottom: 8px;
+}
+body, button, input, select, textarea {
+  color: #404040;
+  font-family: tahoma,arial,"\5b8b\4f53",sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}/*
+input {
+  color: #666;
+  font-size: 12px;
+  background: url(http://a.tbcdn.cn/app/ic/img/input-bg.png) no-repeat #fff;
+}*/
+.multimage .multimage-gallery .info {
+  z-index: 3;
+  text-align: center;
+  top: 30px;
+  font-size: 12px;
+}
+.multimage .multimage-gallery .examp, .multimage .multimage-gallery .info, .multimage .multimage-gallery .mask, .multimage .multimage-gallery .preview, .multimage .multimage-gallery desc {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.multimage .multimage-gallery .operate {
+  background: rgba(33,33,33,.7);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#b2404040, endColorstr=#b2404040);
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 78px;
+  height: 10px;
+  display: none;
+  padding: 5px 0 5px 12px;
+}
+.multimage .multimage-gallery .has-img .preview, .multimage .multimage-gallery .has-video .preview {
+  display: block;
+}
+.multimage .multimage-gallery .preview {
+  z-index: 4;
+  text-align: center;
+  line-height: 90px;
+  font-family: arial;
+  background-color: #fff;
+  display: none;
+}
+#desc .tab {
+  padding: 10px 10px 0;
+  margin-bottom: 10px;
+  background: #f8f8f8;
+  border: 1px solid #ececec;
+}
+#desc .tab li {
+  margin: 0;
+  float: none;
+  display: inline;
+}
+.give-tip {
+  position: relative;
+  border: 1px solid #ffcf5c;
+  background: #ffffe6;
+  line-height: 30px;
+  padding: 0 15px;
+  margin-bottom: 10px;
+  color: #f40;
+}
+.fields-box {
+  padding-left: 1px;
+  overflow: hidden;
+}
+.multimage .multimage-panels .local-panel .upload-field {
+  margin-left: 130px;
+}
+.se_a {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 300px;
+  height: 16px;
+  line-height: 17px;
+  text-align: left;
+  color: #1c1c1c;
+}

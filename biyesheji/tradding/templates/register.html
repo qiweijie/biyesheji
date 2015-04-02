@@ -1,0 +1,360 @@
+<!-- register.html -->
+{% extends "base.html" %}
+{% block title %}欢迎注册交易系统{% endblock %}
+<!-- {% load staticfiles %} -->
+{% block css_js %}
+<script src={% static 'jquery.min.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<style type="text/css">
+	html body {
+			background: #f8f8f8;
+		}
+	div,dl,dt ,dd{
+	display: block;
+	}
+	body, button, input, select, textarea {
+		font-family: arial, tahoma, 宋体;
+		font-size: 12px;
+		font-style: normal;
+		font-variant: normal;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 1.5;
+	}
+	button, input, select, textarea {
+	font-size: 100%;
+	outline: none;
+	}
+	label {
+	cursor: default;
+	}
+	.wrapper {
+	width: 990px;
+	min-width: 990px;
+	margin: 0 auto;
+	clear: both;
+	}
+	.simple-header {
+	padding: 15px 0 20px;
+	}
+	.clearfix {
+	zoom: 1;
+	}
+	.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	}
+	.simple-header a {
+	float: left;
+	}
+	a {
+	color: #333;
+	text-decoration: none;
+	outline: none;
+	}
+	.simple-header .channel {
+	margin: 18px 0 0 10px;
+	}
+	.l {
+	float: left;
+	}
+	.mart {
+	margin-bottom: 125px;
+	}
+	.main-box {
+	zoom: 1;
+	}
+	.main-box {
+	padding: 0 10px;
+	border: solid 1px #ddd;
+	border-top: 3px solid #F90;
+	background: #fff;
+	}
+	.reg-bor-top .login-bor {
+	margin: 0;
+	padding: 0 10px;
+	line-height: 29px;
+	}
+	.reg .notice {
+	position: relative;
+	margin: 0 -10px;
+	padding: 0 10px 0 22px;
+	background: #f8f8f8;
+	}
+	.reg .notice {
+	height: 30px;
+	line-height: 30px;
+	}
+	.song {
+	font-family: SimSun;
+	}
+	.tr {
+	text-align: right;
+	}
+	.main-box a {
+	color: #08C;
+	}
+	a {
+	color: #333;
+	text-decoration: none;
+	outline: none;
+	}
+	a:-webkit-any-link {
+	color: -webkit-link;
+	text-decoration: underline;
+	cursor: auto;
+	}
+	.cont-marg {
+	width: 968px;
+	border: 1px solid #ddd;
+	padding: 0 10px;
+	}
+	.tab-cont {
+	clear: both;
+	position: relative;
+	}
+	.pb85 {
+	padding-bottom: 25px;
+	}
+	.pt50 {
+	padding-top: 50px;
+	}
+	.reg-bor-top {
+	position: relative;
+	border-top: none;
+	padding: 0;
+	border: none;
+	margin-top: 5px;
+	}
+	.acc-form dl {
+	clear: both;
+	overflow: hidden;
+	}
+	.reg-user {
+	overflow: visible!important;
+	}
+	dl {
+	display: block;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	}
+	.acc-form dl dt {
+	float: left;
+	width: 150px;
+	padding-top: 8px;
+	text-align: right;
+	font-size: 14px;
+	}
+	.acc-form dl dd {
+	float: left;
+	padding-bottom: 24px;
+	}
+	.auto-person {
+	position: relative;
+	z-index: 11;
+	}
+	.auto-person .ui-text {
+	color: #333;
+	}
+	.auto-person .ui-text {
+	color: #999;
+	}
+	.reg .ui-text {
+	padding: 8px 4px;
+	}
+	.ui-text {
+	float: left;
+	width: 220px;
+	height: 18px;
+	padding: 5px 4px;
+	border: 1px solid #DDD;
+	font-size: 14px;
+	color: #333;
+	line-height: 18px;
+	}
+	.acc-form .default-name {
+	clear: both;
+	float: left;
+	width: 220px;
+	margin-top: -32px;
+	padding: 6px 7px;
+	line-height: 18px;
+	height: 18px;
+	color: #999;
+	font-size: 14px;
+	opacity: 1;
+	transition: all .2s ease-out;
+	-webkit-transition: all .2s ease-in;
+	-moz-transition: all .2s ease-out;
+	}
+	.safe-rank-label {
+	float: left;
+	width: 56px;
+	line-height: 15px;
+	color: #666;
+	white-space: nowrap;
+	overflow: hidden;
+	}
+	.safe-rank li {
+	float: left;
+	width: 56px;
+	border-right: 1px solid #FFF;
+	line-height: 14px;
+	text-align: center;
+	color: #FFF;
+	font-family: \5b8b\4f53;
+	padding-top: 1px\9;
+	}
+	.acc-form dl dd .tip-ok-wrap {
+	float: left;
+	}
+			.submit button {
+				width: 230px;
+				height: 38px;
+				border: 0;
+				display: inline-block;
+				overflow: hidden;
+				vertical-align: middle;
+				line-height: 36px;
+				font-size: 16px;
+				font-weight: 700;
+				color: #FFF;
+				background: #ff4700;
+				border-radius: 3px;
+				cursor: pointer;
+				zoom: 1;
+			}
+	.tip-box {
+	float: left;
+	clear: both;
+	margin-bottom: -20px;
+	width: 420px;
+	}
+	.vip-check-link {
+	position: absolute;
+	right: 116px;
+	top: 51px;
+	width: 257px;
+	}
+	body, h1, h2, h3, h4, h5, h6, hr, p, dl, dt, dd, ul, ol, li, form, fieldset, legend, button, input, textarea, th, td {
+	margin: 0;
+	padding: 0;
+	}
+	.c-error {
+	color: #F00!important;
+	}
+	.acc-form dl dd .tip-ok-wrap {
+	float: left;
+	}
+	.hide {
+	display: none;
+	}
+	.acc-form dl dd .tip-ok-wrap i {
+	float: left;
+	margin: 7px 5px 0 10px;
+	}
+	.tip-ok, .tip-ok-16 {
+	background-position: -182px 0;
+	}
+	.tip-icon {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url({% static 'images/tipIcon.png' %}) no-repeat -182px 0;
+	}
+</style>
+<script src={% static 'password.js' %} type="text/javascript" charset="utf-8" async defer></script>
+{% endblock %}
+{% block body %}
+{% if msg %}
+<script type="text/javascript">alert('{{msg}}');</script>
+{% endif %}
+<div class="wrapper">
+	<div class="simple-header">
+		<div id="snlogo" class="clearfix">
+			<a href="/tradding" title="首页"><img alt="logo" src={% static "images/logo_small.png" %} style="width:190px;height:60px;"></a>
+			<span class="channel l"><img alt="logo" src={% static "images/regLogo.png" %} ></span>
+		</div>
+	</div>
+	<div class="main-box reg mart reg-bor-top">
+		<p class="tr lh36 song notice login-bor">
+		我已经注册，马上<a href="/tradding/login" name="register_info_xinxi026"> 登录 &gt;</a>
+		</p>
+		<div class="tab-cont cont-marg" id="normalRegTabContent">
+			<form class="acc-form pt50 pb85" id="normalReg_form" method="post" autocomplete="off" action="/tradding/register">{% csrf_token %}
+				<dl class="reg-user">
+					<dt>账户名：</dt>
+					<dd class="auto-person">
+						<input type="text" class="ui-text" name="username" id="normalReg_logonName" autocomplete="off" maxlength="64" tabindex="1" placeholder="手机号/邮箱/用户名" onblur="check_username(this);">
+						<span class="tip-ok-wrap hide" id="normalReg_username_icon"><i class="tip-icon tip-ok"></i></span>
+						<div class="tip-box l clear-both">
+						<div class="input-tip" id="normalReg_username_tip"></div>
+					</dd>
+				</dl>
+				<dl>
+				<dt>设置密码：</dt>
+					<dd>
+					<input type="password" class="ui-text" name="password" id="normalReg_password" value="" autocomplete="off" maxlength="20" tabindex="2" onblur="checkP(this);">
+					<span class="tip-ok-wrap hide" id="normalReg_password_icon"><i class="tip-icon tip-ok"></i></span>
+					<div class="tip-box l clear-both">
+					<div class="input-tip" id="normalReg_password_tip"></div>
+					<!-- safe-rank [[-->
+					<div class="safe-rank-box hide" style="display: none;">
+						<div class="safe-rank-label">安全程度：</div>
+						<div class="safe-rank" id="normalReg_password_safeRank">
+							<div class="safe-rank-bar"></div>
+							<ul><li>低</li><li>中</li><li>高</li></ul>
+						</div>
+					</div>
+					<!-- safe-rank ]]-->
+					</div>
+					</dd>
+				</dl>
+				<dl>
+					<dt>确认密码：</dt>
+					<dd>
+						<input type="password" class="ui-text ui-text-disabled"  name="confirmpass" id="normalReg_passwordVerify" value="" autocomplete="off" maxlength="20" tabindex="3" onblur="comfirmP(this);">
+						<!--tip-ok-->
+						<span class="tip-ok-wrap hide" id="normalReg_passwordVerify_icon"><i class="tip-icon tip-ok"></i></span>
+						<div class="tip-box">
+						<div class="input-tip c-error" id="normalReg_passwordVerify_tip"></div>
+						</div>
+					</dd>
+				</dl>
+				<dl class="reg-email" >
+					<dt>邮箱地址：</dt>
+					<dd class="auto-email">
+						<input type="text" class="ui-text" name="email" id="normalReg_email" autocomplete="off" value="" maxlength="50" tabindex="5" placeholder="用于找回密码，可不填" onblur="checkE(this);">
+						<!--tip-ok-->
+						<span class="tip-ok-wrap hide" id="normalReg_email_icon"><i class="tip-icon tip-ok"></i></span>
+						<div class="tip-box">
+						<div class="input-tip c-error" id="normalReg_email_tip"></div>
+						</div>
+						<div id="emailct" class="email-list hide" style="display: none;"></div>
+					</dd>
+				</dl>
+
+				<dl class="acc-act">
+					<dt></dt>
+					<dd>				
+						<div class="submit">
+				            <button type="submit" disabled="" id="submit_button">注　册</button>
+				        </div> 
+					</dd>
+				</dl>
+			</form>
+			<div class="vip-check-link">
+				<a name="register_info_xinxi031" href="offLineMergeMCardSelectView?storeId=10052&amp;catalogId=10051" title="">
+				<img name="register_info_xinxi007" src={% static "images/1.jpg" %} alt="#" width="257" height="186">
+				</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

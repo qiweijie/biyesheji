@@ -1,0 +1,212 @@
+<!-- login.html -->
+{% extends "base.html" %}
+{% block title %}欢迎登陆交易系统{% endblock %}
+<!-- {% load staticfiles %} -->
+{% block css_js %}
+	<style type="text/css">
+		html body {
+			background: #f8f8f8;
+		}
+		body {
+			font-family: Tahoma, Helvetica, Arial, 宋体, sans-serif;
+			font-size: 12px;
+			font-style: normal;
+			font-variant: normal;
+			font-weight: normal;
+			font-stretch: normal;
+			line-height: 1.5;
+		}
+		div{
+			display: block;
+		}
+		#page {
+			width: 1190px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#logo{
+			padding: 30px 0 0 780px;
+			font-size: 18px;
+		}
+		.login{
+			position: relative;
+			min-height: 550px;
+		}
+		a {
+			color: #6d6d6d;
+			text-decoration: none;
+		}
+		.login_box {
+			position: absolute;
+			background-color: #FFF;
+			padding: 15px 0;
+			width: 315px;
+			margin: 60px 0 48px 720px;
+			z-index: 1;
+			border: 2px solid #dedede;
+			border-top: 2px solid #ff4200;
+		}
+		.login_box .hd {
+			height: 16px;
+			margin: 0 20px;
+			padding-top: 10px;
+			position: relative;
+			z-index: 1;
+		}
+		li {
+			list-style: none;
+		}
+		.login_box .hd h2 {
+			display: block;
+			font-size: 14px;
+			padding-left: 10px;
+			color: #333;
+			z-index: 1;
+		}
+		.login_box .bd {
+			position: relative;
+			z-index: 2;
+			margin: 0 30px;
+			zoom: 1;
+		}
+		.login_box .bd .box{
+			padding: 10px 0;
+			color: #666;
+			zoom: 1;
+		}
+		.login_box .field {
+			padding: 10px 0;
+			zoom: 1;
+		}
+		.login_box .username-field {
+			padding-top: 32px;
+		}
+		.login_box .field {
+			position: relative;
+			z-index: 1;
+		}
+		.login_box .field label {
+			display: block;
+			width: 27px;
+			height: 27px;
+			line-height: 27px;
+			color: #FFF;
+			text-align: center;
+			background: #ccc url({% static 'images/icon-label2.png' %}) no-repeat 50% 7px;
+			position: absolute;
+			left: 0;
+			top: 10px;
+			text-indent: -9999em;
+			outline: 0;
+		}
+		.login_box .username-field label {
+		top: 32px;
+		}
+		label {
+		cursor: default;
+		}
+		.login_box .login-text {
+			width: 220px;
+			height: 19px;
+			line-height: 19px;
+			padding: 3px;
+			padding-left: 30px;
+			vertical-align: middle;
+			border: 1px solid #dedede;
+		}
+		.login_box .pwd-field label {
+		background-position: 50% -30px;
+		}
+		#J_StandardPwd {
+			display: inline-block;
+			height: 38px;
+			vertical-align: middle;
+		}
+		.login_box .submit {
+			padding: 5px 0 10px;
+			overflow: hidden;
+			clear: both;
+			zoom: 1;
+		}
+		.login_box .submit button {
+			width: 255px;
+			height: 38px;
+			border: 0;
+			display: inline-block;
+			overflow: hidden;
+			vertical-align: middle;
+			line-height: 36px;
+			font-size: 16px;
+			font-weight: 700;
+			color: #FFF;
+			background: #ff4700;
+			border-radius: 3px;
+			cursor: pointer;
+			zoom: 1;
+		}
+		.login-bg {
+			position: absolute;
+			width: 350px;
+			height: 280px;
+			overflow: hidden;
+			left: 170px;
+			top: 120px;
+			z-index: 0;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+<!-- {{msg}}{{user_name}}{{pass_word}}{{label}} -->
+{% if msg %}
+<script type="text/javascript">alert('{{msg}}');</script>
+{% endif %}
+<div id="page">	
+	<div id="header">
+		<h1 id="logo">
+			<a href="/tradding/" title="">
+				<img src={% static "images/logo_small.png"%}  alt="logo" style="width:190px;height:80px;">
+			</a>
+		</h1>
+	</div>
+	<div id="content">
+		<div class="login">
+			<div id="login_box" class="login_box">
+				<div class="hd"> 
+					<ul>
+						<li class="current"><h2>登录</h2> </li>
+					</ul>
+				</div>
+				<div class="bd">
+					<div class="box">
+						<div class="static">
+							<form action="" method="post" accept-charset="utf-8" target="">
+								{% csrf_token %}
+								<div class="field ph-hide username-field">
+						        	<label for="username_1" class="iconfont"></label>
+						            <input type="text" name="username" id="username_1" class="login-text J_UserName" value={% if user_name %}{{user_name}}{% else %}""{% endif %} maxlength="32" tabindex="1" placeholder="手机号/邮箱/用户名">
+						        </div>
+						        <div class="field pwd-field">
+									<label id="password-label" for="password_1" class="iconfont"></label>						
+									<span id="J_StandardPwd">
+										<input type="password" aria-labelledby="password-label" name="password" id="password_1" class="login-text" maxlength="20" tabindex="2">
+									</span>
+								</div>   
+								<div class="submit">
+						            <button type="submit" >登　录</button> 
+						            <a href="/tradding/register" title="注册" style="float:right;">注 册</a>
+						        </div>      	
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="login-bg">
+				<img src={% static "images/1.jpg" %} alt="" style="width:350px;height:280px;">>			
+    		</div>
+		</div>
+	</div>
+		
+	</div>
+</div>
+{% endblock %}

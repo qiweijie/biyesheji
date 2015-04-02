@@ -1,0 +1,329 @@
+div{
+	display: block;
+}
+body, button, input, select, textarea {
+font-family: tahoma, arial, 'Hiragino Sans GB', 宋体, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+font-stretch: normal;
+line-height: 1.5;
+margin: 0;
+}
+ol,li{
+	list-style: none;
+}
+body, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ul, ol, li, del, form, th, td {
+margin: 0;
+padding: 0;
+}
+#hd {
+font-family: 'Hiragino Sans GB', Simsun, Arial;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+font-stretch: normal;
+line-height: normal;
+color: #646464;
+}
+#hd .tools {
+width: 100%;
+background-color: #f9f9f9;
+border-bottom: 1px solid #f2f2f2;
+height: 34px;
+line-height: 34px;
+}
+.tools .ddnewhead_operate {
+width: 1200px;
+margin: 0 auto;
+background-color: #f9f9f9;
+height: 34px;
+}
+.tools .ddnewhead_operate_nav {
+float: right;
+padding-top: 2px;
+}
+.ddnewhead_operate_nav li {
+float: left;
+height: 22px;
+padding-top: 4px;
+line-height: 21px;
+background: url(./images/home_sprite2_1017.png) no-repeat left -285px;
+position: relative;
+z-index: 100;
+}
+.ddnewhead_operate_nav li.ddnewhead_cart {
+background-image: none;
+}
+.ddnewhead_operate_nav li a {
+display: block;
+position: relative;
+line-height: 21px;
+padding: 0 9px 0 11px;
+}
+.ddnewhead_operate_nav li.dang_erweima {
+width: 84px;
+}
+.ddnewhead_operate_nav li a.menu_btn {
+background: url(./images/home_sprite2_1017.png) no-repeat right -307px;
+padding-right: 23px;
+}
+.ddnewhead_operate_nav li.my_dd a.menu_btn {
+padding-right: 27px;
+}
+.ddnewhead_operate_nav li.dang_erweima a.menu_btn {
+background: 0;
+padding: 0 9px 0 27px;
+width: auto;
+border: 0;
+margin: 0;
+height: 21px;
+}
+.ddnewhead_operate_nav li .icon_card {
+float: left;
+width: 15px;
+height: 14px;
+background: url(./images/home_sprite2_1017.png) no-repeat -40px -86px;
+overflow: hidden;
+margin: 3px 9px 0 0;
+}
+.tools .ddnewhead_operate_nav i.icon_tel {
+width: 11px;
+height: 16px;
+background: url(./images/home_sprite2_1017.png) no-repeat -40px -70px;
+position: absolute;
+left: 11px;
+top: 2px;
+}
+.ddnewhead_gcard_list {
+position: absolute;
+top: 21px;
+left: -1px;
+border: 1px solid #e6e6e6;
+border-top: 0;
+background-color: #fff;
+padding: 4px 0;
+display: none;
+}
+.tools .ddnewhead_welcome {
+padding: 5px 0 0 10px;
+height: 24px;
+line-height: 24px;
+position: relative;
+float: left;
+z-index: 50;
+}
+.tools .ddnewhead_welcome .hi {
+display: inline-block;
+height: 24px;
+color: #ff2832;
+}
+.tools .ddnewhead_welcome a.login_link {
+color: #ff2832!important;
+}
+.tools .ddnewhead_welcome a {
+display: inline-block;
+}
+.tools .ddnewhead_welcome a.login_link {
+color: #ff2832!important;
+}
+
+/*logo 搜索框*/
+#hd .logo_line_out {
+position: relative;
+z-index: 30;
+}
+#hd .logo_line {
+height: 110px;
+width: 1200px;
+margin: 0 auto;
+position: relative;
+}
+#hd .logo_line .logo {
+overflow: hidden;
+width: 362px;
+vertical-align: middle;
+position: absolute;
+left: 0;
+top: 0;
+}
+#hd .logo_line .search {
+position: absolute;
+margin-top: 32px;
+height: 48px;
+z-index: 9999;
+left: 362px;
+top: 0;
+}
+#hd .logo_line .search form {
+display: block;
+height: 50px;
+}
+#hd .logo_line .search .label_search {
+position: absolute;
+top: 1px;
+left: 11px;
+width: 398px;
+height: 38px;
+line-height: 38px;
+z-index: 1;
+overflow: hidden;
+}
+label {
+cursor: default;
+}
+#hd .logo_line .search .text {
+width: 398px;
+height: 18px;
+border: 1px solid #c8c8c8;
+background: url(./images/home_sprite2_1017.png) no-repeat -3px -265px;
+padding: 10px 0 10px 10px;
+position: absolute;
+left: 0;
+top: 0;
+box-shadow: 2px 2px 1px #f2f2f2 inset;
+z-index: 2;
+color: #323232;
+font: 12px/18px 'Hiragino Sans GB',"Simsun",Arial;
+outline: 0;
+}
+#hd .logo_line .search .select {
+position: absolute;
+top: 0;
+left: 410px;
+border: 1px solid #c8c8c8;
+border-left: none;
+width: 92px;
+height: 38px;
+line-height: 38px;
+font: 16px/36px "Microsoft Yahei";
+color: #969696;
+padding: 0 0 0 14px;
+cursor: pointer;
+background-color: #fafafa;
+}
+#hd a {
+color: #646464;
+text-decoration: none;
+}
+#hd .logo_line .search .button {
+width: 80px;
+height: 40px;
+border: 0;
+margin-left: 2px;
+background: url(./images/home_sprite2_1017.png) no-repeat 0 -346px;
+cursor: pointer;
+position: absolute;
+left: 517px;
+top: 0;
+}
+#hd .logo_line .search_bottom {
+position: absolute;
+top: 77px;
+left: 362px;
+color: #969696;
+width: 599px;
+line-height: 20px;
+z-index: 6666;
+}
+.logo_line .search_hot {
+float: left;
+width: 536px;
+overflow: hidden;
+height: 20px;
+}
+#hd .logo_line .search_bottom a, #hd .logo_line .search_bottom a:hover {
+color: #969696;
+margin-right: 15px;
+_display: inline;
+height: 20px;
+overflow: hidden;
+}
+#hd .logo_line .search .select .icon {
+width: 13px;
+height: 7px;
+overflow: hidden;
+background: url(./images/home_sprite2_1017.png) no-repeat -14px -90px;
+position: absolute;
+left: 88px;
+top: 16px;
+}
+.logo_line .search .select_pop {
+width: 104px;
+height: 288px;
+border: 1px solid #c8c8c8;
+position: absolute;
+top: 38px;
+left: -1px;
+background-color: #fff;
+overflow: auto;
+}
+.logo_line .search .select_pop a, .logo_line .search .select_pop a:hover {
+display: block;
+height: 24px;
+padding: 0 5px 0 15px;
+text-decoration: none;
+font-family: 'Hiragino Sans GB', Simsun;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+font-stretch: normal;
+line-height: 24px;
+}
+#hd .nav_top {
+width: 100%;
+height: 36px;
+background-color: #ff2832;
+}
+#hd .nav_top ul {
+width: 1200px;
+margin: 0 auto;
+height: 36px;
+background-color: #ff2832;
+display: block;
+zoom: 1;
+}
+#hd .nav_top ul li {
+float: left;
+text-align: center;
+position: relative;
+}
+#hd a {
+color: #646464;
+text-decoration: none;
+}
+#hd .nav_top a, #hd .nav_top a:hover {
+color: #fff;
+font: 14px/36px "microsoft yahei";
+text-decoration: none;
+padding: 0 15px;
+display: block;
+font-weight: bold;
+}
+#hd .nav_top ul li.all {
+width: 171px;
+padding: 0 0 0 20px;
+margin-right: 17px;
+margin-left: -3px;
+_display: inline;
+text-align: left;
+background: #fa2832 url(./images/home_y_sprite_1017.png) repeat-y -190px 0;
+position: relative;
+}
+#hd .nav_top ul li.all a, #hd .nav_top ul li.all a:hover {
+padding: 0;
+}
+
+.home_nav_l .new_pub_nav li.on a, .home_nav_l .new_pub_nav li.on a:hover, .home_nav_l .new_pub_nav li.on span ,.home_nav_l .new_pub_nav li.on span a{
+color: #ff2832;
+font-family: 'Microsoft Yahei';
+font-size: 16px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+font-stretch: normal;
+line-height: 34px;
+}
