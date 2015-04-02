@@ -1,0 +1,269 @@
+/*product.css*/
+div{
+	display: block;
+}
+#content{
+width: 1200px;
+height: 600px;
+margin: 0 auto;
+padding-top: 20px;
+color: #555;
+}
+#product_inf{
+	display: inline;
+	position: relative;
+	float: left;
+	width: 1000px;
+}
+#border{
+	display: inline;
+	position: relative;
+	float: left;
+	width: 1000px;
+	height: 600px;
+	border: 1px solid #e8e8e8;
+}
+#left{
+	display: inline;
+	float: left;
+	width: 490px;
+	position: relative;
+}
+#img_div{
+width: 490px;
+height: 490px;
+display: block;
+overflow: hidden;
+}
+.goods_img{
+padding:10px 10px 0 10px;
+width: 480px;
+height: 480px;
+position: absolute;
+}
+#img_div_small{
+padding-top: 10px;
+width: 490px;
+height: 90px;
+display: block;
+overflow: hidden;
+}
+.small_img{
+	width: 70px;
+	border: none;
+	border-color: #f40;
+}
+#center{
+	display: inline;
+	float: left;
+	width: 490px;
+	padding-left: 10px;
+}
+#title,#special,#num,#price,#description,#add{
+	padding: 10px;
+}
+#description{
+	display: block;
+	width: 480px;
+	height: 300px;
+	overflow: auto;
+}
+#t{  
+min-height: 21px;
+_height: 21px;
+font-size: 16px;
+font-weight: 700;
+line-height: 21px;
+color: #3c3c3c;
+}
+#attributes {
+  margin-bottom: 10px;
+  /*padding: 10px;*/
+  border-bottom: solid 1px #eee;
+}
+#attributes ul {
+  padding: 0 15px;
+}
+.attributes-list li {
+  display: inline;
+  float: left;
+  width: 206px;
+  height: 24px;
+  /*margin-right: 20px;*/
+  overflow: hidden;
+  text-indent: 5px;
+  line-height: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#right{
+	display: inline;
+	width: 190px;
+	float: right;
+	border: 1px solid #e8e8e8;
+}
+dl {
+  margin-bottom: 10px;
+}
+dl dt {
+  display: inline;
+  float: left;
+  margin-right: 5px;
+  width: 55px;
+  color: #6c6c6c;
+}
+dl dd {
+  overflow: hidden;
+}
+.tb-stock {
+  position: relative;
+  display: inline;
+  float: left;
+}
+.tb-increase {
+  border-left: 0!important;
+  margin-right: 8px;
+}
+.tb-disable-reduce, .tb-stock .tb-disable-reduce:hover {
+  color: #ccc;
+  cursor: not-allowed;
+  background-color: #ededed;
+}
+.tb-stock a,.tb-stock a:hover {
+  display: block;
+  _display: inline;
+  float: left;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #ccc;
+  line-height: 26px;
+  padding: 0;
+  vertical-align: top;
+  text-align: center;
+  background-color: #ededed;
+  overflow: hidden;
+  text-decoration: none;
+}
+.tb-stock input {
+  display: inline;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 48px;
+  height: 26px;
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+  color: #666;
+  border: 1px solid #ccc;
+  outline: 0;
+  background: #fff;
+  ime-mode: disabled;
+}
+.tb-amount {
+  line-height: 28px;
+}
+.tb-meta {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+.tb-meta {
+  z-index: 7;
+  position: relative;
+  min-height: 35px;
+  _height: 35px;
+  zoom: 1;
+}
+.tb-meta li {
+  margin-bottom: 0;
+}
+.tb-meta .tb-detail-price {
+  width: 350px;
+}
+.tb-meta .tb-property-type {
+  display: inline;
+  float: left;
+  width: 60px;
+  color: #6c6c6c;
+}
+.tb-meta .tb-property-cont {
+  overflow: hidden;
+}
+.tb-counter {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+}
+.tb-meta .tb-detail-price strong {
+  position: relative;
+  top: -2px;
+  vertical-align: middle;
+  padding-right: 5px;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: Tahoma,Arial,Helvetica,sans-serif;
+  color: #f40;
+  overflow: hidden;
+}
+.tb-rate-counter {
+  padding-right: 9px;
+  padding-left: 9px;
+}
+.tb-counter .tb-rate-counter,.tb-counter .tb-sell-counter {
+  display: inline;
+  float: left;
+  text-align: center;
+}
+.tb-counter .tb-rate-counter a, .tb-counter .tb-sell-counter a {
+  display: block;
+  color: #6c6c6c;
+}
+.tb-counter .tb-rate-counter a strong, .tb-counter .tb-sell-counter a strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 18px;
+}
+.tb-rmb-num {
+  font-family: verdana,arial;
+}
+em {
+  font-style: normal;
+}
+ .tb-btn-buy {
+  margin-right: 9px;
+}
+ .tb-btn-add,  .tb-btn-buy,  .tb-btn-wait {
+  display: inline;
+  float: left;
+}
+.tb-btn-buy a {
+  color: #fff;
+  border-color: #81bc00;
+  background: #81bc00;
+  text-decoration: none;
+}
+.tb-btn-add a {
+  width: 180px;
+  color: #fff;
+  border-color: #81bc00;
+  background: #81bc00;
+  text-decoration: none;
+}
+.tb-btn-add a, .tb-btn-buy a, .tb-btn-wait a {
+  display: block;
+  cursor: pointer;
+  width: 134px;
+  height: 38px;
+  text-align: center;
+  font-family: "Hiragino Sans GB","microsoft yahei",sans-serif;
+  font-size: 16px;
+  line-height: 38px;
+  border-width: 1px;
+  border-style: solid;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}

@@ -6,6 +6,7 @@ sys.setdefaultencoding('utf-8')
 from tradding.User import User,Customer
 from tradding.Address import Address
 from tradding.Goods import Goods,Goods_picture,Picture
+from tradding.models import BrowseRecord
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 def seller_center(request):
 	if request.session.get('login',False):
@@ -154,3 +155,41 @@ def history_products(request):
 			'user':user,'all_goods':all_goods})
 	else :
 		return HttpResponseRedirect('/tradding/login?url=seller_center')
+def products_detail(request,object_id=1):
+	g = Goods.objects.get(pk=object_id)
+	if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+	    ip =  request.META['HTTP_X_FORWARDED_FOR']
+	else:
+	    ip = request.META['REMOTE_ADDR']
+	if request.session.get('login',False):
+		user = Customer.objects.get(username=request.session['username'])
+		customer = user	
+		#first time
+		if not customer.recent_browse:
+			customer.recent_browse="*"
+			customer.save()
+		if customer.recent_browse.find("*"+str(object_id)+"*")!=-1:
+			#aready add
+			pass
+		else:
+			b = BrowseRecord()
+			b.customer_id = user
+			b.goods_id = g
+			b.ip=ip
+			b.save()
+			customer.add_browse_record(b.id)
+			customer.save()
+		return render_to_response("seller/products_detail.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'user':user,'object':g})
+	else:
+		user = ''
+		return render_to_response("seller/products_detail.html",{'user':user,'object':g})
+def seller(request,object_id=1):
+	c = Customer.objects.get(pk=object_id)
+	if request.session.get('login',False):
+		user = Customer.objects.get(username=request.session['username'])
+		return render_to_response("seller/seller.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'user':user,'object':c})
+	else:
+		user = ''
+		return render_to_response("seller/seller.html",{'user':user,'object':c})

@@ -291,10 +291,6 @@ float: left;
 text-align: center;
 position: relative;
 }
-#hd a {
-color: #646464;
-text-decoration: none;
-}
 #hd .nav_top a, #hd .nav_top a:hover {
 color: #fff;
 font: 14px/36px "microsoft yahei";

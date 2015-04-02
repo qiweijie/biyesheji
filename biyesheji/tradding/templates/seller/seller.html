@@ -1,11 +1,12 @@
-<!-- products_detail.html -->
+<!-- seller.html -->
 {% extends "base.html" %}
 {% load staticfiles %}
-{% block title %}{{object.title}}{% endblock %}
+{% block title %}{{object.nickname}}的店铺{% endblock %}
 {% block css_js %}
+	<link rel="stylesheet" type="text/css" href={% static 'person.css' %}>
+	<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
 	<link rel="stylesheet" href={% static 'header.css' %}>
-	<link rel="stylesheet" href={% static 'product.css' %}>
-<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+	<link rel="stylesheet" href={% static "middle.css" %}>
 	<script src={% static 'product.js' %} type="text/javascript" charset="utf-8" async defer></script>
 {% endblock %}
 {% block body %}
@@ -73,101 +74,44 @@
 		    </div>
 		</div>
 	</div>
+<div class="account-body">
+  <div class="account-wrap">
+  <div class="acc-tab-content">
+          <div id="customer-address-list" class="customer-unit">
+            <h2>出售中的宝贝
+            </h2>
+            <hr>
+            <table class="tab-address">
+                <tbody id="saveAddress">
+              <tr > 
+                <td class="address-icon" style="width:300px;">
+                  标题
+                  </td>
+                <td class="address-icon" style="width:400px;">详细描述
+                </td>
+              </tr>
+            {% for goods in object.goods_set.all %}
+              <tr > 
+                <td class="address-icon" style="width:300px;">
+                  <div >
+                    <a href="{{goods.get_absolute_url}}" title="" target="blank"><img src="{{goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br>
+                        <p><a href="{{goods.get_absolute_url}}" target="_blank" class="se_a">{{goods.title}}</a></p>
+                    <input type="text" id="goods_id{{goods.goods_id}}" value="{{goods.goods_id}}" style="display:none">
+                  </div></td>
+                <td class="address-icon" style="width:400px;">
+                  <div>
+                    <span class="address-detail">{{goods.special}}</span>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+          </div>
+
+        </div>
+
+  </div>
 </div>
-<div id="content">
-	<div id="product_inf">
-		<div id="border">
-			<div id="left">
-				<div id="img_div">
-					{% for img in object.goods_photo.all %}
-					<img src="{{img.image.url}}" alt="{{object.title}}" class="goods_img" z-index="1" id="big{{img.id}}">
-					{% endfor %}			
-				</div>
-				<div id="img_div_small">
-					{% for img in object.goods_photo.all %}
-					<img src="{{img.image.thumb_url}}" alt="{{object.title}}" class="small_img" z-index="1" id="{{img.id}}" onclick="big('{{img.id}}')">
-					{% endfor %}			
-				</div>
-			</div>
-			<div id="center">
-				<div id="title">
-					<h3 id="t">{{object.title}}</h3>
-				</div>
-				<div id="special">
-					<p>{{object.special}}</p>
-				</div>		
-				<div id="price">
-					<ul class="tb-meta">
-					    <li id="J_StrPriceModBox" class="tb-detail-price tb-clearfix J_PriceItem" shortcut-key="p" shortcut-label="查看价格" shortcut-effect="focus" data-price-wight="0">
-							<span class="tb-property-type"> 价格</span>
-							<div class="tb-property-cont">
-							<strong id="J_StrPrice" style="font-size: 24px; color: rgb(255, 68, 0); font-weight: 700; text-decoration: none;"><em class="tb-rmb">¥</em><em class="tb-rmb-num">{{object.price}}</em></strong></div>
-						</li>					    
-						 <li id="J_Counter" class="tb-counter">
-							 <div class="tb-counter-bd">
-								 <div class="tb-rate-counter">
-								 <a >
-								 <strong id="J_RateCounter">615</strong>
-								 <span>累计评论</span>
-								 </a>
-								 </div>
-								 <div class="tb-sell-counter">
-								 <a >
-								 <strong id="J_SellCounter">217</strong>
-								 <span>交易成功</span>
-								 </a>
-								 </div>
-							 </div>
-						 </li>
-					 </ul>
-				</div>	
-				<div id="num">
-					<dl class="tb-amount tb-clearfix">
-					<dt class="tb-property-type">数量</dt>
-					<dd>
-					<span class="tb-stock" id="J_Stock">
-					 <a href="#" hidefocus="" id="J_Reduce" class="tb-reduce  tb-iconfont tb-disable-reduce" onclick="reduce_one();">-</a>
-					 <input id="J_IptAmount" type="text" class="tb-text" value="1" maxlength="8" title="请输入购买量" onchange="amount_change(this)" >
-					 <a href="#" hidefocus="" id="J_Increase" class="tb-increase  tb-iconfont" onclick="increase_one();">+</a>件
-					 </span>
-					(库存<span id="J_SpanStock" class="tb-count">911</span>件)
-					</dd>
-					</dl>
-				</div>
-				<div id="add" class="tb-action tb-clearfix ">
-					<div class="tb-btn-buy"><a href="#" >立即购买</a></div>
-					<div class="tb-btn-add"><a href="#" onclick="add_pro('{{object.goods_id}}');">加入购物车</a></div>
-				</div>
-			<div id="description">
-				{{object.description|safe}}
-			</div>		
-			</div>	
-		</div>
-	</div>
-	<div id="right">
-		<div id="seller">
-			 <div class="tb-shop-seller">
-				 <dl>
-					 <dt>掌柜：</dt>
-					 <dd>
-					 <a class="tb-seller-name" href={{object.user.get_absolute_url}}>
-					 {{object.user.nickname}}
-					 </a>
-					 </dd>
-				 </dl>
-			 </div>
-			 <div class="tb-shop-ww">
-				 <dl>
-					 <dt>联系：</dt>
-					 <dd><span>{{object.user.phone_number}}</span>
-					 </dd>
-				 </dl>
-			 </div>
-			<div class="tb-shop-info-ft">
-			<a href={{object.user.get_absolute_url}} >进入店铺</a>
-			<a href="javascript:void();" onclick="add_fav('{{object.user.user_id}}')">收藏店铺</a>
-			</div>
-		</div>
-	</div>
 </div>
 {% endblock %}

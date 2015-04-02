@@ -10,7 +10,7 @@
          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
          "save table contextmenu directionality emoticons template paste textcolor"
    ],
-    content_css :'/static/mce.css',
+    content_css :'http://127.0.0.1:8000/static/mce.css',
    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons | code anchor searchreplace | ", 
    style_formats: [
         {title: 'Bold text', inline: 'b'},

@@ -215,7 +215,6 @@ function checkPasswordStrength(b){
 }
 
 function checkP (p) {
-	if(p.value=="") return;
 	errorA = checkPassword(p.value);
 	e=document.getElementById("normalReg_password_tip");
 	if(errorA.msg!="OK."){
@@ -229,7 +228,6 @@ function checkP (p) {
 	e.className="input-tip c-error";
 }
 function comfirmP(p){
-	document.getElementById("normalReg_passwordVerify_icon").style.display="none";
 	if(p.value=="") return;
 	np=document.getElementById("normalReg_password");
 	e = document.getElementById("normalReg_passwordVerify_tip");
@@ -241,15 +239,10 @@ function comfirmP(p){
 		e.innerText="您两次输入的密码不一致，请重新输入。";	
 		document.getElementById("normalReg_passwordVerify_icon").style.display="none";
 	}
-	if(document.getElementById("normalReg_username_icon").style.display=='block'
-		&&document.getElementById("normalReg_password_icon").style.display=='block'
-		&&document.getElementById("normalReg_passwordVerify_icon").style.display=='block')
-		document.getElementById("submit_button").disabled=false;
+
 }
 function checkE(e){
 	 var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/; 
-	 if(e.value=="") {document.getElementById("normalReg_email_tip").innerText="";
-	 	return;}
 	 if(pattern.test(e.value)){
 		document.getElementById("normalReg_email_tip").innerText="";
 		document.getElementById("normalReg_email_icon").style.display="block";
@@ -258,57 +251,4 @@ function checkE(e){
 		document.getElementById("normalReg_email_tip").innerText="您的邮箱格式不正确，请重新输入";
 		document.getElementById("normalReg_email_icon").style.display="none";
 	 }
-}
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken');
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});		
-function check_username (e) {
-	if(e.value=="") 
-    {
-    	document.getElementById("normalReg_username_icon").style.display='';
-    	document.getElementById("normalReg_username_tip").innerText="";
-    	return;
-    }
-	var username= document.getElementById("normalReg_logonName").value;
-    $.post('/tradding/register/check', 
-        {
-            username:username,
-        },
-         function(data, textStatus, xhr) {
-        /*optional stuff to do after success */
-        if(data=="")
-        {
-        	document.getElementById("normalReg_username_icon").style.display='block';
-        	document.getElementById("normalReg_username_tip").innerText="用户名可用";
-        }
-        else
-        {
-        	document.getElementById("normalReg_username_icon").style.display='';
-        	document.getElementById("normalReg_username_tip").innerText="用户名已经注册，请直接登陆";
-        }
-    });
 }

@@ -3,7 +3,9 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-from tradding.User import User,Customer
+from tradding.User import User,Customer,Favorite_shop
+from tradding.models import ShoppingCartItem
+from tradding.Goods import Goods
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
 from django.core.mail import send_mail
@@ -81,5 +83,56 @@ def change(request):
 			return HttpResponse("")
 		else:
 			return HttpResponse("error")
+	else:
+		return HttpResponse("ok")
+def add_fav(request):
+	data = request.POST['add_fav'] if 'add_fav' in request.POST else ''
+	if data:
+		seller_id,customer_id = data.split("*_*")
+		if seller_id and customer_id:
+			seller = Customer.objects.get(pk=seller_id)
+			customer = Customer.objects.get(pk=customer_id)
+			#first time
+			if not customer.favorite_shops:
+				customer.favorite_shops="*"
+				customer.save()
+			#是否已经存在该收藏项favorite_shop(f_s)
+			try:
+				f_s = Favorite_shop.objects.get(customer_id=customer,shop_id=seller)
+				f_s.save()
+			#如果不存在，新建一个
+			except :
+				f = Favorite_shop()
+				f.customer_id = customer
+				f.shop_id = seller 
+				f.save()
+				customer.add_favorite_shops(f.id)
+				customer.save()
+			return HttpResponse("")
+	else:
+		return HttpResponse("ok")
+
+def add_pro(request):
+	data = request.POST['add_pro'] if 'add_pro' in request.POST else ''
+	if data:
+		goods_id,customer_id = data.split("*_*")
+		if goods_id and customer_id:
+			goods = Goods.objects.get(pk=goods_id)
+			customer = Customer.objects.get(pk=customer_id)
+			#first time
+			if not customer.shopping_cart:
+				customer.shopping_cart="*"
+				customer.save()
+			if customer.shopping_cart.find("*"+str(goods_id)+"*")!=-1:
+				#aready add,refresh the time
+				pass
+			else:
+				c = ShoppingCartItem()
+				c.customer_id = customer
+				c.goods_id = goods 
+				c.save()
+				customer.add_shopping_item(c.id)
+				customer.save()
+			return HttpResponse("")
 	else:
 		return HttpResponse("ok")

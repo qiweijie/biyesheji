@@ -3,6 +3,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from tradding.User import User,Customer
+from tradding.Goods import Goods
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
 # Create your views here.
@@ -67,11 +68,24 @@ def register(request):
 			msg = "errot"
 			return render_to_response("register.html",{'msg':msg},context_instance=RequestContext(request))
 def home(request):
+	all_goods = {}
+	all_ = Goods.objects.all()
+	all_goods['first'] = all_[0:4]
+	all_goods['second'] = all_[4:8]
+	all_goods['third'] = all_[8:12]
+	all_goods['new'] = all_[0:2]
 	if request.session.get('login',False):
-		return render_to_response('home.html',{'user_name':request.session['username'],'logout_url':request.session['logout_url']})
+		return render_to_response('home.html',{'user_name':request.session['username'],'logout_url':request.session['logout_url']
+			,'all_goods':all_goods})
 	else:
-		return render_to_response("home.html")
+		return render_to_response("home.html",{'all_goods':all_goods})
 def logout(request):
+	all_goods = {}
+	all_ = Goods.objects.all()
+	all_goods['first'] = all_[0:4]
+	all_goods['second'] = all_[4:8]
+	all_goods['third'] = all_[8:12]
+	all_goods['new'] = all_[0:2]
 	user_name = request.GET['username'] if 'username' in request.GET else ''
 	login_time = request.GET['login_time'] if 'login_time' in request.GET else ''
 	if user_name and login_time:
@@ -79,4 +93,4 @@ def logout(request):
 		request.session['login']=False
 		login_time = str(int(time.time()))
 		request.session['time']=login_time
-		return render_to_response("home.html")
+		return render_to_response("home.html",{'all_goods':all_goods})

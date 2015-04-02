@@ -32,50 +32,65 @@ function removeClass(obj, cls) {
         obj.className = obj.className.replace(reg, ' ');
     }
 }
-var currentIndex = 1;
-function slideTo (index) {
-	if(index=="-") currentIndex = (currentIndex-1)<1?(currentIndex-1+8):(currentIndex-1);
-	else if(index=="+") currentIndex = (currentIndex+1)>8?(currentIndex+1-8):(currentIndex+1);
-	else currentIndex = parseInt(index);
-	// alert(currentIndex);
-	var ul = document.getElementById("slidecontent").childNodes;
-	for(var i=0;i<ul.length;i++){
-		// alert(ul[i].childNodes[0].name);
-		if(ul[i].childNodes[0].name=="f_"+currentIndex){
-			ul[i].style.zIndex=2;
-			ul[i].style.opacity=1.0;
-		}
-		else{
-			ul[i].style.zIndex=1;
-			ul[i].style.opacity=0;
-		}
-	}
-	var ul_b = document.getElementById("slidelabel_nav").childNodes;
-	for (var i = 0; i < ul_b.length; i++) {
-		if(parseInt(ul_b[i].textContent)==currentIndex){
-			ul_b[i].className="on";
-		}
-		else ul_b[i].className="";
-	}	
-}
-var curNum=0;
-function slideToS (index) {
-	var ul = document.getElementById("tehui").children;
-	if(curNum+index<0) curNum=7;
-	else if(curNum+index>7) curNum=0;
-	else curNum = curNum+index;
-	// alert(curNum);
-	for (var i = 1; i < ul.length; i++) {
-		if(i==curNum){
-			ul[i].style.zIndex=2;
-			ul[i].style.opacity=1.0;
-		}
-		else {
-			ul[i].style.zIndex=1;
-			ul[i].style.opacity=0;
-		}
-	};
-}
+// var currentIndex = 1;
+// function slideTo (index) {
+// 	if(index=="-") currentIndex = (currentIndex-1)<1?(currentIndex-1+8):(currentIndex-1);
+// 	else if(index=="+") currentIndex = (currentIndex+1)>8?(currentIndex+1-8):(currentIndex+1);
+// 	else currentIndex = parseInt(index);
+// 	// alert(currentIndex);
+// 	var ul = document.getElementById("slidecontent").childNodes;
+// 	for(var i=0;i<ul.length;i++){
+// 		// alert(ul[i].childNodes[0].name);
+// 		if(ul[i].childNodes[0].name=="f_"+currentIndex){
+// 			ul[i].style.zIndex=2;
+// 			ul[i].style.opacity=1.0;
+// 		}
+// 		else{
+// 			ul[i].style.zIndex=1;
+// 			ul[i].style.opacity=0;
+// 		}
+// 	}
+// 	var ul_b = document.getElementById("slidelabel_nav").childNodes;
+// 	for (var i = 0; i < ul_b.length; i++) {
+// 		if(parseInt(ul_b[i].textContent)==currentIndex){
+// 			ul_b[i].className="on";
+// 		}
+// 		else ul_b[i].className="";
+// 	}	
+// }
+// var curNum=0;
+// function slideToS (index) {
+// 	var li = document.getElementById("Cbanner").children;
+// 	// if(curNum+index<0) curNum=7;
+// 	// else if(curNum+index>7) curNum=0;
+// 	// else curNum = curNum+index;
+// 	// // alert(curNum);
+// 	// for (var i = 0; i < 4; i++) {
+// 	// 	if(i==curNum){
+// 	// 		ul[i].style.zIndex=2;
+// 	// 		ul[i].style.opacity=1.0;
+// 	// 	}
+// 	// 	else {
+// 	// 		ul[i].style.zIndex=1;
+// 	// 		ul[i].style.opacity=0;
+// 	// 	}
+// 	// };
+// 	if(index==1){
+// 		var a = li[0].children;
+// 		for(var i=0;i<7;i++){
+// 			li[i].children = li[i+1].children;
+// 		}
+// 		li[7].children = a;
+// 		// alert(index);
+// 	}
+// 	if(index==-1){
+// 		var a = li[7].children;
+// 		for(var i=1;i<8;i++){
+// 			li[i].children = li[i-1].children;
+// 		}
+// 		li[0].children = a;
+// 	}
+// }
 function init () {
 	//中间左边
 	var arrs=document.getElementsByClassName("n_b");
@@ -111,37 +126,37 @@ function init () {
 			this.style.display="none";
 		}
 	}
-	//中间的中间
-	// var btn_l = document.getElementById("btn_l");
-	// var btn_r = document.getElementById("btn_r");
-	// btn_l.onclick = function  () {
-	// 	slideTo("-");
-	// }
-	// btn_r.onclick = function  () {
-	// 	slideTo("+");
-	// }
-	// var ul = document.getElementById("slidelabel_nav").childNodes;
-	// for (var i = 0; i < ul.length; i++) {
-	// 	ul[i].onmouseover = function  () {
-	// 		slideTo(this.textContent);
-	// 	}
-	// };	
-	// setInterval(function  () {
-	// 	if(currentIndex+1>8) currentIndex=0;
-	// 	slideTo(currentIndex+1);
-	// },3000);
-	var c_left = document.getElementById("c_left");
-	var c_right = document.getElementById("c_right");
-	c_left.onclick = function  () {
-		slideToS(-1);
-	}
-	c_right.onclick = function  () {
-		slideToS(1);
-	}
-	setInterval(function  () {
-		if(curNum+1>8) curNum=0;
-		slideToS(curNum+1);
-	},4000);
+// //中间的中间
+// 	// var btn_l = document.getElementById("btn_l");
+// 	// var btn_r = document.getElementById("btn_r");
+// 	// btn_l.onclick = function  () {
+// 	// 	slideTo("-");
+// 	// }
+// 	// btn_r.onclick = function  () {
+// 	// 	slideTo("+");
+// 	// }
+// 	// var ul = document.getElementById("slidelabel_nav").childNodes;
+// 	// for (var i = 0; i < ul.length; i++) {
+// 	// 	ul[i].onmouseover = function  () {
+// 	// 		slideTo(this.textContent);
+// 	// 	}
+// 	// };	
+// 	// setInterval(function  () {
+// 	// 	if(currentIndex+1>8) currentIndex=0;
+// 	// 	slideTo(currentIndex+1);
+// 	// },3000);
+// 	var c_left = document.getElementById("c_left");
+// 	var c_right = document.getElementById("c_right");
+// 	c_left.onclick = function  () {
+// 		slideToS(-1);
+// 	}
+// 	c_right.onclick = function  () {
+// 		slideToS(1);
+// 	}
+// 	setInterval(function  () {
+// 		if(curNum+1>8) curNum=0;
+// 		slideToS(curNum+1);
+// 	},4000);
 	//中间的左边
 	var cxgg_title = document.getElementById("cxgg_title");
 	var fwgg_title = document.getElementById("fwgg_title");
