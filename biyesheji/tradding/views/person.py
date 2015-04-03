@@ -4,7 +4,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from tradding.User import User,Customer,Favorite_shop
-from tradding.models import ShoppingCartItem
+from tradding.models import ShoppingCartItem,BrowseRecord
 from tradding.Goods import Goods
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
@@ -134,6 +134,44 @@ def shopping_cart(request):
 		return render_to_response("person/shopping_cart.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
 			'user':user,'items':items})
 	else :
+		return HttpResponseRedirect('/tradding/login?url=personal_center')
+def browsed(request):
+	if request.session.get('login',False):
+		user = Customer.objects.get(username=request.session['username'])
+		recent_browse = user.recent_browse.split("*")
+		items =[]
+		for f_s in recent_browse:
+			if f_s:
+				items.append(BrowseRecord.objects.get(pk=f_s))
+		return render_to_response("person/recent_browsed.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'user':user,'items':items})
+	else :
+		return HttpResponseRedirect('/tradding/login?url=personal_center')
+def delete_browsed(request):	
+	if request.method == 'POST':
+		browsed = request.POST['browsed_id'] if 'browsed_id' in request.POST else ''
+		browsed_id,user_id = browsed.split("*_*")
+		if browsed_id and user_id:
+			browsed = BrowseRecord.objects.get(pk=browsed_id)
+			user = Customer.objects.get(pk=user_id)
+			user.delete_browse_record(browsed.id)
+			user.save()
+			browsed.delete()
+			return HttpResponse("")
+	else:
+		return HttpResponseRedirect('/tradding/login?url=personal_center')
+def delete_fav(request):
+	if request.method == 'POST':
+		fav = request.POST['fav_id'] if 'fav_id' in request.POST else ''
+		fav_id,user_id = fav.split("*_*")
+		if fav_id and user_id:
+			fav = Favorite_shop.objects.get(pk=fav_id)
+			user = Customer.objects.get(pk=user_id)
+			user.delete_favorite_shops(fav.id)
+			user.save()
+			fav.delete()
+			return HttpResponse("")
+	else:
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
 def add_pro(request):
 	data = request.POST['add_pro'] if 'add_pro' in request.POST else ''

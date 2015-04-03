@@ -6,7 +6,49 @@
 <link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
-<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});	
+function delete_fav (fav_id) {
+	$.post('/tradding/favorite/delete_fav',
+		{
+			fav_id:fav_id+"*_*"+document.getElementById("user_id").value
+		}, function(data, textStatus, xhr) {
+			if(data==""){
+				window.location.reload();				
+			}
+	        else if(data=="ok")
+	        {
+	        	alert('网络状况不好，请稍后尝试');
+	        }
+		});	
+}
+</script>
 {% endblock %}
 {% block favorites %}<a class="selected" href="/tradding/personal_center">{% endblock %}
 {% block body %}
@@ -43,9 +85,8 @@
                   </div>
                 </td>
                   <td  class="address-icon" style="width:200px;">
-                  <a class="modify-address" href="/tradding/products/edit?goods_id={{goods.goods_id}}">编辑</a>
-                  <a class="modify-address" href="#customer-address-list" onclick="offsale_goods('{{goods.goods_id}}');">下架</a>
-                  <a class="delete-address" href="#customer-address-list" onclick="delete_goods('{{goods.goods_id}}');">删除</a>
+                  <a class="modify-address" href={{favorite.shop_id.get_absolute_url}}>浏览</a>
+                  <a class="delete-address" href="#customer-address-list" onclick="delete_fav('{{favorite.id}}');">删除</a>
                 </td>
               </tr>
             {% endfor %}
