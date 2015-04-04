@@ -61,6 +61,10 @@ text-align: left;
 border: 1px solid #ddd;
 margin-top: 24px;
 }
+.tab-address td span{
+  word-break: break-all;
+  word-wrap: break-word;
+}
 table {
 border-collapse: collapse;
 border-spacing: 0;

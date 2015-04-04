@@ -25,6 +25,8 @@
                   </td>
                 <td class="address-icon" style="width:400px;">详细描述
                 </td>
+                  <td  class="address-icon" style="width:200px;">价格
+                </td>
                   <td  class="address-icon" style="width:200px;">操作
                 </td>
               </tr>
@@ -41,12 +43,22 @@
                     <span class="address-detail">{{favorite.goods_id.special}}</span>
                   </div>
                 </td>
+                <td style="text-align:center;color: rgb(255, 68, 0);">
+                  <div>
+                    <span class="address-detail">{{favorite.goods_id.price}}</span>
+                  </div>
+                </td>
                   <td  class="address-icon" style="width:200px;">
                   <a class="modify-address" href={{favorite.goods_id.get_absolute_url}}>浏览</a>
-                  <a class="modify-address" href="#customer-address-list" onclick="offsale_goods('{{favorite.goods_id.goods_id}}');">下架</a>
-                  <a class="delete-address" href="#customer-address-list" onclick="delete_browsed('{{favorite.id}}');">删除</a>
+                  <a class="delete-address" href="#customer-address-list" onclick="delete_cart_pro('{{favorite.id}}');">删除</a>
+                  <a class="modify-address" href="#customer-address-list" onclick="buy('{{favorite.goods_id.goods_id}}');">去结算</a>
                 </td>
               </tr>
+<form action="/tradding/order/add" method="post" style="display:none;" id="add_order">
+  {% csrf_token %}
+  <input type="hidden" name="goods_id" value="{{favorite.goods_id.goods_id}}">
+  <input type="hidden" name="user_id" value="{{user.user_id}}">
+</form>
             {% endfor %}
                 </tbody>
             </table>

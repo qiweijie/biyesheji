@@ -1,17 +1,24 @@
-<!-- seller.html -->
-{% extends "base.html" %}
+{# base_head.html #}
+<!DOCTYPE html>
+<html>
+<head>
 {% load staticfiles %}
-{% block title %}{{object.nickname}}的店铺{% endblock %}
-{% block css_js %}
+	<title>{% block title %}交易系统{% endblock %}</title>
+	<meta name="description" content="基于django实现的网络交易系统，主要是开发一个网络交易系统的模板，为毕业设计开发，尽大学之所学，做自己能做的最好的app">
+	<meta name="author" content="戚伟杰">
+	<meta name="keywords" content="网络交易系统,戚伟杰">
+	<meta name="generator" content="django">
+	<meta name="robots" content="all">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="content-language" content="utf-8">
+	<meta http-equiv="windows-target" content="_top">
 	<link rel="stylesheet" href={% static 'header.css' %}>
 	<link rel="stylesheet" href={% static "middle.css" %}>
-	<link rel="stylesheet" type="text/css" href={% static 'person.css' %}>
-	<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
-	<script src={% static 'product.js' %} type="text/javascript" charset="utf-8" async defer></script>
-<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
-{% endblock %}
-{% block body %}
-<div id="hd" style="border-bottom: 1px solid #c1c1c1;">
+<script src={% static 'jquery.min.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<link rel="stylesheet" type="text/css" href={% static 'person.css' %}>
+	{% block css_js %}{% endblock %}
+</head>
+<body><div id="hd">
 	<div id="tools">
 		<div class="tools">
 		    <div class="ddnewhead_operate" dd_name="顶链接">
@@ -76,57 +83,5 @@
 		</div>
 	</div>
 </div>
-<div class="account-body">
-  <div class="account-wrap">
-  <div class="acc-tab-content">
-          <div id="customer-address-list" class="customer-unit">
-            <h2>出售中的宝贝
-            </h2>
-            <hr>
-            <table class="tab-address">
-                <tbody id="saveAddress">
-              <tr > 
-                <td class="address-icon" style="width:300px;">
-                  标题
-                  </td>
-                <td class="address-icon" style="width:400px;">详细描述
-                </td>
-                </td>
-                  <td  class="address-icon" style="width:200px;">价格
-                </td>
-                  <td  class="address-icon" style="width:200px;">操作
-                </td>
-              </tr>
-            {% for goods in object.goods_set.all %}
-              <tr > 
-                <td class="address-icon" style="width:300px;">
-                  <div >
-                    <a href="{{goods.get_absolute_url}}" title="" target="blank"><img src="{{goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br>
-                        <p><a href="{{goods.get_absolute_url}}" target="_blank" class="se_a">{{goods.title}}</a></p>
-                    <input type="text" id="goods_id{{goods.goods_id}}" value="{{goods.goods_id}}" style="display:none">
-                  </div></td>
-                <td class="address-icon" style="width:400px;">
-                  <div>
-                    <span class="address-detail">{{goods.special}}</span>
-                  </div>
-                </td>
-                <td style="text-align:center;color: rgb(255, 68, 0);">
-                  <div>
-                    <span class="address-detail">{{goods.price}}</span>
-                  </div>
-                </td>
-                  <td  class="address-icon" style="width:200px;">
-                  <a class="modify-address" href={{goods.get_absolute_url}}>浏览</a>
-                  <a class="modify-address" href="#customer-address-list" onclick="buy('{{goods.goods_id}}');">去结算</a>
-                </td>
-              </tr>
-            {% endfor %}
-                </tbody>
-            </table>
-          </div>
-
-        </div>
-
-  </div>
-</div>
-{% endblock %}
+</div>{% block body %}{% endblock %}</body>
+</html>

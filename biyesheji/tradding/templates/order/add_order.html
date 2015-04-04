@@ -1,0 +1,43 @@
+{# <!-- add_order.html --> #}
+{% extends "base_head.html" %}
+{% load staticfiles %}
+{% block title %}添加订单{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+{% endblock %}
+{% block body %}
+<div class="account-body">
+  <div class="account-wrap">
+  <div class="acc-tab-content">
+          <div id="customer-address-list" class="customer-unit">
+            <h2>选择地址{{user.nickname}}
+            </h2>
+            <hr>
+            <table class="tab-address">
+                <tbody id="saveAddress">
+              <tr > 
+	            {% for address in user.address_user.all %}		            
+		              	<td width="200">
+			                <input type="radio" name="address_id" value="{{address.address_id}}" >
+			                <span class="default-bold address-realname">{{address.name}}</span>
+			                <span><label class="address-phone">{{address.phone_number}}</label></span><br>
+			                <span class="address-detail">{{address.address}}</span><br>
+		              		
+		                </td>
+	            	{% if address.bool_delete %}
+	            	{% else %}
+		          {% endif %}
+	            {% endfor %}
+              </tr>
+                </tbody>
+            </table>
+          </div>
+
+        </div>
+
+  </div>
+</div>
+{% endblock %}

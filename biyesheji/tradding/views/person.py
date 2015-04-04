@@ -132,7 +132,7 @@ def shopping_cart(request):
 			if f_s:
 				items.append(ShoppingCartItem.objects.get(pk=f_s))
 		return render_to_response("person/shopping_cart.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
-			'user':user,'items':items})
+			'user':user,'items':items},context_instance=RequestContext(request))
 	else :
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
 def browsed(request):
@@ -198,3 +198,16 @@ def add_pro(request):
 			return HttpResponse("")
 	else:
 		return HttpResponse("ok")
+def delete_cart_pro(request):
+	if request.method == 'POST':
+		cart_pro = request.POST['cart_pro_id'] if 'cart_pro_id' in request.POST else ''
+		cart_pro_id,user_id = cart_pro.split("*_*")
+		if cart_pro_id and user_id:
+			cart_pro = ShoppingCartItem.objects.get(pk=cart_pro_id)
+			user = Customer.objects.get(pk=user_id)
+			user.delete_shopping_item(cart_pro.id)
+			user.save()
+			cart_pro.delete()
+			return HttpResponse("")
+	else:
+		return HttpResponseRedirect('/tradding/login?url=personal_center')

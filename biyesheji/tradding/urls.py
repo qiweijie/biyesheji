@@ -15,6 +15,7 @@ urlpatterns += patterns('tradding.views.person',
 	url(r'^personal_center$', 'personal_center'),
 	url(r'^order_list$', 'order_list'),
 	url(r'^shopping_cart/add_pro', 'add_pro'),
+	url(r'^shopping_cart/delete_cart_pro', 'delete_cart_pro'),
 	url(r'^shopping_cart$', 'shopping_cart'),
 	url(r'^favorite/delete_fav', 'delete_fav'),
 	url(r'^favorite/add_fav', 'add_fav'),
@@ -61,5 +62,11 @@ urlpatterns += patterns('tradding.views.seller',
 	url(r'^products/delete_goods', 'delete_goods'),
 	url(r'^products/resale_goods', 'resale_goods'),
     url(r'^products/products/(?P<object_id>\d+)$', 'products_detail',name='products_detail'),
+	# url(r'^products/buy', 'buy'),
 	url(r'^products$', 'products'),
+)
+#order
+urlpatterns += patterns('tradding.views.order',
+	url(r'^order/add','add'),
+	# url()
 )

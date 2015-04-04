@@ -516,3 +516,50 @@ function bundle_email () {
         }
     });
 }
+
+function delete_fav (fav_id) {
+	$.post('/tradding/favorite/delete_fav',
+		{
+			fav_id:fav_id+"*_*"+document.getElementById("user_id").value
+		}, function(data, textStatus, xhr) {
+			if(data==""){
+				window.location.reload();				
+			}
+	        else if(data=="ok")
+	        {
+	        	alert('网络状况不好，请稍后尝试');
+	        }
+		});	
+}
+function delete_browsed (browsed_id) {
+	$.post('/tradding/browsed/delete',
+		{
+			browsed_id:browsed_id+"*_*"+document.getElementById("user_id").value
+		}, function(data, textStatus, xhr) {
+			if(data==""){
+				window.location.reload();				
+			}
+	        else if(data=="ok")
+	        {
+	        	alert('网络状况不好，请稍后尝试');
+	        }
+		});	
+}
+function delete_cart_pro (cart_pro_id) {
+	$.post('/tradding/shopping_cart/delete_cart_pro',
+		{
+			cart_pro_id:cart_pro_id+"*_*"+document.getElementById("user_id").value
+		}, function(data, textStatus, xhr) {
+			if(data==""){
+				window.location.reload();				
+			}
+	        else if(data=="ok")
+	        {
+	        	alert('网络状况不好，请稍后尝试');
+	        }
+		});	
+}
+function buy (goods_id) {
+	var form = document.getElementById("add_order");
+	form.submit();
+}
