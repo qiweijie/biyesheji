@@ -80,6 +80,11 @@ display: none;
 .tab-address tbody tr .address-icon {
 text-align: center;
 }
+.tab-address tbody tr th {
+padding:  10px;
+border-bottom: 3px solid #ddd;
+border-right: 2px solid #fff;
+}
 .tab-address tbody tr td {
 padding: 22px 10px;
 border-top: 1px dashed #ddd;

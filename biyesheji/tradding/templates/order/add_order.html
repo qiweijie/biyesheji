@@ -3,23 +3,26 @@
 {% load staticfiles %}
 {% block title %}添加订单{% endblock %}
 {% block css_js %}
-<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
 <script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+  <script src={% static 'product.js' %} type="text/javascript" charset="utf-8" async defer></script>
 {% endblock %}
 {% block body %}
 <div class="account-body">
   <div class="account-wrap">
   <div class="acc-tab-content">
           <div id="customer-address-list" class="customer-unit">
-            <h2>选择地址{{user.nickname}}
+            <h2>选择收货地址
             </h2>
             <hr>
             <table class="tab-address">
                 <tbody id="saveAddress">
               <tr > 
-	            {% for address in user.address_user.all %}		            
+	            {% for address in user.address_user.all %}
+                {% if address.bool_delete %}
+                {% else %}		            
 		              	<td width="200">
 			                <input type="radio" name="address_id" value="{{address.address_id}}" >
 			                <span class="default-bold address-realname">{{address.name}}</span>
@@ -27,15 +30,69 @@
 			                <span class="address-detail">{{address.address}}</span><br>
 		              		
 		                </td>
-	            	{% if address.bool_delete %}
-	            	{% else %}
 		          {% endif %}
 	            {% endfor %}
               </tr>
                 </tbody>
             </table>
           </div>
-
+          <div id="customer-address-list" class="customer-unit">
+            <h2>确认订单信息
+            </h2>
+            <hr>
+            <table class="tab-address">
+                <tbody id="saveAddress">
+              <tr > 
+                <th class="address-icon" style="width:400px;">{{user.nickname}}的小店
+                </th>
+                  <th  class="address-icon" style="width:200px;">单价（元）
+                </th>
+                <th class="address-icon" style="width:300px;">
+                  数量
+                  </th>
+                  <th  class="address-icon" style="width:200px;">小计
+                </th>
+              </tr>
+              <tr > 
+                <td class="address-icon" style="width:300px;">
+                  <div style="display:inline-block;">
+                    <a href="{{goods.get_absolute_url}}" title="" target="blank"><img src="{{goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br></div>
+                    <div style="display:inline-block;width:90px;height:90px;">
+                    <a href="{{goods.get_absolute_url}}" target="_blank"> <span>{{goods.title}}</span></a>
+                  </div>
+                </td>
+                <td style="text-align:center;color: rgb(255, 68, 0);">
+                  <div>
+                    <span class="address-detail" id="_price">{{goods.price}}</span>
+                  </div>
+                </td>
+                  <td  class="address-icon" style="width:200px;">  
+                    <div class="tb-stock" id="J_Stock">
+                     <a href="javascript:;" hidefocus="" id="J_Reduce" class="tb-reduce  tb-iconfont tb-disable-reduce" onclick="reduce_one();">-</a>
+                     <input id="J_IptAmount" type="text" name="number" value="1" maxlength="8" title="请输入购买量" onchange="amount_change(this)" size="5" sytle="text-align:center;">
+                     <a href="javascript:;" hidefocus="" id="J_Increase" class="tb-increase  tb-iconfont" onclick="increase_one();">+</a>
+                     </div>
+                </td>
+                  <td  style="text-align:center;color: rgb(255, 68, 0);">
+                    <span class="address-detail" id="_total">{{goods.price}}</span>
+                </td>
+              </tr>
+              <tr style="">
+                <td   class="address-icon" style="text-align:right;"> <span> （可以在这里可告诉卖家您的特殊要求）<b>补充说明</b></span></td>
+                <td colspan="3" style="text-align:left;">
+                  <input type="text" id="supplement" size="120" placeholder="最多可以输入80字">
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <input id="doresetpassword" class="btn btn-success customer-btn" type="button" value="提交订单"  onclick="add_order();"></td>
+                <td></td>
+              </tr>
+                </tbody>
+            </table>
+          </div>
         </div>
 
   </div>
