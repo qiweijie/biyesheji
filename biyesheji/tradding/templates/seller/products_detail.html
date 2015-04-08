@@ -137,6 +137,11 @@
 				<div id="add" class="tb-action tb-clearfix ">
 					<div class="tb-btn-buy"><a href="#" onclick="buy('{{object.goods_id}}');" >立即购买</a></div>
 					<div class="tb-btn-add"><a href="#" onclick="add_pro('{{object.goods_id}}');">加入购物车</a></div>
+					<form action="/tradding/order/add" method="post" style="display:none;" id="add_order">
+					  {% csrf_token %}
+					  <input type="hidden" name="goods_id" value="{{object.goods_id}}">
+					  <input type="hidden" name="user_id" value="{{user.user_id}}">
+					</form>
 				</div>
 			<div id="description">
 				{{object.description|safe}}

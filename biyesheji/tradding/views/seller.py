@@ -141,7 +141,7 @@ def resale_goods(request):
 def warehousing_products(request):
 	if request.session.get('login',False):
 		user = Customer.objects.get(username=request.session['username'])
-		all_goods = Goods.objects.filter(user=user,bool_onsale=False)
+		all_goods = Goods.objects.filter(user=user,bool_onsale=False,bool_delete=False)
 		return render_to_response("seller/warehousing_products.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
 			'user':user,'all_goods':all_goods})
 	else :
@@ -180,7 +180,7 @@ def products_detail(request,object_id=1):
 			customer.add_browse_record(b.id)
 			customer.save()
 		return render_to_response("seller/products_detail.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
-			'user':user,'object':g})
+			'user':user,'object':g},context_instance=RequestContext(request))
 	else:
 		user = ''
 		return render_to_response("seller/products_detail.html",{'user':user,'object':g})
