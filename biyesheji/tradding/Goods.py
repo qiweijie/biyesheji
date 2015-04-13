@@ -6,7 +6,7 @@ from ThumbnailImageField import ThumbnailImageField
 class Goods(models.Model):
 	"""Goods is the core element of this tradding system """
 	goods_id = models.CharField(max_length=100,blank=False,null=False,primary_key=True)
-	user = models.ForeignKey(Customer)
+	user = models.ForeignKey(Customer,related_name="goods_user")
 	title    = models.CharField(max_length=100,blank=False,null=True)
 	special = models.CharField(max_length=200,blank=False)
 	price    = models.CharField(max_length=20,blank=False)

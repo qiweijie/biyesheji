@@ -114,35 +114,35 @@
 </div>
 <div id="popup-address" class="popup" style="margin-top: -131.5px; margin-left: -410px; display: none;">
     <h3>修改收货地址<a class="popup-close" href="#customer-address-list" title="关闭" onclick="close_edit();">×</a></h3> 
-<tr id="new-address-form" class="fn-hide">
-<td colspan="4">
-  <form id="j-create-address">
-    <div class="customer-unit">
-      <div class="infobox" style="border:none">
-		<input type="text" id="address_id" value="" style="display:none">
-        <ul class="info-list address-list">
-          <li>
-            <label class="label" for="username">*收货人姓名：</label>
-            <input id="edit_username" name="realname" class="txtfield" type="text" onblur="check_username(this);">
-            <span class="warn"></span>
-          </li>
-          <li>
-            <label class="label" for="telnum">*联系方式：</label>
-            <input id="edit_telnum" name="telephone" class="txtfield" type="text" onblur="check_tel(this);">
-            <span class="warn"></span>
-          </li>
-          <li>
-            <label class="label" for="address">*详细地址：</label>
-            <input id="edit_address" name="address" class="txtfield" placeholder="具体填写省/市/区" style="width:550px;" type="text" onblur="check_addr(this);">
-            <span class="warn textwarn"></span>
-          </li>
-        </ul>
-        <input class="btn btn-success address-btn" type="button" value="保存修改" onclick="save_edit();">
-      </div>
-    </div>
-  </form>
-</td>
-</tr>
+    <tr id="new-address-form" class="fn-hide">
+    <td colspan="4">
+      <form id="j-create-address">
+        <div class="customer-unit">
+          <div class="infobox" style="border:none">
+    		<input type="text" id="address_id" value="" style="display:none">
+            <ul class="info-list address-list">
+              <li>
+                <label class="label" for="username">*收货人姓名：</label>
+                <input id="edit_username" name="realname" class="txtfield" type="text" onblur="check_username(this);">
+                <span class="warn"></span>
+              </li>
+              <li>
+                <label class="label" for="telnum">*联系方式：</label>
+                <input id="edit_telnum" name="telephone" class="txtfield" type="text" onblur="check_tel(this);">
+                <span class="warn"></span>
+              </li>
+              <li>
+                <label class="label" for="address">*详细地址：</label>
+                <input id="edit_address" name="address" class="txtfield" placeholder="具体填写省/市/区" style="width:550px;" type="text" onblur="check_addr(this);">
+                <span class="warn textwarn"></span>
+              </li>
+            </ul>
+            <input class="btn btn-success address-btn" type="button" value="保存修改" onclick="save_edit();">
+          </div>
+        </div>
+      </form>
+    </td>
+    </tr>
 </div>
 <div class="overlayer png-fixed" style="display: none;"></div>
 {% endblock %}

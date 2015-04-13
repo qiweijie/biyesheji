@@ -1,0 +1,150 @@
+{# courier.html #}
+{# seller_order.html #}
+{% extends "base_seller.html" %}
+{% load staticfiles %}
+{% block title %}订单物流-卖家中心{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'person_address.js' %} type="text/javascript" charset="utf-8" async defer></script>
+
+{% endblock %}
+{% block order %}<a class="selected" href="/tradding/seller_center">{% endblock %}
+{% block body %}
+<div class="account-body">
+  <div class="account-wrap">
+      <div class="acc-tab-top">
+      <ul class="acc-tab-menu">
+        <li><a  class="first" href="/tradding/seller/order">所有订单</a></li>
+        <li><a class=" active" href="/tradding/seller/courier">物流管理</a></li>
+      </ul>
+    </div>
+  <div class="acc-tab-content">
+          <div id="customer-address-list" class="customer-unit">
+            <h2>物流管理
+            </h2>
+            <hr>
+            <table class="tab-address">
+                <tbody id="saveAddress">
+              <tr > 
+                <td class="address-icon" >
+                  订单编号 <br>
+                  订单时间
+                  </td>
+                <td class="address-icon" style="width:200px;">宝贝
+                </td>
+                <td class="address-icon" >
+                  收货人
+                  </td>
+                  <td  class="address-icon" >数量
+                </td>
+                <td class="address-icon" >订单金额
+                </td>
+                <td class="address-icon" >单价
+                </td>
+                <td class="address-icon" >订单状态
+                </td>
+                  <td  class="address-icon" >操作
+                </td>
+                  <td  class="address-icon" >物流状态
+                </td>
+              </tr>
+            {% for goods in user.goods_user.all %}
+            {% for order in goods.order_goods.all reversed%}
+              <tr > 
+                <td class="address-icon" >
+                  {{order.id}}<br>
+                  {{order.time}}
+                  </td>
+                <td class="address-icon" >
+                  <div style="display:inline-block;">
+                    <a href="{{order.goods.get_absolute_url}}" title="" target="blank"><img src="{{order.goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br></div>
+                    <div style="display:inline-block;width:90px;height:90px;">
+                    <a href="{{order.goods.get_absolute_url}}" target="_blank"> <span>{{order.goods.title}}</span></a>
+                    <input type="text" name="goods_id" value="{{order.goods.goods_id}}" id="goods_id" style="display:none;">
+                  </div>
+                </td>
+                <td class="address-icon" >
+                  {{order.address.name}}
+                  </td>
+                  <td  class="address-icon" >{{order.goods_number}}
+                </td> 
+                <td class="address-icon"  style="text-align:center;color: rgb(255, 68, 0);">{{order.goods.price}}
+                </td>
+                  <td  class="address-icon" style="text-align:center;color: rgb(255, 68, 0);">
+                  {%  widthratio order.goods_number 1 order.goods.price %}
+                </td>
+                <td class="address-icon" >
+                  <div id="order_status">
+	                  {% if order.ing %}
+	                  	<input class="btn btn-success" type="button" value="交易中">
+	                  {% elif order.confirm %}
+	                  	<input class="btn btn-success" type="button" value="交易成功">
+	                  {% else %}
+	                  	<input class="btn btn-success" type="button" value="交易已取消">
+	                  {% endif %}
+                  </div>
+                </td>
+                  <td  class="address-icon" >
+	                  <div id="order_action">
+		                  {% if order.ing %}
+		                  	<input class="btn btn-success" type="button" value="添加物流" onclick="show_add_courier('{{order.id}}')">
+		                  {% elif order.confirm %}
+		                  	暂无操作，交易已确认
+		                  {% else %}
+		                  	暂无操作，交易已取消
+		                  {% endif %}
+	                  </div>
+                </td>
+                  <td  class="address-icon" >
+                </td>
+              </tr>
+            {% endfor %}
+            {% endfor %}
+                </tbody>
+            </table>
+          </div>
+
+        </div>
+
+  </div>
+</div>
+<div id="popup-address" class="popup" style="margin-top: -131.5px; margin-left: -410px; display: none;">
+    <h3>添加物流<a class="popup-close" href="#customer-address-list" title="关闭" onclick="close_edit();">×</a></h3> 
+    <tr id="new-address-form" class="fn-hide">
+    <td colspan="4">
+      <form id="j-create-address">
+        <div class="customer-unit">
+          <div class="infobox" style="border:none">
+    		<input type="text" id="order_id" value="" style="display:none">
+            <ul class="info-list address-list">
+              <li>
+                <label class="label" for="username">*快递公司：</label>
+                <select name="courier" id="courier">
+                	<option value="申通快递">申通快递</option>
+                	<option value="圆通快递">圆通快递</option>
+                	<option value="顺丰快递" selected="selected">顺丰快递</option>
+                	<option value="韵达快递">韵达快递</option>
+                	<option value="天天快递">天天快递</option>
+                	<option value="优速快递">优速快递</option>
+                	<option value="其他">其他</option>
+                </select>
+                <span class="warn"></span>
+              </li>
+              <li>
+                <label class="label" for="telnum">*订单号码：</label>
+                <input id="express_id" name="telephone" class="txtfield" type="text">
+                <span class="warn"></span>
+              </li>
+            </ul>
+            <input class="btn btn-success address-btn" type="button" value="添加" onclick="add_courier();">
+          </div>
+        </div>
+      </form>
+    </td>
+    </tr>
+</div>
+<div class="overlayer png-fixed" style="display: none;"></div>
+{% endblock %}

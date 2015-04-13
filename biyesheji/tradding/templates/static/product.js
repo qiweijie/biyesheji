@@ -32,6 +32,11 @@ function reduce_one () {
 function increase_one () {
 	amount = document.getElementById("J_IptAmount");
 	amount.value = amount.value-1+2;
+	if(document.getElementById("_price")){
+		price = document.getElementById("_price").innerText;
+		total = document.getElementById("_total");
+		total.innerText=""+amount.value*price;
+	}
 	if(amount.value>1) {
 		document.getElementById("J_Reduce").className="tb-reduce  tb-iconfont"
 		return;

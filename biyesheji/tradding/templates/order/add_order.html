@@ -37,22 +37,22 @@
                 {% else %}  
               <tr id="addr{{forloop.counter}}" class="addr" {% if address.bool_default %} class="default" {% else %}  onmouseenter="show(this);" {% endif %} >
                         <td class="address-icon"><i class="png-fixed"></i>
-                <input type="text" id="addr_id{{address.address_id}}" value="{{address.address_id}}" style="display:none"></td>
+                <input type="text" id="addr_id{{address.address_id}}" value="{{address.address_id}}" style="display:none" class="input_"></td>
                 <td>
                           <span class="default-bold address-realname">{{address.name}}</span>
                           <span>(手机/电话：<label class="address-phone">{{address.phone_number}}</label>)</span><br>
                           <span class="address-detail">{{address.address}}</span>
                         </td>
-                <td>
+                <td  style="width:200px;">
                   <p class="setaddress">
                   {% if address.bool_default %}<span>默认地址</span>
                   {% else %}<a  class="setdefault" href="#customer-address-list" onclick="set_default('{{address.address_id}}');">设为默认地址</a>
                   {% endif %}
                   </p>
                 </td>
-                <td class="fn-text-align-center">
-                  <a class="modify-address" href="#customer-address-list" onclick="select('addr{{forloop.counter}}');" id="select_addr">选择</a>
-                  <a class="delete-address hide" href="#customer-address-list" onclick="delete_addr('{{address.address_id}}');" id="re_select">重新选择</a>
+                <td class="fn-text-align-center" style="width:200px;">
+                  <a class="modify-address" href="#customer-address-list" onclick="select_addr('addr{{forloop.counter}}',this,'addr_id{{address.address_id}}');">选择</a>
+                  <a class="delete-address hide" href="#customer-address-list" onclick="re_select_addr(this);">重新选择</a>
                 </td>
 
               </tr>
@@ -125,6 +125,7 @@
                     <a href="{{goods.get_absolute_url}}" title="" target="blank"><img src="{{goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br></div>
                     <div style="display:inline-block;width:90px;height:90px;">
                     <a href="{{goods.get_absolute_url}}" target="_blank"> <span>{{goods.title}}</span></a>
+                    <input type="text" name="goods_id" value="{{goods.goods_id}}" id="goods_id" style="display:none;">
                   </div>
                 </td>
                 <td style="text-align:center;color: rgb(255, 68, 0);">

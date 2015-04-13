@@ -20,9 +20,6 @@ def personal_center(request):
 	else :
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
 
-def shopping_cart(request):
-	return render_to_response("person/shopping_cart.html")
-
 def order_list(request):
 	return render_to_response("person/order_list.html")
 

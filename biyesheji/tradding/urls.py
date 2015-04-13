@@ -68,5 +68,14 @@ urlpatterns += patterns('tradding.views.seller',
 #order
 urlpatterns += patterns('tradding.views.order',
 	url(r'^order/add','add'),
-	# url()
+	url(r'^order/confirm_order', 'confirm_order'),
+	url(r'^order/confirm_tradding', 'confirm_tradding'),
+	url(r'^order/cancle_tradding', 'cancle_tradding'),
+	url(r'^order$', 'order'),
+)
+#seller order
+urlpatterns += patterns('tradding.views.order',
+	url(r'^seller/order/','seller_order'),
+	url(r'^seller/courier/add_courier','add_courier'),
+	url(r'^seller/courier/','seller_courier'),
 )

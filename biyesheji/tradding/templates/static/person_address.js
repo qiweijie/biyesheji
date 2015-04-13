@@ -169,3 +169,142 @@ function delete_addr (addr_id) {
         }
 	});
 }
+function select_addr (address_id,a,input_id) {
+	all_tr = document.getElementsByClassName("addr");
+	for(var i=0;i<all_tr.length;i++){
+		all_tr[i].className="addr hide";
+	}
+	sel=document.getElementById(address_id)
+	sel.className="addr select_addr";
+	a.className="modify-address hide";
+	a.nextElementSibling.className="delete-address";
+	document.getElementById("add_new_addr").className="add-address-ctrl hide";
+	input = document.getElementById(input_id);
+	input.className="select_input input_";
+}
+function re_select_addr (a) {
+	all_tr = document.getElementsByClassName("addr");
+	for(var i=0;i<all_tr.length;i++){
+		all_tr[i].className="addr";
+	}
+	a.className="delete-address hide";
+	a.previousElementSibling.className="modify-address";
+	document.getElementById("add_new_addr").className="add-address-ctrl";
+	all_input = document.getElementsByClassName("input_");
+	for(var i=0;i<all_input.length;i++){
+		all_input[i].className="input_";
+	}
+}
+function add_order () {
+	select_input = document.getElementsByClassName("select_input")[0];
+	if(!select_input) alert("请先确认收货地址");
+	else{
+		address_id = select_input.value;
+		goods_id = document.getElementById("goods_id").value;
+		user_id = document.getElementById("user_id").value;
+		goods_number = document.getElementById("J_IptAmount").value;
+		additional = document.getElementById("supplement").value;
+		// alert(goods_number);
+		var data = new FormData();
+		data.append('address_id',address_id);data.append('goods_id',goods_id);data.append('user_id',user_id);
+		data.append('goods_number',goods_number);data.append('additional',additional);
+		$.ajax({
+			url: '/tradding/order/confirm_order',
+			type: 'POST',
+			cache:false,
+			contentType:false,
+			processData:false,
+			data: data,
+			success:function  (data) {
+				if(data=="ok"){
+					alert("网络状态不好，请稍后重试");
+				}
+				else{
+					window.location.href="/tradding/order";
+				}
+			}
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+	}
+}
+function confirm_tradding (order_id) {
+	$.post('/tradding/order/confirm_tradding',
+		{
+			order_id:order_id
+		},
+		function(data, textStatus, xhr) {
+		if(data==""){
+			window.location.reload();
+		}
+        else if(data=="ok")
+        {
+        	alert('网络状况不好，请稍后尝试');
+        }
+	});
+}
+function cancle_tradding (order_id) {
+	$.post('/tradding/order/cancle_tradding',
+		{
+			order_id:order_id
+		},
+		function(data, textStatus, xhr) {
+		if(data==""){
+			window.location.reload();
+		}
+        else if(data=="ok")
+        {
+        	alert('网络状况不好，请稍后尝试');
+        }
+	});
+}
+
+function show_add_courier (order_id) {
+	document.getElementsByClassName("overlayer")[0].style.display='block';
+	document.getElementById("popup-address").style.display='block';
+	document.getElementById("order_id").value=order_id;
+}
+function add_courier () {
+	courier = document.getElementById("courier");
+	index = courier.selectedIndex;
+	company = courier.options[index].value;
+	express_id = document.getElementById("express_id").value;
+	order_id=document.getElementById("order_id").value;
+	var data = new FormData();
+	data.append('order_id',order_id);
+	data.append('company',company);
+	data.append('express_id',express_id);
+	$.ajax({
+		url: '/tradding/seller/courier/add_courier',
+		type: 'POST',
+		cache:false,
+		contentType:false,
+		processData:false,
+		data: data,
+		success:function  (data) {
+			if(data=="ok"){
+				alert("网络状态不好，请稍后重试");
+			}
+			else{
+				window.location.href="/tradding/seller/courier";
+			}
+		}
+	})
+	.done(function() {
+		console.log("success");
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+}

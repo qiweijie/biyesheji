@@ -189,7 +189,7 @@ def seller(request,object_id=1):
 	if request.session.get('login',False):
 		user = Customer.objects.get(username=request.session['username'])
 		return render_to_response("seller/seller.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
-			'user':user,'object':c})
+			'user':user,'object':c},context_instance=RequestContext(request))
 	else:
 		user = ''
 		return render_to_response("seller/seller.html",{'user':user,'object':c})

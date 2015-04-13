@@ -97,7 +97,7 @@
                   <td  class="address-icon" style="width:200px;">操作
                 </td>
               </tr>
-            {% for goods in object.goods_set.all %}
+            {% for goods in object.goods_user.all %}
               <tr > 
                 <td class="address-icon" style="width:300px;">
                   <div >
@@ -118,6 +118,11 @@
                   <td  class="address-icon" style="width:200px;">
                   <a class="modify-address" href={{goods.get_absolute_url}}>浏览</a>
                   <a class="modify-address" href="#customer-address-list" onclick="buy('{{goods.goods_id}}');">去结算</a>
+  					<form action="/tradding/order/add" method="post" style="display:none;" id="add_order">
+					  {% csrf_token %}
+					  <input type="hidden" name="goods_id" value="{{goods.goods_id}}">
+					  <input type="hidden" name="user_id" value="{{user.user_id}}">
+					</form>
                 </td>
               </tr>
             {% endfor %}
