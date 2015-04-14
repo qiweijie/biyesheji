@@ -39,13 +39,11 @@
                   </td>
                   <td  class="address-icon" >数量
                 </td>
-                <td class="address-icon" >订单金额
-                </td>
                 <td class="address-icon" >单价
                 </td>
-                <td class="address-icon" >订单状态
+                <td class="address-icon" >订单金额
                 </td>
-                  <td  class="address-icon" >操作
+                <td class="address-icon" >订单状态
                 </td>
                   <td  class="address-icon" >物流状态
                 </td>
@@ -87,18 +85,7 @@
                   </div>
                 </td>
                   <td  class="address-icon" >
-	                  <div id="order_action">
-		                  {% if order.ing %}
-		                  	<input class="btn btn-success" type="button" value="确认交易" onclick="confirm_tradding('{{order.id}}')"><br>
-		                  	<input class="btn btn-success" type="button" value="确认取消" onclick="cancle_tradding('{{order.id}}')">
-		                  {% elif order.confirm %}
-		                  	暂无操作，交易已确认
-		                  {% else %}
-		                  	暂无操作，交易已取消
-		                  {% endif %}
-	                  </div>
-                </td>
-                  <td  class="address-icon" >
+                  {% if order.courier_order %}{{order.courier_order.company}}{% endif %}
                 </td>
               </tr>
             {% endfor %}

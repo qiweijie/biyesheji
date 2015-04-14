@@ -18,84 +18,84 @@
             <h2>所有订单
             </h2>
             <hr>
-            <table class="tab-address">
-                <tbody id="saveAddress">
-              <tr > 
-                <td class="address-icon" >
-                  订单编号 <br>
-                  订单时间
-                  </td>
-                <td class="address-icon" style="width:200px;">宝贝
-                </td>
-                <td class="address-icon" >
-                  收货人
-                  </td>
-                  <td  class="address-icon" >数量
-                </td>
-                <td class="address-icon" >订单金额
-                </td>
-                <td class="address-icon" >单价
-                </td>
-                <td class="address-icon" >订单状态
-                </td>
-                  <td  class="address-icon" >操作
-                </td>
-                  <td  class="address-icon" >物流状态
-                </td>
-              </tr>
-            {% for order in user.order_user.all reversed %}
-              <tr > 
-                <td class="address-icon" >
-                  {{order.id}}<br>
-                  {{order.time}}
-                  </td>
-                <td class="address-icon" >
-                  <div style="display:inline-block;">
-                    <a href="{{order.goods.get_absolute_url}}" title="" target="blank"><img src="{{order.goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br></div>
-                    <div style="display:inline-block;width:90px;height:90px;">
-                    <a href="{{order.goods.get_absolute_url}}" target="_blank"> <span>{{order.goods.title}}</span></a>
-                    <input type="text" name="goods_id" value="{{order.goods.goods_id}}" id="goods_id" style="display:none;">
-                  </div>
-                </td>
-                <td class="address-icon" >
-                  {{order.address.name}}
-                  </td>
-                  <td  class="address-icon" >{{order.goods_number}}
-                </td> 
-                <td class="address-icon"  style="text-align:center;color: rgb(255, 68, 0);">{{order.goods.price}}
-                </td>
-                  <td  class="address-icon" style="text-align:center;color: rgb(255, 68, 0);">
-                  {%  widthratio order.goods_number 1 order.goods.price %}
-                </td>
-                <td class="address-icon" >
-                  <div id="order_status">
-	                  {% if order.ing %}
-	                  	<input class="btn btn-success" type="button" value="交易中">
-	                  {% elif order.confirm %}
-	                  	<input class="btn btn-success" type="button" value="交易成功">
-	                  {% else %}
-	                  	<input class="btn btn-success" type="button" value="交易已取消">
-	                  {% endif %}
-                  </div>
-                </td>
-                  <td  class="address-icon" >
-	                  <div id="order_action">
+	    <table class="tab-address">
+	        <tbody id="saveAddress">
+	          <tr > 
+	            <td class="address-icon" >
+	              订单编号 <br>
+	              订单时间
+	              </td>
+	            <td class="address-icon" style="width:200px;">宝贝
+	            </td>
+	            <td class="address-icon" >
+	              收货人
+	              </td>
+	              <td  class="address-icon" >数量
+	            </td>
+	            <td class="address-icon" >单价
+	            </td>
+	            <td class="address-icon" >订单金额
+	            </td>
+	            <td class="address-icon" >订单状态
+	            </td>
+	              <td  class="address-icon" >操作
+	            </td>
+	              <td  class="address-icon" >物流状态
+	            </td>
+	          </tr>
+	            {% for order in user.order_user.all reversed %}
+	              <tr > 
+	                <td class="address-icon" >
+	                  <a href="{{order.get_absolute_url}}" title="">{{order.id}}</a><br>
+	                  {{order.time}}
+	                  </td>
+	                <td class="address-icon" >
+	                  <div style="display:inline-block;">
+	                    <a href="{{order.goods.get_absolute_url}}" title="" target="blank"><img src="{{order.goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br></div>
+	                    <div style="display:inline-block;width:90px;height:90px;">
+	                    <a href="{{order.goods.get_absolute_url}}" target="_blank"> <span>{{order.goods.title}}</span></a>
+	                    <input type="text" name="goods_id" value="{{order.goods.goods_id}}" id="goods_id" style="display:none;">
+	                  </div>
+	                </td>
+	                <td class="address-icon" >
+	                  {{order.address.name}}
+	                  </td>
+	                  <td  class="address-icon" >{{order.goods_number}}
+	                </td> 
+	                <td class="address-icon"  style="text-align:center;color: rgb(255, 68, 0);">{{order.goods.price}}
+	                </td>
+	                  <td  class="address-icon" style="text-align:center;color: rgb(255, 68, 0);">
+	                  {%  widthratio order.goods_number 1 order.goods.price %}
+	                </td>
+	                <td class="address-icon" >
+	                  <div id="order_status">
 		                  {% if order.ing %}
-		                  	<input class="btn btn-success" type="button" value="确认交易" onclick="confirm_tradding('{{order.id}}')"><br>
-		                  	<input class="btn btn-success" type="button" value="确认取消" onclick="cancle_tradding('{{order.id}}')">
+		                  	<input class="btn btn-success" type="button" value="交易中">
 		                  {% elif order.confirm %}
-		                  	暂无操作，交易已确认
+		                  	<input class="btn btn-success" type="button" value="交易成功">
 		                  {% else %}
-		                  	暂无操作，交易已取消
+		                  	<input class="btn btn-success" type="button" value="交易已取消">
 		                  {% endif %}
 	                  </div>
-                </td>
-                  <td  class="address-icon" >
-                </td>
-              </tr>
-            {% endfor %}
-                </tbody>
-            </table>
+	                </td>
+	                  <td  class="address-icon" >
+		                  <div id="order_action">
+			                  {% if order.ing %}
+			                  	<input class="btn btn-success" type="button" value="确认交易" onclick="confirm_tradding('{{order.id}}')"><br>
+			                  	<input class="btn btn-success" type="button" value="确认取消" onclick="cancle_tradding('{{order.id}}')">
+			                  {% elif order.confirm %}
+			                  	暂无操作，交易已确认
+			                  {% else %}
+			                  	暂无操作，交易已取消
+			                  {% endif %}
+		                  </div>
+	                </td>
+	                  <td  class="address-icon" >{{order.courier_order.company}}
+	                </td>
+	              </tr>
+	            {% endfor %}
+		    </tbody>
+	    </table>
           </div>
 
         </div>

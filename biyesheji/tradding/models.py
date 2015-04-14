@@ -30,12 +30,15 @@ class Order(models.Model):
 	ing = models.BooleanField(default=True)
 	confirm = models.BooleanField(default=False)
 	cancle = models.BooleanField(default=False)
+	@models.permalink
+	def get_absolute_url(self):
+		return ('order_detail',None,{'object_id':self.id})
 
 class Courier(models.Model):
 	"""docstring for Courier"""
 	company = models.CharField(max_length=10)
 	express_id = models.CharField(max_length=50)
 	time = models.DateTimeField(auto_now_add=True)
-	order = models.ForeignKey(Order,related_name="courier_order")
+	order = models.OneToOneField(Order,related_name="courier_order")
 
 		

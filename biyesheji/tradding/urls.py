@@ -67,6 +67,7 @@ urlpatterns += patterns('tradding.views.seller',
 )
 #order
 urlpatterns += patterns('tradding.views.order',
+    url(r'^order/(?P<object_id>\d+)$', 'order_detail', name='order_detail'),
 	url(r'^order/add','add'),
 	url(r'^order/confirm_order', 'confirm_order'),
 	url(r'^order/confirm_tradding', 'confirm_tradding'),

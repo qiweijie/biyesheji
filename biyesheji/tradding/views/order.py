@@ -113,3 +113,10 @@ def seller_courier(request):
 			'user':user})
 	else :
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
+def order_detail(request,object_id=1):
+	order = Order.objects.get(pk=object_id)
+	if request.session.get('login',False):
+		return render_to_response("order/order_detail.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'order':order},context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/tradding/login?url=personal_center')

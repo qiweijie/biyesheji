@@ -40,9 +40,9 @@
                   </td>
                   <td  class="address-icon" >数量
                 </td>
-                <td class="address-icon" >订单金额
-                </td>
                 <td class="address-icon" >单价
+                </td>
+                <td class="address-icon" >订单金额
                 </td>
                 <td class="address-icon" >订单状态
                 </td>
@@ -99,6 +99,7 @@
 	                  </div>
                 </td>
                   <td  class="address-icon" >
+                  {% if order.courier_order %}{{order.courier_order.company}}{% endif %}
                 </td>
               </tr>
             {% endfor %}
