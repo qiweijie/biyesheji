@@ -48,7 +48,7 @@
                   <td  class="address-icon" >物流状态
                 </td>
               </tr>
-            {% for goods in user.goods_user.all %}
+            {% for goods in user.goods_user.all reversed%}
             {% for order in goods.order_goods.all reversed%}
               <tr > 
                 <td class="address-icon" >
@@ -76,11 +76,11 @@
                 <td class="address-icon" >
                   <div id="order_status">
 	                  {% if order.ing %}
-	                  	<input class="btn btn-success" type="button" value="交易中">
+	                  	<input class="btn btn-success" type="button" value="交易中" style="cursor: not-allowed;">
 	                  {% elif order.confirm %}
-	                  	<input class="btn btn-success" type="button" value="交易成功">
+	                  	<input class="btn btn-success" type="button" value="交易成功" style="cursor: not-allowed;">
 	                  {% else %}
-	                  	<input class="btn btn-success" type="button" value="交易已取消">
+	                  	<input class="btn btn-success" type="button" value="交易已取消" style="cursor: not-allowed;">
 	                  {% endif %}
                   </div>
                 </td>

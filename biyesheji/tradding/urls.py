@@ -13,7 +13,6 @@ urlpatterns = patterns('tradding.views.views',
 #personal urls
 urlpatterns += patterns('tradding.views.person',
 	url(r'^personal_center$', 'personal_center'),
-	url(r'^order_list$', 'order_list'),
 	url(r'^shopping_cart/add_pro', 'add_pro'),
 	url(r'^shopping_cart/delete_cart_pro', 'delete_cart_pro'),
 	url(r'^shopping_cart$', 'shopping_cart'),
@@ -72,6 +71,7 @@ urlpatterns += patterns('tradding.views.order',
 	url(r'^order/confirm_order', 'confirm_order'),
 	url(r'^order/confirm_tradding', 'confirm_tradding'),
 	url(r'^order/cancle_tradding', 'cancle_tradding'),
+	url(r'^order_list$', 'order'),
 	url(r'^order$', 'order'),
 )
 #seller order

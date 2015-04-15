@@ -111,9 +111,9 @@
 				                  {% if order.ing %}
 				                  	<input class="btn btn-success" type="button" value="交易中">
 				                  {% elif order.confirm %}
-				                  	<input class="btn btn-success" type="button" value="交易成功">
+				                  	<input class="btn btn-success" type="button" value="交易成功" style="cursor: not-allowed;">
 				                  {% else %}
-				                  	<input class="btn btn-success" type="button" value="交易已取消">
+				                  	<input class="btn btn-success" type="button" value="交易已取消" style="cursor: not-allowed;">
 				                  {% endif %}
 			                  </div>
 			                </td>
@@ -130,6 +130,11 @@
 				                  </div>
 			                </td>
 			              </tr>
+		              <tr style="">
+		                <td   class="address-icon" style="text-align:right;"> <span> <b>补充说明</b></span></td>
+		                <td class="address-icon" colspan="6" style="text-align:left;">{{order.additional}}
+		                </td>
+		              </tr>
 				    </tbody>
 			    </table>
 	            {% endwith %}
@@ -163,14 +168,7 @@
 				                </td>
 				                  <td  class="address-icon" >
 					                  <div id="order_action">
-						                  {% if order.ing %}
-						                  	<input class="btn btn-success" type="button" value="确认交易" onclick="confirm_tradding('{{order.id}}')"><br>
-						                  	<input class="btn btn-success" type="button" value="确认取消" onclick="cancle_tradding('{{order.id}}')">
-						                  {% elif order.confirm %}
-						                  	暂无操作，交易已确认
-						                  {% else %}
-						                  	暂无操作，交易已取消
-						                  {% endif %}
+						                  	<input class="btn btn-success" type="button" value="查看物流" onclick="">
 					                  </div>
 				                </td>
 			              </tr>
