@@ -46,6 +46,7 @@
 			                <td class="address-icon" >
 			                  <a href="{{order.get_absolute_url}}" title="">{{order.id}}</a><br>
 			                  {{order.time}}
+			                  <input type="text" name="order_id" value="{{order.id}}" id="order_id" style="display:none;">
 			                  </td>
 			                <td class="address-icon" >
 			                  <div style="display:inline-block;">
@@ -92,7 +93,7 @@
 			    </table>
 	            {% endwith %}
 		    </div>
-			<div class="compose-main customer-unit">
+			<div class="compose-main customer-unit" id="evaluate">
 	            <h2>其他买家，需要你的建议哦！                                              认真写评价可以升级的更快哦
 	            </h2>
 	            <hr>
@@ -106,11 +107,10 @@
 				            <td class="address-icon" >评价项目
 				            </td>
 				              <td  class="address-icon" style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
+				              {% for i in li %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					          {% endfor %}
+					            </span>
 				              <input type="hidden" name="" value="">
 				            </td>
 				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
@@ -118,20 +118,28 @@
 			          <tr class=""> 
 				            <td class="address-icon" rowspan="3">评价<br>商品
 				              </td>
-				            <td class="address-icon" rowspan="3"><textarea name="" cols="50" rows="5" placeholder="说点什么吧..."></textarea>
+				            <td class="address-icon" rowspan="3"><textarea id="goods_evaluate" name="goods_evaluate" cols="50" rows="5" placeholder="说点什么吧...">{{order.order_evaluate.goods_evaluate}}</textarea>
 				            </td>
 				            <td class="address-icon" >实物匹配程度
 				            </td>
 				              <td  class="address-icon"  style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
-				              <input type="hidden" name="match" value="match">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.match %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+				              <input type="hidden" name="match" value="match{{order.order_evaluate.match}}">
 				            </td>
 				            <td colspan="" rowspan="6" headers="" style="width:400px">
-				            	<p style="text-align:center"><input class="btn btn-success" type="button" value="评价" onclick="submit_evaluation();"></p>
+				            	<p style="text-align:center">
+				            		{% if order.order_evaluate %}
+				            		{% else %}
+				            		<input class="btn btn-success" type="button" value="评价" onclick="submit_evaluation();">
+				            		{% endif %}
+				            	</p>
 				            </td>
 				            
 			          </tr>
@@ -139,11 +147,14 @@
 				            <td class="address-icon" >商品质量如何
 				            </td>
 				              <td  class="address-icon"  style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.quality %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
 				              <input type="hidden" name="quality" value="quality">
 				            </td>
 				            
@@ -152,11 +163,14 @@
 				            <td class="address-icon" >使用状况如何
 				            </td>
 				              <td  class="address-icon"  style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.status %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
 				              <input type="hidden" name="status" value="status">
 				            </td>
 				            
@@ -164,16 +178,19 @@
 			          <tr class=""> 
 				            <td class="address-icon" rowspan="3">评价<br>服务
 				              </td>
-				            <td class="address-icon" rowspan="3"><textarea name="" cols="50" rows="5" placeholder="说点什么吧..."></textarea>
+				            <td class="address-icon" rowspan="3"><textarea id="service_evaluate" name="service_evaluate" cols="50" rows="5" placeholder="说点什么吧...">{{order.order_evaluate.service_evaluate}}</textarea>
 				            </td>
 				            <td class="address-icon" >售前服务如何
 				            </td>
 				              <td  class="address-icon"  style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.pr_service %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
 				              <input type="hidden" name="pr_service" value="pr_service">
 				            </td>
 				            
@@ -182,11 +199,14 @@
 				            <td class="address-icon" >发货速度如何	
 				            </td>
 				              <td  class="address-icon"  style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.courier_speed %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
 				              <input type="hidden" name="courier_speed" value="courier_speed">
 				            </td>
 				            
@@ -195,11 +215,14 @@
 				            <td class="address-icon" >售后服务如何
 				            </td>
 				              <td  class="address-icon"  style="width:200px;"><span class="commstar">
-				              	<a href="javascript:;" class="star1" name="A5"></a>
-				              <a href="javascript:;" class="star2" name="A4"></a>
-				              <a href="javascript:;" class="star3" name="A3"></a>
-				              <a href="javascript:;" class="star4" name="A2"></a>
-				              <a href="javascript:;" class="star5" name="A1"></a></span>
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.af_service %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
 				              <input type="hidden" name="af_service" value="af_service">
 				            </td>
 				            

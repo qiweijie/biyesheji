@@ -157,6 +157,7 @@ def history_products(request):
 		return HttpResponseRedirect('/tradding/login?url=seller_center')
 def products_detail(request,object_id=1):
 	g = Goods.objects.get(pk=object_id)
+	li = ['1','2','3','4','5']
 	if request.META.has_key('HTTP_X_FORWARDED_FOR'):
 	    ip =  request.META['HTTP_X_FORWARDED_FOR']
 	else:
@@ -180,7 +181,7 @@ def products_detail(request,object_id=1):
 			customer.add_browse_record(b.id)
 			customer.save()
 		return render_to_response("seller/products_detail.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
-			'user':user,'object':g},context_instance=RequestContext(request))
+			'user':user,'object':g,'li':li},context_instance=RequestContext(request))
 	else:
 		user = ''
 		return render_to_response("seller/products_detail.html",{'user':user,'object':g})

@@ -339,6 +339,11 @@ function submit_evaluation () {
 			data.append(input.name,all_active[i].className.replace("star","").replace(" active",""));
 		};
 	}
+	order_id=document.getElementById("order_id").value;
+	service_evaluate = document.getElementById("service_evaluate").value;
+	goods_evaluate = document.getElementById("goods_evaluate").value;
+	alert(goods_evaluate);
+	data.append('order_id',order_id);data.append('goods_evaluate',goods_evaluate);data.append('service_evaluate',service_evaluate);
 	$.ajax({
 		url: '/tradding/evaluate/add_evaluation',
 		type: 'POST',
@@ -351,7 +356,7 @@ function submit_evaluation () {
 				alert("网络状态不好，请稍后重试");
 			}
 			else{
-				// window.location.reload();
+				window.location.reload();
 			}
 		}
 	})

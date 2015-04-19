@@ -5,8 +5,13 @@
 {% block css_js %}
 	<link rel="stylesheet" href={% static 'header.css' %}>
 	<link rel="stylesheet" href={% static 'product.css' %}>
+	<link rel="stylesheet" href={% static 'person.css' %}>
+<link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
 <script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
 	<script src={% static 'product.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'person_address.js' %} type="text/javascript" charset="utf-8" async defer></script>
 {% endblock %}
 {% block body %}
 <div id="hd" style="border-bottom: 1px solid #c1c1c1;">
@@ -172,6 +177,119 @@
 			<div class="tb-shop-info-ft">
 			<a href={{object.user.get_absolute_url}} >进入店铺</a>
 			<a href="javascript:void();" onclick="add_fav('{{object.user.user_id}}')">收藏店铺</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="account-body">
+	<div class="account-wrap">
+		<div class="acc-tab-content">
+			<div class="compose-main customer-unit" id="evaluate">
+	            <h2>可以先看看其他买家的评价，共有{{object.order_goods.all.count}}人拍下了这件商品
+	            </h2>
+	            <hr>
+			    <table class="tab-address">
+			        <tbody id="saveAddress">
+			          <tr class=""> 
+				            <td class="address-icon" >用户{{object.get_evaluation}}
+				              </td>
+				            <td class="address-icon" >商品评价
+				            </td>
+				            <td class="address-icon" >服务评价
+				            </td>
+				            <td class="address-icon" >实物匹配程度
+				              </td>
+				            <td class="address-icon" >商品质量如何
+				            </td>
+				            <td class="address-icon" >使用状况如何
+				            </td>
+				            <td class="address-icon" >售前服务如何
+				              </td>
+				            <td class="address-icon" >发货速度如何
+				            </td>
+				            <td class="address-icon" >售后服务如何
+				            </td>
+			          </tr>
+			          {% for order in object.order_goods.all %}
+			          	{% if order.order_evaluate %}
+					          <tr class=""> 
+						            <td class="address-icon" >{{order.user.nickname}}
+						              </td>
+						            <td class="address-icon" >{{order.order_evaluate.goods_evaluate}}
+						            </td>
+						            <td class="address-icon" >{{order.order_evaluate.service_evaluate}}
+						            </td>
+						            <td class="address-icon" ><span class="commstar">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.match %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+						              </td>
+						            <td class="address-icon" ><span class="commstar">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.quality %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+						            </td>
+						            <td class="address-icon" ><span class="commstar">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.status %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+						            </td>
+						            <td class="address-icon" ><span class="commstar">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.pr_service %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+						              </td>
+						            <td class="address-icon" ><span class="commstar">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.courier_speed %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+						            </td>
+						            <td class="address-icon" ><span class="commstar">
+				              {% for i in li %}
+				              	{% if i == order.order_evaluate.af_service %}
+				              	<a href="javascript:;" class="star{{i}} active"></a>
+				              	{% else %}
+					              <a href="javascript:;" class="star{{i}}"></a>
+					            {% endif %}
+					          {% endfor %}
+					            </span>
+						            </td>
+					          </tr>
+			          	  {% with evaluation=order.order_evaluate %}
+					      {% endwith %}
+				        {% endif %}
+				      {% empty %}
+					    	<tr>
+					    		<td colspan="9" rowspan="" headers="">还没有人评价呢</td>
+					    	</tr>
+				      {% endfor %}
+				    </tbody>
+			    </table>
 			</div>
 		</div>
 	</div>
