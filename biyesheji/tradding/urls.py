@@ -80,3 +80,7 @@ urlpatterns += patterns('tradding.views.order',
 	url(r'^seller/courier/add_courier','add_courier'),
 	url(r'^seller/courier/','seller_courier'),
 )
+#evaluate
+urlpatterns += patterns('tradding.views.evaluate',
+	url(r'evaluate/(?P<order_id>\d+)$', 'evaluate_order'),
+)

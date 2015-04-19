@@ -1,0 +1,167 @@
+{# evaluate_order.html #}
+{% extends "base_head.html" %}
+{% load staticfiles %}
+{% block title %}订单评价{% endblock %}
+{% block css_js %}
+<link rel="stylesheet" type="text/css" href="{% static 'products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person_address.css' %}">
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+  <script src={% static 'product.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'person_address.js' %} type="text/javascript" charset="utf-8" async defer></script>
+{% endblock %}
+{% block body %}
+<div class="account-body">
+	<div class="account-wrap">
+		<div class="acc-tab-content">
+		    <div id="customer-address-list" class="customer-unit">
+	            <h2>订单信息
+	            </h2>
+	            <hr>
+	            {% with user=order.user goods=order.goods %}
+			    <table class="tab-address">
+			        <tbody id="saveAddress">
+			          <tr > 
+			            <td class="address-icon" >
+			              订单编号 <br>
+			              订单时间
+			              </td>
+			            <td class="address-icon" style="width:200px;">宝贝
+			            </td>
+			              <td  class="address-icon" >数量
+			            </td>
+			            <td class="address-icon" >单价
+			            </td>
+			            <td class="address-icon" >订单金额
+			            </td>
+			            <td class="address-icon" >订单状态
+			            </td>
+			              <td  class="address-icon" >操作
+			            </td>
+			              <td  class="address-icon" >补充说明
+			            </td>
+			          </tr>
+			              <tr > 
+			                <td class="address-icon" >
+			                  <a href="{{order.get_absolute_url}}" title="">{{order.id}}</a><br>
+			                  {{order.time}}
+			                  </td>
+			                <td class="address-icon" >
+			                  <div style="display:inline-block;">
+			                    <a href="{{order.goods.get_absolute_url}}" title="" target="blank"><img src="{{order.goods.goods_photo.all.0.image.thumb_url}}" alt=""></a><br></div>
+			                    <div style="display:inline-block;width:90px;height:90px;">
+			                    <a href="{{order.goods.get_absolute_url}}" target="_blank"> <span>{{order.goods.title}}</span></a>
+			                    <input type="text" name="goods_id" value="{{order.goods.goods_id}}" id="goods_id" style="display:none;">
+			                  </div>
+			                </td>
+			                  <td  class="address-icon" >{{order.goods_number}}
+			                </td> 
+			                <td class="address-icon"  style="text-align:center;color: rgb(255, 68, 0);">{{order.goods.price}}
+			                </td>
+			                  <td  class="address-icon" style="text-align:center;color: rgb(255, 68, 0);">
+			                  {%  widthratio order.goods_number 1 order.goods.price %}
+			                </td>
+			                <td class="address-icon" >
+			                  <div id="order_status">
+				                  {% if order.ing %}
+				                  	<input class="btn btn-success" type="button" value="交易中">
+				                  {% elif order.confirm %}
+				                  	<input class="btn btn-success" type="button" value="交易成功" style="cursor: not-allowed;">
+				                  {% else %}
+				                  	<input class="btn btn-success" type="button" value="交易已取消" style="cursor: not-allowed;">
+				                  {% endif %}
+			                  </div>
+			                </td>
+			                  <td  class="address-icon" >
+				                  <div id="order_action">
+					                  {% if order.ing %}
+					                  	<input class="btn btn-success" type="button" value="确认交易" onclick="confirm_tradding('{{order.id}}')"><br>
+					                  	<input class="btn btn-success" type="button" value="确认取消" onclick="cancle_tradding('{{order.id}}')">
+					                  {% elif order.confirm %}
+					                  	暂无操作，交易已确认
+					                  {% else %}
+					                  	暂无操作，交易已取消
+					                  {% endif %}
+				                  </div>
+			                </td>
+			                  <td  class="address-icon" >{{order.additional}}
+			                </td> 
+			              </tr>
+				    </tbody>
+			    </table>
+	            {% endwith %}
+		    </div>
+			<div class="compose-main customer-unit">
+	            <h2>其他买家，需要你的建议哦！                                              认真写评价可以升级的更快哦
+	            </h2>
+	            <hr>
+			    <table class="tab-address">
+			        <tbody id="saveAddress">
+			          <tr class="hide"> 
+				            <td class="address-icon" >评价
+				              </td>
+				            <td class="address-icon" >说点什么吧
+				            </td>
+				            <td class="address-icon" >评价项目
+				            </td>
+				              <td  class="address-icon" style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+			          <tr class=""> 
+				            <td class="address-icon" rowspan="3">评价<br>商品
+				              </td>
+				            <td class="address-icon" rowspan="3"><textarea name="" cols="50" rows="7" placeholder="说点什么吧..."></textarea>
+				            </td>
+				            <td class="address-icon" >实物匹配程度
+				            </td>
+				              <td  class="address-icon"  style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+			          <tr class=""> 
+				            <td class="address-icon" >商品质量如何
+				            </td>
+				              <td  class="address-icon"  style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+			          <tr class=""> 
+				            <td class="address-icon" >使用状况如何
+				            </td>
+				              <td  class="address-icon"  style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+			          <tr class=""> 
+				            <td class="address-icon" rowspan="3">评价<br>服务
+				              </td>
+				            <td class="address-icon" rowspan="3"><textarea name="" cols="50" rows="7" placeholder="说点什么吧..."></textarea>
+				            </td>
+				            <td class="address-icon" >售前服务如何
+				            </td>
+				              <td  class="address-icon"  style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+			          <tr class=""> 
+				            <td class="address-icon" >发货速度如何	
+				            </td>
+				              <td  class="address-icon"  style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+			          <tr class=""> 
+				            <td class="address-icon" >售后服务如何
+				            </td>
+				              <td  class="address-icon"  style="width:200px;"><div class="rating-content"><span class="rating-star"><input type="hidden" name="" value=""><span class="star-1"><a href="#" data-star-value="1" hidefocus="true">1</a></span><span class="star-2"><a href="#" data-star-value="2" hidefocus="true">2</a></span><span class="star-3"><a href="#" data-star-value="3" hidefocus="true">3</a></span><span class="star-4"><a href="#" data-star-value="4" hidefocus="true">4</a></span><span class="star-5"><a href="#" data-star-value="5" hidefocus="true">5</a></span></span></div>
+				            </td>
+				            <td colspan="" rowspan="" headers="" style="width:400px"></td>
+			          </tr>
+				    </tbody>
+			    </table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

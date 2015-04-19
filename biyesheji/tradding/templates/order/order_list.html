@@ -84,7 +84,9 @@
 			                  	<input class="btn btn-success" type="button" value="确认交易" onclick="confirm_tradding('{{order.id}}')"><br>
 			                  	<input class="btn btn-success" type="button" value="确认取消" onclick="cancle_tradding('{{order.id}}')">
 			                  {% elif order.confirm %}
-			                  	暂无操作，交易已确认
+			                  	<a href="/tradding/evaluate/{{order.id}}" title="">
+			                  		<input class="btn btn-success" type="button" value="去评价">
+		                  		</a>
 			                  {% else %}
 			                  	暂无操作，交易已取消
 			                  {% endif %}

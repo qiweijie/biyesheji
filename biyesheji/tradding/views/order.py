@@ -1,5 +1,5 @@
-# order.py
 #*_* coding:utf-8*_*
+# order.py
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -23,10 +23,12 @@ def add(request):
 		if request.method == 'POST':
 			goods_id = request.POST['goods_id'] if 'goods_id' in request.POST else ''
 			user_id  = request.POST['user_id'] if 'user_id' in request.POST else ''
+			product_number  = request.POST['product_number'] if 'product_number' in request.POST else '1'
 			if goods_id and user_id:
 				goods = Goods.objects.get(pk=goods_id)
 				user = Customer.objects.get(pk=user_id)
-				return render_to_response("order/add_order.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],'user':user,'goods':goods},context_instance=RequestContext(request))
+				return render_to_response("order/add_order.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+					'user':user,'goods':goods,'product_number':product_number},context_instance=RequestContext(request))
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
 	else :
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
