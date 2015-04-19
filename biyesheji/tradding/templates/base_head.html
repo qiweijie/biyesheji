@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href={% static 'person.css' %}>
 	{% block css_js %}{% endblock %}
 </head>
-<body><div id="hd">
+<body {% block init %}{% endblock %}><div id="hd">
 	<div id="tools">
 		<div class="tools">
 		    <div class="ddnewhead_operate" dd_name="顶链接">

@@ -40,5 +40,19 @@ class Courier(models.Model):
 	express_id = models.CharField(max_length=50)
 	time = models.DateTimeField(auto_now_add=True)
 	order = models.OneToOneField(Order,related_name="courier_order")
-
+class Evaluate(models.Model):
+    """
+    Description: Model Description
+    """
+    order = models.OneToOneField(Order,related_name='order_evaluate')
+    match = models.CharField(max_length=1)
+    quality = models.CharField(max_length=1)
+    status = models.CharField(max_length=1)
+    pr_service = models.CharField(max_length=1)
+    courier_speed = models.CharField(max_length=1)
+    af_service = models.CharField(max_length=1)
+    goods_evaluate = models.TextField()
+    service_evaluate = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)
+		
 		

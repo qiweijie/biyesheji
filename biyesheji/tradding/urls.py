@@ -83,4 +83,5 @@ urlpatterns += patterns('tradding.views.order',
 #evaluate
 urlpatterns += patterns('tradding.views.evaluate',
 	url(r'evaluate/(?P<order_id>\d+)$', 'evaluate_order'),
+	url(r'evaluate/add_evaluation$', 'add_evaluation'),
 )

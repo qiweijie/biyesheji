@@ -308,3 +308,60 @@ function add_courier () {
 		console.log("complete");
 	});
 }
+function init_a () {
+	all_span = document.getElementsByClassName("commstar");
+	for(var i=0;i<all_span.length;i++){
+		all_children_a = all_span[i].children;
+		for (var j = 0; j < all_children_a.length; j++) {
+			// alert(all_children_a.length);
+			all_children_a[j].onclick=function () {
+				 active_a (this);
+			}
+		};
+	}
+}
+function active_a (a) {
+	parentNode = a.parentNode;
+	all_children_a = parentNode.children;
+	for (var i = 0; i < all_children_a.length; i++) {
+		all_children_a[i].className = all_children_a[i].className.replace(" active","");
+	};
+	a.className=a.className+" active";
+}
+function submit_evaluation () {
+	all_active = document.getElementsByClassName("active");
+	data = new FormData();
+	if(all_active.length<6) alert("亲爱的，你还有没评价的项哦");
+	else{
+		for (var i = 0; i < all_active.length; i++) {
+			parentNode = all_active[i].parentNode;
+			input = parentNode.nextElementSibling;
+			data.append(input.name,all_active[i].className.replace("star","").replace(" active",""));
+		};
+	}
+	$.ajax({
+		url: '/tradding/evaluate/add_evaluation',
+		type: 'POST',
+		cache:false,
+		contentType:false,
+		processData:false,
+		data: data,
+		success:function  (data) {
+			if(data=="ok"){
+				alert("网络状态不好，请稍后重试");
+			}
+			else{
+				// window.location.reload();
+			}
+		}
+	})
+	.done(function() {
+		console.log("success");
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+}

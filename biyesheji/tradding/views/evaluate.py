@@ -5,7 +5,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 from tradding.Address import Address
 from tradding.User import User,Customer,Favorite_shop
-from tradding.models import ShoppingCartItem,BrowseRecord,Order,Courier
+from tradding.models import ShoppingCartItem,BrowseRecord,Order,Courier,Evaluate
 from tradding.Goods import Goods
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
@@ -18,3 +18,6 @@ def evaluate_order(request,order_id=1):
 			'user':user,'order':order})
 	else :
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
+
+def add_evaluation(request):
+	return HttpResponse("")
