@@ -51,8 +51,8 @@
 		    	<a href="/" title=""><img src={% static "images/logo.png" %} usemap="#logo_link"></a>
 		    </div>
 		    <div class="search">
-		        <form action="http://search.dangdang.com" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
-		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">新常态改变中</label>
+		        <form form action="/tradding/search" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
+		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">欢迎光临本站</label>
 		            <input type="text" class="text" name="key" id="key_S" autocomplete="off" onclick="key_onclick();" onfocus="this.className='text';" onblur="key_onblur();" onbeforepaste="onpaste_search();">
 		            <input type="submit" id="search_btn" style="display:none">
 		            <input type="button" class="button" dd_name="搜索按钮" onclick="javascript:document.getElementById('search_btn').click();">
@@ -60,20 +60,19 @@
 		    </div>
 		    <div class="search_bottom">
 		        <div class="search_hot">热搜: 
-			        <a href="http://search.dangdang.com/?key=%BB%C4%D2%B0%C7%F3%C9%FA" name="hotword" target="_blank">荒野求生</a>
-			        <a href="http://search.dangdang.com/?key=%B6%F9%CD%AF%D3%F0%C8%DE%B7%FE" name="hotword" target="_blank">儿童羽绒服</a>
-			        <a href="http://search.dangdang.com/?key=%B5%B1%B5%B1%D7%D4%D3%AA%D0%C2%B0%B2%E2%F9" name="hotword" target="_blank">新安怡</a>
-			        <a href="http://search.dangdang.com/?key=%D1%FD%BE%AB%B5%C4%BF%DA%B4%FC" name="hotword" target="_blank">妖精的口袋</a>
-			        <a href="http://search.dangdang.com/?key=%C9%AD%C2%ED" name="hotword" target="_blank">森马</a>
+		        	{% for term in hot_term %}
+		        	<a href="http://tradding/search?key={{term.key}}" title="{{term.key}}">{{term.key}}</a>
+		        	{% endfor %}
 		        </div>
-		        <a href="http://search.dangdang.com/advsearch" class="search_advs" target="_blank" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
+		         
 		    </div>
 		</div>
 	</div>
 	<div class="nav_top" dd_name="一级导航条">
         <ul>
-        	<li class="all"><a href="http://category.dangdang.com/?ref=www-0-C" dd_name="全部商品详细分类">全部商品详细分类</a></li>
-        	<!-- <li><a name="nav1" href="http://new.dangdang.com/">新品闪购</a></li>-->
+        	<li class="all"><a href="" dd_name="全部商品详细分类">浏览排行榜</a></li>
+        	 <li style="width:762px;"><a name="nav1" href="">最新上架</a></li><!---->
+        	<li class="all"><a href="" dd_name="全部商品详细分类">公告推荐栏</a></li>
         </ul>
     </div>
 </div>
@@ -83,7 +82,7 @@
 			<div class="new_pub_nav_box" dd_name="左侧分类导航">
 			    <span class="new_pub_line_a"></span>
 			    <span class="new_pub_line_b"></span>
-			    <div class="new_pub_nav_shadow" id="menu_list">
+			    <!--<div class="new_pub_nav_shadow" id="menu_list">
 					<ul class="new_pub_nav" id="menulist_content">
 						<li class="n_b first" id="li_label_1" data-submenu-id="__ddnav_sort1" data_index="1" data_key="34102" data_type="'goods'">
 			                <span class="nav" id="categoryh_1">
@@ -187,7 +186,15 @@
 			    	<div class="new_pub_nav_pop" style="display: none; top: 0px;" id="__ddnav_sort12"></div>
 			    	<div class="new_pub_nav_pop" style="display: none; top: 0px;" id="__ddnav_sort13"></div>
 			    	<div class="new_pub_nav_pop" style="display: none; top: 0px;" id="__ddnav_sort14"></div>
-			    </div>
+			    </div>-->
+			    {% for goods in hot_browsed %}					
+						<li>
+							<a href={{goods.get_absolute_url}} target="_blank" title="{{goods}}" name="bzth_1">
+								<div style="display:inline-block;width:150px;"><img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:150px;"></div>
+								<span class="cover" style="display: block;"></span>
+							</a>
+						</li>
+				{% endfor %}
 			</div>
 		</div>
 		<div class="home_circle_c">
@@ -235,19 +242,13 @@
 			</div>
 		</div>
 		<div class="home_notice_r">
-			<div class="home_notice_r_pic" dd_name="焦点右图">
-						{% for goods in all_goods.new %}	
-							<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1" style="display:inline-block">
-							<img src={{goods.goods_photo.all.0.image.thumb_url}} alt="" ><span class="cover" style="display: block;"></span></a>
-						{% endfor %}
-			</div>
 			<div class="home_notice_gg" id="gongao_title">
 				<h3 id="gonggao_switch">
 					<span class="on" id="cxgg_title">
 						<a href="javascript:void(0);" name="cx_title" style="cursor: default;">最新消息</a>
 					</span>
 					<span id="fwgg_title" class="">
-						<a href="http://blog.dangdang.com/?page_id=3382" target="_blank" name="fw_title">服务公告</a>
+						<a href="" target="_blank" name="fw_title">服务公告</a>
 					</span>
 				</h3>
 				<div id="logo_content" style="position: relative; width: 233px; height: 143px; overflow: hidden; border-width: 0px 1px 1px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-right-color: rgb(230, 230, 230); border-bottom-color: rgb(230, 230, 230); border-left-color: rgb(230, 230, 230); padding-top: 23px;">
@@ -262,6 +263,12 @@
 						</li>
 					</ul>
 				</div>
+			</div>
+			<div class="home_notice_r_pic" dd_name="焦点右图">
+						{% for goods in all_goods.new %}	
+							<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1" style="display:inline-block">
+							<img src={{goods.goods_photo.all.0.image.thumb_url}} alt="" ><span class="cover" style="display: block;"></span></a>
+						{% endfor %}
 			</div>
 		</div>
 	</div>

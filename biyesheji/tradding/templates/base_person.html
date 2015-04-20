@@ -62,8 +62,8 @@
 		    	<a href="/" title=""><img src={% static "images/logo.png" %} usemap="#logo_link"></a>
 		    </div>
 		    <div class="search">
-		        <form action="http://search.dangdang.com" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
-		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">新常态改变中</label>
+		        <form form action="/tradding/search" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
+		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">欢迎光临本站</label>
 		            <input type="text" class="text" name="key" id="key_S" autocomplete="off" onclick="key_onclick();" onfocus="this.className='text';" onblur="key_onblur();" onbeforepaste="onpaste_search();">
 		            <input type="submit" id="search_btn" style="display:none">
 		            <input type="button" class="button" dd_name="搜索按钮" onclick="javascript:document.getElementById('search_btn').click();">
@@ -71,13 +71,11 @@
 		    </div>
 		    <div class="search_bottom">
 		        <div class="search_hot">热搜: 
-			        <a href="http://search.dangdang.com/?key=%BB%C4%D2%B0%C7%F3%C9%FA" name="hotword" target="_blank">荒野求生</a>
-			        <a href="http://search.dangdang.com/?key=%B6%F9%CD%AF%D3%F0%C8%DE%B7%FE" name="hotword" target="_blank">儿童羽绒服</a>
-			        <a href="http://search.dangdang.com/?key=%B5%B1%B5%B1%D7%D4%D3%AA%D0%C2%B0%B2%E2%F9" name="hotword" target="_blank">新安怡</a>
-			        <a href="http://search.dangdang.com/?key=%D1%FD%BE%AB%B5%C4%BF%DA%B4%FC" name="hotword" target="_blank">妖精的口袋</a>
-			        <a href="http://search.dangdang.com/?key=%C9%AD%C2%ED" name="hotword" target="_blank">森马</a>
+			        {% for term in hot_term %}
+		        	<a href="http://tradding/search?key={{term.key}}" title="{{term.key}}">{{term.key}}</a>
+		        	{% endfor %}
 		        </div>
-		        <a href="http://search.dangdang.com/advsearch" class="search_advs" target="_blank" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
+		         
 		    </div>
 		</div>
 	</div>

@@ -54,5 +54,11 @@ class Evaluate(models.Model):
     goods_evaluate = models.TextField()
     service_evaluate = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
-		
+
+class Search_Record(models.Model):
+	"""docstring for Search_Record"""
+	key = models.CharField(max_length=100)
+	user_id = models.CharField(max_length=20)
+	ip =  models.CharField(max_length=40)
+	time = models.DateTimeField(auto_now_add=True)	
 		

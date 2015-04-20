@@ -4,6 +4,8 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 from tradding.User import User,Customer
 from tradding.Goods import Goods
+from tradding.models import BrowseRecord,Search_Record
+from django.db.models import Count,Max,Avg
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
 # Create your views here.
@@ -74,11 +76,14 @@ def home(request):
 	all_goods['second'] = all_[4:8]
 	all_goods['third'] = all_[8:12]
 	all_goods['new'] = all_[0:2]
+	hot_browsed = BrowseRecord.objects.values('goods_id').annotate(num=Count('customer_id')).order_by("-num")
+	hot_browsed = [ Goods.objects.get(pk=g['goods_id']) for g in hot_browsed][:10]
+	hot_term = Search_Record.objects.values('key').annotate(num=Count('user_id')).order_by("-num")
 	if request.session.get('login',False):
 		return render_to_response('home.html',{'user_name':request.session['username'],'logout_url':request.session['logout_url']
-			,'all_goods':all_goods})
+			,'all_goods':all_goods,'hot_browsed':hot_browsed,'hot_term':hot_term})
 	else:
-		return render_to_response("home.html",{'all_goods':all_goods})
+		return render_to_response("home.html",{'all_goods':all_goods,'hot_browsed':hot_browsed,'hot_term':hot_term})
 def logout(request):
 	all_goods = {}
 	all_ = Goods.objects.all()
@@ -94,3 +99,16 @@ def logout(request):
 		login_time = str(int(time.time()))
 		request.session['time']=login_time
 		return render_to_response("home.html",{'all_goods':all_goods})
+def search(request):
+	key = request.GET['key'] if 'key' in request.GET else ''
+	if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+	    ip =  request.META['HTTP_X_FORWARDED_FOR']
+	else:
+	    ip = request.META['REMOTE_ADDR']
+	if request.session.get('login',False):
+		user_id = User.objects.get(username=request.session['username']).user_id
+	else:
+		user_id = '-1'
+	new_search_record = Search_Record(key=key,user_id=user_id,ip=ip)
+	new_search_record.save()
+	return HttpResponse(key)
