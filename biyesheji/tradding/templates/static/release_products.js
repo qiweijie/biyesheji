@@ -82,6 +82,12 @@ function submit_pro () {
 		contentType:false,
 		processData:false,
 		success:function  (data) {
+			$.post('/tradding/segment_title',
+				{
+					goods_id:data
+				},
+				 function(data, textStatus, xhr) {
+			});
 		 	window.location.reload();
 		}
 	})

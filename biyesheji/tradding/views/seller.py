@@ -50,12 +50,14 @@ def release_products(request):
 		user_id = request.POST['user_id']
 		user = Customer.objects.get(pk=user_id)
 		all_pic = Picture.objects.filter(user=user)
+		new_goods_id = 'none'
 		if len(all_pic)>6:
 			all_pic=all_pic[len(all_pic)-6:]
 		if 'goods_id' in request.POST:
 			old_goods = Goods.objects.get(pk=request.POST['goods_id'])
 			old_goods.title=title;old_goods.special=special;old_goods.price=price;old_goods.number=number;old_goods.description=discription;
 			old_goods.save()
+			new_goods_id = request.POST['goods_id']
 			for pic in all_pic:
 				if old_goods.goods_photo.all().count() <7:
 					new_goods_pic = Goods_picture()
@@ -66,6 +68,7 @@ def release_products(request):
 			goods_id = Goods.objects.count()
 			new_goods = Goods(goods_id=goods_id,user=user,title=title,special=special,price=price,number=number,description=discription)
 			new_goods.save()
+			new_goods_id = goods_id
 			for pic in all_pic:
 				new_goods_pic = Goods_picture()
 				new_goods_pic.goods = new_goods
@@ -74,7 +77,7 @@ def release_products(request):
 		all_pic = Picture.objects.filter(user=user)
 		for temp_pic in all_pic:
 			temp_pic.delete()
-		return HttpResponse("ok");
+		return HttpResponse(new_goods_id)
 	else:
 		if request.session.get('login',False):
 			user = Customer.objects.get(username=request.session['username'])

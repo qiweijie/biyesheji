@@ -11,6 +11,10 @@ urlpatterns = patterns('tradding.views.views',
 	url(r'^logout', 'logout'),
 	url(r'^search/', 'search')
 )
+urlpatterns += patterns('tradding.views.segment',
+	url(r'^init_term$', 'init_term'),
+	url(r'^segment_title$', 'segment_title')
+)
 #personal urls
 urlpatterns += patterns('tradding.views.person',
 	url(r'^personal_center$', 'personal_center'),
