@@ -10,40 +10,40 @@ from django.db.models import Count,Max,Avg
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
 def init_term(request):
-	t = urllib2.urlopen("http://irsearch-irsearch.stor.sinaapp.com/bdist.txt").read()
-	w = file("tem.txt",'w')
-	w.write(t)
-	w.close()
-	bd = file("tem.txt",'r')
-	d = bd.readline()
-	d = d[3:]
-	d = d.strip()
-	di = Dict(name=d)
-	di.save()
-	while True:
-		line = bd.readline()
-		if len(line)==0:
-			break
-		line = line.strip()
-		di = Dict(name=line)
-		di.save()
-	t = urllib2.urlopen("http://irsearch-irsearch.stor.sinaapp.com/stopword.txt").read()
-	w = file("tem.txt",'w')
-	w.write(t)
-	w.close()
-	sto= file("tem.txt",'r')
-	s = sto.readline()
-	s = s[3:]
-	s = s.strip()
-	st = Stop(name=s)
-	st.save()
-	while True:
-		line = sto.readline()
-		if len(line)==0:
-			break
-		line = line.strip()
-		st = Stop(name=line)
-		st.save()
+	# t = urllib2.urlopen("http://irsearch-irsearch.stor.sinaapp.com/bdist.txt").read()
+	# w = file("tem.txt",'w')
+	# w.write(t)
+	# w.close()
+	# bd = file("tem.txt",'r')
+	# d = bd.readline()
+	# d = d[3:]
+	# d = d.strip()
+	# di = Dict(name=d)
+	# di.save()
+	# while True:
+	# 	line = bd.readline()
+	# 	if len(line)==0:
+	# 		break
+	# 	line = line.strip()
+	# 	di = Dict(name=line)
+	# 	di.save()
+	# t = urllib2.urlopen("http://irsearch-irsearch.stor.sinaapp.com/stopword.txt").read()
+	# w = file("tem.txt",'w')
+	# w.write(t)
+	# w.close()
+	# sto= file("tem.txt",'r')
+	# s = sto.readline()
+	# s = s[3:]
+	# s = s.strip()
+	# st = Stop(name=s)
+	# st.save()
+	# while True:
+	# 	line = sto.readline()
+	# 	if len(line)==0:
+	# 		break
+	# 	line = line.strip()
+	# 	st = Stop(name=line)
+	# 	st.save()
 	return HttpResponse("ok")
 
 def fenci(query):

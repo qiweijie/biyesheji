@@ -5,7 +5,8 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 from tradding.User import User,Customer
 from tradding.Goods import Goods
-from tradding.models import BrowseRecord,Search_Record,Dict,Stop,Goods_label,Label_goods,Goods_similarty,Record_caculate_goods_id
+from tradding.models import BrowseRecord,Search_Record,Dict,Stop,Goods_label,Label_goods,Goods_similarty,Order
+from tradding.models import Record_caculate_goods_id,Record_caculate_love_id,User_goods_level,ShoppingCartItem
 from django.db.models import Count,Max,Avg
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
@@ -54,3 +55,25 @@ def recommend(request):
 		a='<a href="/tradding/search?key=%s" title="%s">%s</a>' %(term['key'],term['key'],term['key'])
 		result_a.append(a+'\n')
 	return HttpResponse(result_a)
+
+
+def caculate_love_level(request):
+	if Record_caculate_love_id.objects.all().count():
+		max_record_id = Record_caculate_love_id.objects.all().aggregate(Max('max_record_id'))['max_record_id__max']
+	else :
+		max_record_id=-1
+	all_records = BrowseRecord.objects.filter(id__gt=max_record_id).order_by("id")
+	for record in all_records:
+		new_love_level = User_goods_level(user_id=record.customer_id.user_id,goods_id=record.goods_id.goods_id,evaluation=5)
+		test = ShoppingCartItem.objects.filter(customer_id=record.customer_id,goods_id=record.goods_id)
+		if test:
+			new_love_level.evaluation=15
+		test = Order.objects.filter(user=record.customer_id,goods=record.goods_id)
+		if test:
+			new_love_level.evaluation=25
+		new_love_level.save()
+	max_record_id_now = BrowseRecord.objects.all().aggregate(Max('id'))['id__max']
+	number=max_record_id_now-max_record_id
+	new_record = Record_caculate_love_id(max_record_id=max_record_id_now,number=number)
+	new_record.save()
+	return HttpResponse(str(max_record_id_now)+"hello"+str(number))

@@ -303,8 +303,8 @@ padding-left: 4px;
 }
 .home_notice_r_pic {
 width: 235px;
-height: 112px;
-overflow: hidden;
+/*height: 112px;
+overflow: hidden;*/
 }
 .home_notice_r_pic img {
 display: block;

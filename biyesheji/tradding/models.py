@@ -104,4 +104,14 @@ class Record_caculate_goods_id(models.Model):
 	max_goods_id = models.CharField(max_length=20)
 	number = models.CharField(max_length=20)
 		
+class User_goods_level(models.Model):
+	"""docstring for User_goods_level"""
+	user_id = models.CharField(max_length=20)
+	goods_id = models.CharField(max_length=20)
+	evaluation = models.IntegerField()
 
+class Record_caculate_love_id(models.Model):
+	"""docstring for Record_caculate_goods_id"""
+	time = models.DateTimeField(auto_now_add=True)
+	max_record_id = models.CharField(max_length=20)
+	number = models.CharField(max_length=20)

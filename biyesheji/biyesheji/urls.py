@@ -19,4 +19,5 @@ urlpatterns = patterns('',
 urlpatterns += patterns('tradding.views.system',
 	url(r'^system/caculate_similarty$','caculate_similarty'),
 	url(r'^system/recommend$','recommend'),
+    url(r'^system/caculate_love_level$','caculate_love_level'),
 )

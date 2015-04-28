@@ -265,9 +265,10 @@
 				</div>
 			</div>
 			<div class="home_notice_r_pic" dd_name="焦点右图">
+				<h1 style="font-size:20px;text-align:center">猜你喜欢</h1>
 						{% for goods in all_goods.new %}	
 							<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1" style="display:inline-block">
-							<img src={{goods.goods_photo.all.0.image.thumb_url}} alt="" ><span class="cover" style="display: block;"></span></a>
+							<img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:235px;"><span class="cover" style="display: block;"></span></a>
 						{% endfor %}
 			</div>
 		</div>
