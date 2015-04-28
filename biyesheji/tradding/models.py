@@ -89,5 +89,17 @@ class Label_goods(models.Model):
 	def add_goods_id(self,goods_id):
 		self.delete_goods_id(goods_id)
 		self.goods_id = self.goods_id+str(goods_id)+'*'
+
+class Goods_similarty(models.Model):
+	"""docstring for Goods_similarty"""
+	small_goods_id = models.CharField(max_length=20)
+	big_goods_id = models.CharField(max_length=20)
+	similarty = models.FloatField()
+
+class Record_caculate_goods_id(models.Model):
+	"""docstring for Record_caculate_goods_id"""
+	time = models.DateTimeField(auto_now_add=True)
+	max_goods_id = models.CharField(max_length=20)
+	number = models.CharField(max_length=20)
 		
-		
+
