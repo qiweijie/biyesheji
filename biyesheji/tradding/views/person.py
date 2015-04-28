@@ -127,7 +127,7 @@ def shopping_cart(request):
 		items =[]
 		for f_s in shopping_carts:
 			if f_s:
-				items.append(ShoppingCartItem.objects.get(pk=f_s))
+				items.append(ShoppingCartItem.objects.get(pk=f_s,bool_delete=False))
 		return render_to_response("person/shopping_cart.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
 			'user':user,'items':items},context_instance=RequestContext(request))
 	else :
@@ -139,7 +139,7 @@ def browsed(request):
 		items =[]
 		for f_s in recent_browse:
 			if f_s:
-				items.append(BrowseRecord.objects.get(pk=f_s))
+				items.append(BrowseRecord.objects.get(pk=f_s,bool_delete=False))
 		return render_to_response("person/recent_browsed.html",{'user_name':request.session['username'],'logout_url':request.session['logout_url'],
 			'user':user,'items':items})
 	else :
@@ -153,7 +153,8 @@ def delete_browsed(request):
 			user = Customer.objects.get(pk=user_id)
 			user.delete_browse_record(browsed.id)
 			user.save()
-			browsed.delete()
+			browsed.bool_delete=True
+			browsed.save()
 			return HttpResponse("")
 	else:
 		return HttpResponseRedirect('/tradding/login?url=personal_center')
@@ -184,7 +185,10 @@ def add_pro(request):
 			try:
 				#是否已经存在该购物车项s_c
 				s_c = ShoppingCartItem.objects.get(customer_id=customer,goods_id=goods)
+				s_c.bool_delete=False
 				s_c.save()
+				customer.add_shopping_item(s_c.id)
+				customer.save()
 			except :
 				c = ShoppingCartItem()
 				c.customer_id = customer
@@ -204,7 +208,8 @@ def delete_cart_pro(request):
 			user = Customer.objects.get(pk=user_id)
 			user.delete_shopping_item(cart_pro.id)
 			user.save()
-			cart_pro.delete()
+			cart_pro.bool_delete=True
+			cart_pro.save()
 			return HttpResponse("")
 	else:
 		return HttpResponseRedirect('/tradding/login?url=personal_center')

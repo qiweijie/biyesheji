@@ -11,6 +11,7 @@ class ShoppingCartItem(models.Model):
 	customer_id = models.ForeignKey(Customer,related_name="cart_customer")
 	goods_id = models.ForeignKey(Goods,related_name="cart_product")
 	time = models.DateTimeField(auto_now=True)	
+	bool_delete = models.BooleanField(default=False)
 
 class BrowseRecord(models.Model):
 	"""docstring for BrowseRecord,record the products those the customer has browsed
@@ -18,7 +19,8 @@ class BrowseRecord(models.Model):
 	customer_id = models.ForeignKey(Customer,related_name="browse_customer")
 	goods_id = models.ForeignKey(Goods,related_name="browse_goods")
 	time = models.DateTimeField(auto_now_add=True)	
-	ip = models.CharField(max_length=40)	
+	ip = models.CharField(max_length=40)
+	bool_delete = models.BooleanField(default=False)	
 class Order(models.Model):
 	"""docstring for Order"""
 	user = models.ForeignKey(Customer,related_name="order_user")
@@ -75,7 +77,7 @@ class Goods_label(models.Model):
 	goods_id = models.CharField(max_length=20)
 	label = models.TextField()
 	def delete_goods_label(self,label):
-		self.label = self.label.replace(str(label)+"*_*","")
+		self.label = self.label.replace("*_*"+str(label)+"*_*","*_*")
 	def add_goods_label(self,label):
 		self.delete_goods_label(label)
 		self.label = self.label+str(label)+"*_*"
@@ -85,7 +87,7 @@ class Label_goods(models.Model):
 	name = models.CharField(max_length=20)
 	goods_id = models.TextField()
 	def delete_goods_id(self,goods_id):
-		self.goods_id = self.goods_id.replace(str(goods_id)+'*','')
+		self.goods_id = self.goods_id.replace('*'+str(goods_id)+'*','*')
 	def add_goods_id(self,goods_id):
 		self.delete_goods_id(goods_id)
 		self.goods_id = self.goods_id+str(goods_id)+'*'

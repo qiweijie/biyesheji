@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href={% static 'header.css' %}>
 	<link rel="stylesheet" href={% static "middle.css" %}>
 <script src={% static 'jquery.min.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'recommend.js' %} type="text/javascript" charset="utf-8" async defer></script>
 <link rel="stylesheet" type="text/css" href={% static 'person.css' %}>
 	{% block css_js %}{% endblock %}
 </head>
@@ -70,7 +71,7 @@
 		        </form>
 		    </div>
 		    <div class="search_bottom">
-		        <div class="search_hot">热搜: 
+		        <div class="search_hot" id="search_hot">热搜: 
 			        {% for term in hot_term %}
 		        	<a href="http://tradding/search?key={{term.key}}" title="{{term.key}}">{{term.key}}</a>
 		        	{% endfor %}

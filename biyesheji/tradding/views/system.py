@@ -21,9 +21,9 @@ def caculate_goods(goods_id1,goods_id2):
 	else:
 		small_goods_labels = Goods_label.objects.get(goods_id=small_goods_id).label.split("*_*")[1:-1]
 		big_goods_labels = Goods_label.objects.get(goods_id=big_goods_id).label.split("*_*")[1:-1]
-		small_and_big = set(small_goods_labels).union(set(big_goods_labels))
-		small_or_big = set(small_goods_labels).intersection(set(big_goods_labels))
-		similarty = float(len(small_and_big)/len(small_or_big))
+		small_and_big = set(small_goods_labels).intersection(set(big_goods_labels))
+		small_or_big = set(small_goods_labels).union(set(big_goods_labels))
+		similarty = float(len(small_and_big))/len(small_or_big)
 		new = Goods_similarty(small_goods_id=small_goods_id,big_goods_id=big_goods_id,similarty=similarty)
 		new.save()
 def caculate_similarty(request):
@@ -31,7 +31,7 @@ def caculate_similarty(request):
 		max_goods_id = Record_caculate_goods_id.objects.all().aggregate(Max('max_goods_id'))['max_goods_id__max']
 	else :
 		max_goods_id=-1
-	all_goods = Goods.objects.filter(goods_id_gt=max_goods_id).order_by("goods_id")
+	all_goods = Goods.objects.filter(goods_id__gt=max_goods_id).order_by("goods_id")
 	for goods in all_goods:
 		goods_label = Goods_label.objects.get(goods_id=goods.goods_id)
 		labels = goods_label.label.split("*_*")[1:-1]
@@ -45,3 +45,12 @@ def caculate_similarty(request):
 	new_record = Record_caculate_goods_id(max_goods_id=max_goods_id_now,number=number)
 	new_record.save()
 	return HttpResponse(str(max_goods_id_now)+"hello"+str(number))
+
+def recommend(request):
+	hot_term = Search_Record.objects.values('key').annotate(num=Count('user_id')).order_by("-num")
+	result_a = []
+	result_a.append("热搜: ")
+	for term in hot_term:
+		a='<a href="/tradding/search?key=%s" title="%s">%s</a>' %(term['key'],term['key'],term['key'])
+		result_a.append(a+'\n')
+	return HttpResponse(result_a)

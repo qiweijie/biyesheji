@@ -174,7 +174,10 @@ def products_detail(request,object_id=1):
 			customer.save()
 		try:
 			b_r = BrowseRecord.objects.get(customer_id=user,goods_id=g)
+			b_r.bool_delete=False
 			b_r.save()
+			customer.add_browse_record(b_r.id)
+			customer.save()
 		except:
 			b = BrowseRecord()
 			b.customer_id = user

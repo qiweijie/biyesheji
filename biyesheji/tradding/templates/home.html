@@ -59,9 +59,9 @@
 		        </form>
 		    </div>
 		    <div class="search_bottom">
-		        <div class="search_hot">热搜: 
+		        <div class="search_hot" id="search_hot">热搜: 
 		        	{% for term in hot_term %}
-		        	<a href="http://tradding/search?key={{term.key}}" title="{{term.key}}">{{term.key}}</a>
+		        	<a href="/tradding/search?key={{term.key}}" title="{{term.key}}">{{term.key}}</a>
 		        	{% endfor %}
 		        </div>
 		         

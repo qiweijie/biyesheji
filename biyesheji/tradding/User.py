@@ -42,14 +42,14 @@ class Customer(User):
 		self.recent_browse = self.recent_browse+str(record_id)+'*'
 	#delete browse record
 	def delete_browse_record(self,record_id):
-		self.recent_browse = self.recent_browse.replace(str(record_id)+'*', '')
+		self.recent_browse = self.recent_browse.replace('*'+str(record_id)+'*', '*')
 	#add shopping item
 	def add_shopping_item(self,item_id):
 		self.delete_shopping_item(str(item_id))
 		self.shopping_cart = self.shopping_cart+str(item_id)+'*'
 	#delete shopping item
 	def delete_shopping_item(self,item_id):
-		self.shopping_cart = self.shopping_cart.replace(str(item_id)+'*', '')
+		self.shopping_cart = self.shopping_cart.replace('*'+str(item_id)+'*', '*')
 	#return the number of the product in the shopping cart
 	def num_of_shopping_cart(self):
 		return self.shopping_cart.count('*')-1
@@ -62,7 +62,7 @@ class Customer(User):
 		self.favorite_shops = self.favorite_shops+str(favorite_shop_id)+"*"
 	#delete favorite_shops
 	def delete_favorite_shops(self,favorite_shop_id):
-		self.favorite_shops = self.favorite_shops.replace(str(favorite_shop_id)+"*", '')
+		self.favorite_shops = self.favorite_shops.replace('*'+str(favorite_shop_id)+"*", '*')
 	
 class Favorite_shop(models.Model):
 	"""Favorite shops or products"""
