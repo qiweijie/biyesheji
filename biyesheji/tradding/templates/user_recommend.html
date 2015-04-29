@@ -11,12 +11,21 @@
 {% endfor %}
 </ul>
 {{result_goods_ids}}-->
-{% if username %}
-<h1 style="font-size:20px;text-align:center">猜你喜欢</h1>
+{% if recommend_user_goods %}
+	{% if username %}
+	{# <h1 style="font-size:20px;text-align:center">猜你喜欢</h1> #}
+			{% for goods in highest_similarty_goods %}	
+				<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1" style="display:inline-block">
+				<img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:235px;"><span class="cover" style="display: block;"></span></a>
+			{% endfor %}
+	{% else %}
+	<h1 style="font-size:10px;text-align:center"> <a dd_name="登录" href="/tradding/login" target="_self" rel="nofollow" class="login_link">登录</a>后可以查看个性化推荐哦</h1>
+	{% endif %}
+{% endif %}
+{% if recommend_similar_goods %}
+<h1 style="font-size:20px;text-align:center">要不看看这些？</h1>
 		{% for goods in highest_similarty_goods %}	
 			<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1" style="display:inline-block">
-			<img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:235px;"><span class="cover" style="display: block;"></span></a>
+			<img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:160px;"><span class="cover" style="display: block;"></span></a>
 		{% endfor %}
-{% else %}
-<h1 style="font-size:10px;text-align:center">登陆后可以查看个性化推荐哦</h1>
 {% endif %}

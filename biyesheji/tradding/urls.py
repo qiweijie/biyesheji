@@ -8,12 +8,12 @@ urlpatterns = patterns('tradding.views.views',
 	url(r'^login$', 'login'),
 	url(r'^register/check$', 'check_username'),
 	url(r'^register$', 'register'),
-	url(r'^logout', 'logout'),
-	url(r'^search/', 'search')
+	url(r'^logout', 'logout')
 )
 urlpatterns += patterns('tradding.views.segment',
 	url(r'^init_term$', 'init_term'),
-	url(r'^segment_title$', 'segment_title')
+	url(r'^segment_title$', 'segment_title'),
+	url(r'^search/', 'search')
 )
 #personal urls
 urlpatterns += patterns('tradding.views.person',

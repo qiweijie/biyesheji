@@ -47,7 +47,7 @@ def caculate_similarty(request):
 	new_record.save()
 	return HttpResponse(str(max_goods_id_now)+"hello"+str(number))
 
-def recommend(request):
+def recommend_search(request):
 	hot_term = Search_Record.objects.values('key').annotate(num=Count('user_id')).order_by("-num")
 	result_a = []
 	result_a.append("热搜: ")
@@ -93,6 +93,7 @@ def caculate_love_level(request):
 	return HttpResponse("hello"+str(number)+"*"+str(all_browses)+"*"+str(all_carts)+"*"+str(all_orders))
 
 def recommend_user_goods(request):
+	recommend_user_goods=True
 	if request.session.get('login',False):
 		username = request.session['username']
 		user = Customer.objects.get(username=username)
@@ -115,9 +116,25 @@ def recommend_user_goods(request):
 		username=''
 		highest_similarty_goods=''
 	return render_to_response("user_recommend.html",
-		{"username":username,"highest_similarty_goods":highest_similarty_goods
+		{"username":username,"highest_similarty_goods":highest_similarty_goods,"recommend_user_goods":recommend_user_goods
 		# ,'user_love_goods_ids':user_love_goods_ids,
 		# "candidate_goods_records":candidate_goods_records,"goods_record":goods_record
 		# ,"result_goods_ids":result_goods_ids
 		},
+		context_instance=RequestContext(request))
+
+def recommend_similar_goods(request):
+	goods_id = request.POST['goods_id'] if 'goods_id' in request.POST else ''
+	recommend_similar_goods=True
+	if goods_id:
+		similar_goods_records = Goods_similarty.objects.filter(Q(small_goods_id=goods_id)|
+				Q(big_goods_id=goods_id)).order_by("-similarty")[:3]
+		record_goods_ids = []
+		for record in similar_goods_records:
+			record_goods_ids.append(record.small_goods_id)
+			record_goods_ids.append(record.big_goods_id)
+		result_goods_ids = set(record_goods_ids)-set([goods_id])
+		highest_similarty_goods = [ Goods.objects.get(pk=goods_id) for goods_id in result_goods_ids ]
+	return render_to_response("user_recommend.html",
+		{"highest_similarty_goods":highest_similarty_goods,"recommend_similar_goods":recommend_similar_goods},
 		context_instance=RequestContext(request))

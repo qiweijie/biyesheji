@@ -151,3 +151,43 @@ def segment_title(request):
 			return HttpResponse(res)
 	else:
 		return HttpResponse("only post accepted!")
+def search(request):
+	key = request.GET['key'] if 'key' in request.GET else ''
+	if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+	    ip =  request.META['HTTP_X_FORWARDED_FOR']
+	else:
+	    ip = request.META['REMOTE_ADDR']
+	if request.session.get('login',False):
+		user_id = User.objects.get(username=request.session['username']).user_id
+	else:
+		user_id = '-1'
+	new_search_record = Search_Record(key=key,user_id=user_id,ip=ip)
+	new_search_record.save()
+	hot_browsed = BrowseRecord.objects.values('goods_id').annotate(num=Count('customer_id')).order_by("-num")
+	hot_browsed = [ Goods.objects.get(pk=g['goods_id']) for g in hot_browsed][:10]
+
+	res = fenci(key)
+	all_goods = []
+	for label in res[0]:
+		try:
+			label_goods = Label_goods.objects.get(name=label)
+			all_goods += label_goods.goods_id.split("*")[1:-1]
+		except :
+			continue
+	result_dict ={}
+	for goods_id in all_goods:
+		goods_labels = Goods_label.objects.get(goods_id=goods_id).label.split("*_*")[1:-1]
+		key_and_goods = set(list(res[0])).intersection(set(goods_labels))
+		key_or_goods  = set(list(res[0])).union(set(goods_labels))
+		similarty = float(len(key_and_goods))/len(key_or_goods)
+		result_dict[goods_id]=similarty
+	ordered_goods_id_list = sorted(result_dict.items(),key=lambda e:e[1],reverse=True)
+	ordered_goods_list = [ Goods.objects.get(pk=goods_id[0]) for goods_id in ordered_goods_id_list ]
+	if request.session.get('login',False):
+		user = Customer.objects.get(username=request.session['username'])
+		return render_to_response("search_result.html",{"key":key,'hot_browsed':hot_browsed,
+			'user_name':request.session['username'],'logout_url':request.session['logout_url'],
+			'user':user,"ordered_goods_list":ordered_goods_list})
+	else:
+		user=''
+		return render_to_response("search_result.html",{"key":key,'hot_browsed':hot_browsed,'user':user,"ordered_goods_list":ordered_goods_list})

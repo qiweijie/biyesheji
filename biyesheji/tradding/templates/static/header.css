@@ -312,7 +312,16 @@ position: relative;
 #hd .nav_top ul li.all a, #hd .nav_top ul li.all a:hover {
 padding: 0;
 }
-
+#hd .nav_top ul li.all_ {
+width: 171px;
+padding: 0 0 0 20px;
+margin-right: 17px;
+margin-left: -3px;
+_display: inline;
+text-align: left;
+background: #fa2832 url(./images/home_y_sprite_1017.png) repeat-y -378px 0;
+position: relative;
+}
 .home_nav_l .new_pub_nav li.on a, .home_nav_l .new_pub_nav li.on a:hover, .home_nav_l .new_pub_nav li.on span ,.home_nav_l .new_pub_nav li.on span a{
 color: #ff2832;
 font-family: 'Microsoft Yahei';

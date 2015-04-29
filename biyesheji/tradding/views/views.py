@@ -100,16 +100,3 @@ def logout(request):
 		request.session['time']=login_time
 		# return render_to_response("home.html",{'all_goods':all_goods})
 		return HttpResponseRedirect('/')
-def search(request):
-	key = request.GET['key'] if 'key' in request.GET else ''
-	if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-	    ip =  request.META['HTTP_X_FORWARDED_FOR']
-	else:
-	    ip = request.META['REMOTE_ADDR']
-	if request.session.get('login',False):
-		user_id = User.objects.get(username=request.session['username']).user_id
-	else:
-		user_id = '-1'
-	new_search_record = Search_Record(key=key,user_id=user_id,ip=ip)
-	new_search_record.save()
-	return HttpResponse(key)

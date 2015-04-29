@@ -1,0 +1,149 @@
+{# search_result.html #}
+<!-- home.html -->
+{% extends "base.html" %}
+{% block title %}{{key}}的搜索结果{% endblock %}
+<!-- {% load staticfiles %} -->
+	{% block css_js %}
+	<link rel="stylesheet" href={% static 'header.css' %}>
+	<link rel="stylesheet" href={% static "middle.css" %}>
+	<script src={% static "recommend.js" %} type="text/javascript" charset="utf-8"></script>{% endblock %}
+{% block body %}
+<div id="test_user">
+	
+</div>
+<div id="hd">
+	<div id="tools">
+		<div class="tools">
+		    <div class="ddnewhead_operate" dd_name="顶链接">
+		        <ul class="ddnewhead_operate_nav">
+		        <li class="ddnewhead_cart"><a href="/tradding/shopping_cart" name="购物车" dd_name="购物车"><i class="icon_card"></i>购物车<b id="cart_items_count"></b></a></li>
+		        <li><a target="_blank" href="/tradding/order_list" name="我的订单" dd_name="我的订单" rel="nofollow">我的订单</a></li>
+		        <li class="my_dd"><a class="menu_btn" target="_blank" href="/tradding/personal_center" name="我的" dd_name="我的" id="a_myddchannel">我的主页</a>
+		            <ul class="ddnewhead_gcard_list" id="__ddnav_mydd" style="display: none; width: 86px;">
+		                <li><a ></a></li>
+		            </ul>
+		        </li>
+		        <li><a class="menu_btn" href="/tradding/seller_center" name="qycg" id="seller_center">商家中心</a>
+		            <ul class="ddnewhead_gcard_list" id="__ddnav_qycg"style="display: none; width: 82px;">
+		            </ul>
+		        </li>
+		        <li class="hover "><a class="menu_btn" href="javascript:void(0);" style="cursor:default;" name="ddkf_0" dd_name="客户服务" id="a_bzzxchannel" >客户服务</a>
+		            <ul class="ddnewhead_gcard_list" id="__ddnav_bzzx" onmouseover="showgaoji('a_bzzxchannel','__ddnav_bzzx');" onmouseout="hideotherchannel('a_bzzxchannel','__ddnav_bzzx');">
+		                <li><a target="_blank" href="http://help.dangdang.com/index" name="ddkf_2" dd_name="帮助中心">帮助中心</a></li>
+		                <li><a target="_blank" href="http://help.dangdang.com/details/page206" name="ddkf_4" dd_name="联系客服">联系客服</a></li>
+		                <li><a target="_blank" href="http://help.dangdang.com/email_contact" name="tsjy_1" dd_name="我要投诉" rel="nofollow">我要投诉</a></li>
+		                <li><a target="_blank" href="http://help.dangdang.com/email_contact" name="tsjy_2" dd_name="意见建议" rel="nofollow">意见建议</a></li>
+		            </ul>
+		        </li>
+		        </ul>
+		        <div class="ddnewhead_welcome" display="none;">
+		            <span id="nickname">{% if user_name %}
+		            <span class="hi">Hi,<a href="/tradding/personal_center" target="_blank" class="login_link">{{user_name}}</a>
+		            <b><a href="{{logout_url}}" target="_self">[退出]</a></b></span>
+		            {% else %}欢迎光临本站&nbsp;
+		            <a dd_name="登录" href="/tradding/login" target="_self" rel="nofollow" class="login_link">登录</a>
+		            <a dd_name="免费注册" href="/tradding/register" target="_self" rel="nofollw">免费注册</a></span>
+		            {% endif %}
+		        </div>
+		        <div class="new_head_znx" id="znx_content" style="display:none;"></div>
+		    </div>
+		</div>
+		</div>
+	<div style="position:relative;" class="logo_line_out">
+		<div class="logo_line" dd_name="搜索框">
+		    <div class="logo">
+		    	<a href="/" title=""><img src={% static "images/logo.png" %} usemap="#logo_link"></a>
+		    </div>
+		    <div class="search">
+		        <form form action="/tradding/search" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
+		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">{{key}}</label>
+		            <input type="text" class="text" name="key" id="key_S" autocomplete="off" onclick="key_onclick();" onfocus="this.className='text';" onblur="key_onblur();" onbeforepaste="onpaste_search();">
+		            <input type="submit" id="search_btn" style="display:none">
+		            <input type="button" class="button" dd_name="搜索按钮" onclick="javascript:document.getElementById('search_btn').click();">
+		        </form>
+		    </div>
+		    <div class="search_bottom">
+		        <div class="search_hot" id="search_hot">热搜: 
+		        	{% for term in hot_term %}
+		        	<a href="/tradding/search?key={{term.key}}" title="{{term.key}}">{{term.key}}</a>
+		        	{% endfor %}
+		        </div>
+		         
+		    </div>
+		</div>
+	</div>
+	<div class="nav_top" dd_name="一级导航条">
+        <ul>
+        	<li class="all"><a href="" dd_name="全部商品详细分类">浏览排行榜</a></li>
+        	 <li style="width:762px;"><a name="nav1" href="">搜索结果</a></li><!---->
+        	<li class="all_"><a href="" dd_name="全部商品详细分类">个性化推荐</a></li>
+        </ul>
+    </div>
+</div>
+<div id="bd">
+	<div class="home_first_screen">
+		<div class="home_nav_l" dd_name="左侧分类" ddclick_utopia="off">
+			<div class="new_pub_nav_box" dd_name="左侧分类导航">
+			    <span class="new_pub_line_a"></span>
+			    <span class="new_pub_line_b"></span>
+			    {% for goods in hot_browsed %}					
+						<li>
+							<a href={{goods.get_absolute_url}} target="_blank" title="{{goods}}" name="bzth_1">
+								<div style="display:inline-block;width:150px;"><img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:150px;"></div>
+								<span class="cover" style="display: block;"></span>
+							</a>
+						</li>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="home_circle_c">
+			<div class="tehui_box" id="bzth">
+				<div>
+					<ul style="width: 12000px; position: absolute; z-index: 10; opacity: 1;">
+						{% for goods in ordered_goods_list %}					
+						<li>
+							<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1">
+								<div style="display:inline-block;width:190px;"><img src={{goods.goods_photo.all.0.image.url}} alt=""></div>
+								<span class="cover" style="display: block;"></span>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+	<!--		<div class="tehui_box" id="bzth">
+				<div>
+					<ul style="width: 12000px; position: absolute; z-index: 10; opacity: 1;">
+						{% for goods in all_goods.second %}					
+						<li>
+							<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1">
+								<div style="display:inline-block;width:190px;"><img src={{goods.goods_photo.all.0.image.url}} alt=""></div>
+								<span class="cover" style="display: block;"></span>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="tehui_box" id="bzth">
+				<div>
+					<ul style="width: 12000px; position: absolute; z-index: 10; opacity: 1;">
+						{% for goods in all_goods.third %}					
+						<li>
+							<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1">
+								<div style="display:inline-block;width:190px;"><img src={{goods.goods_photo.all.0.image.url}} alt=""></div>
+								<span class="cover" style="display: block;"></span>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>-->
+		</div>
+		<div class="home_notice_r">
+			<div class="home_notice_r_pic" dd_name="焦点右图" id="user_recommend">
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -28,19 +28,30 @@ $.ajaxSetup({
     }
 });	
 function init () {
-	$.post('/system/recommend',
+	$.post('/system/recommend_search',
 		{
 			hello:"hello"
 		},
 		 function(data, textStatus, xhr) {
 		 	document.getElementById("search_hot").innerHTML = data;
 	});
+if(document.getElementById("test_")){
+    $.post('/system/recommend_similar_goods',
+        {
+            goods_id:document.getElementById("goods_id").value
+        },
+         function(data, textStatus, xhr) {
+            document.getElementById("goods_recommend").innerHTML = data;
+    });    
+}
+if(document.getElementById("test_user")){
     $.post('/system/recommend_user_goods',
         {
             hello:"hello"
         },
          function(data, textStatus, xhr) {
             document.getElementById("user_recommend").innerHTML = data;
-    });
+    });   
+}
 }
 window.onload = init;

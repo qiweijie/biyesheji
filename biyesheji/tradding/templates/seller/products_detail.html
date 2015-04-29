@@ -15,6 +15,9 @@
 <script src={% static 'recommend.js' %} type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 {% block body %}
+<div id="test_">
+	
+</div>
 <div id="hd" style="border-bottom: 1px solid #c1c1c1;">
 	<div id="tools">
 		<div class="tools">
@@ -176,6 +179,9 @@
 			<div class="tb-shop-info-ft">
 			<a href={{object.user.get_absolute_url}} >进入店铺</a>
 			<a href="javascript:void();" onclick="add_fav('{{object.user.user_id}}')">收藏店铺</a>
+			</div>
+			<div class="home_notice_r_pic" dd_name="焦点右图" id="goods_recommend">
+			<input type="hidden" name="goods_id" value="{{object.goods_id}}" id="goods_id">
 			</div>
 		</div>
 	</div>
