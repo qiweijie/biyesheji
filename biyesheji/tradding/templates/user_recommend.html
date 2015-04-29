@@ -1,0 +1,22 @@
+{# user_recommend.html #}
+<!--用户喜欢的商品id{{user_love_goods_ids}}
+<ul>相似度较高的商品
+{% for r in candidate_goods_records %}
+	<li>{{r.small_goods_id}},{{r.big_goods_id}},{{r.similarty}}</li>
+{% endfor %}
+</ul>
+<ul>相似度最高的三件商品
+{% for r in goods_record %}
+	<li>{{r.small_goods_id}},{{r.big_goods_id}},{{r.similarty}}</li>
+{% endfor %}
+</ul>
+{{result_goods_ids}}-->
+{% if username %}
+<h1 style="font-size:20px;text-align:center">猜你喜欢</h1>
+		{% for goods in highest_similarty_goods %}	
+			<a href={{goods.get_absolute_url}} target="_blank" title="" name="bzth_1" style="display:inline-block">
+			<img src={{goods.goods_photo.all.0.image.url}} alt="" style="width:235px;"><span class="cover" style="display: block;"></span></a>
+		{% endfor %}
+{% else %}
+<h1 style="font-size:10px;text-align:center">登陆后可以查看个性化推荐哦</h1>
+{% endif %}

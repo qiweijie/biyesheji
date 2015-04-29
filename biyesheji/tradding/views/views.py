@@ -98,7 +98,8 @@ def logout(request):
 		request.session['login']=False
 		login_time = str(int(time.time()))
 		request.session['time']=login_time
-		return render_to_response("home.html",{'all_goods':all_goods})
+		# return render_to_response("home.html",{'all_goods':all_goods})
+		return HttpResponseRedirect('/')
 def search(request):
 	key = request.GET['key'] if 'key' in request.GET else ''
 	if request.META.has_key('HTTP_X_FORWARDED_FOR'):

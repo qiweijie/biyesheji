@@ -4,7 +4,7 @@
 {% block title %}个人中心{% endblock %}
 {% block css_js %}
 <link rel="stylesheet" type="text/css" href="{% static 'person_center.css' %}">
-<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'person_center.js' %} type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 {% block setting %}<a class="selected" href="/tradding/personal_center">{% endblock %}
 {% block body %}
@@ -23,7 +23,7 @@
           <div class="infobox">
             <ul class="info-list">
               <li>
-                <label class="label" for="memberUid">我的账号：</label> <strong class="strong userid" >{{user.user_id}}</strong>
+                <label class="label" for="memberUid">我的账号：</label> <strong class="strong userid" id="XXX">{{user.user_id}}</strong>
               </li>
               <li>
                 <label class="label" for="memberUid">用户名：</label> <strong class="strong">{{user.username}}</strong>

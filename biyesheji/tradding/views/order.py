@@ -24,6 +24,7 @@ def add(request):
 			goods_id = request.POST['goods_id'] if 'goods_id' in request.POST else ''
 			user_id  = request.POST['user_id'] if 'user_id' in request.POST else ''
 			product_number  = request.POST['product_number'] if 'product_number' in request.POST else '1'
+			product_number = product_number if product_number else '1'
 			if goods_id and user_id:
 				goods = Goods.objects.get(pk=goods_id)
 				user = Customer.objects.get(pk=user_id)

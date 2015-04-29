@@ -35,5 +35,12 @@ function init () {
 		 function(data, textStatus, xhr) {
 		 	document.getElementById("search_hot").innerHTML = data;
 	});
+    $.post('/system/recommend_user_goods',
+        {
+            hello:"hello"
+        },
+         function(data, textStatus, xhr) {
+            document.getElementById("user_recommend").innerHTML = data;
+    });
 }
 window.onload = init;

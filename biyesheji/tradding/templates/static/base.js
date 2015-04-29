@@ -1,4 +1,5 @@
 // base.js
+console.log(window.jQuery);
 function allCategoryShow () {
 	var t=document.getElementById("search_all_category");
 	t.style.border="1px solid #c8c8c8";
@@ -32,6 +33,33 @@ function removeClass(obj, cls) {
         obj.className = obj.className.replace(reg, ' ');
     }
 }
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});	
 // var currentIndex = 1;
 // function slideTo (index) {
 // 	if(index=="-") currentIndex = (currentIndex-1)<1?(currentIndex-1+8):(currentIndex-1);
@@ -188,6 +216,14 @@ function init () {
 			removeClass(fwgg_title,"on");
 		}
 	},4000)
+
+    $.post('/system/recommend_user_goods',
+        {
+            hello:"hello"
+        },
+         function(data, textStatus, xhr) {
+            document.getElementById("user_recommend").innerHTML = data;
+    });
 }
 window.onload = init;
 function li_On (a,b,c) {

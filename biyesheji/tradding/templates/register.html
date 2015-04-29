@@ -3,7 +3,7 @@
 {% block title %}欢迎注册交易系统{% endblock %}
 <!-- {% load staticfiles %} -->
 {% block css_js %}
-<script src={% static 'jquery.min.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'jquery.min.js' %} type="text/javascript" charset="utf-8"></script>
 <style type="text/css">
 	html body {
 			background: #f8f8f8;
@@ -267,7 +267,7 @@
 	background: url({% static 'images/tipIcon.png' %}) no-repeat -182px 0;
 	}
 </style>
-<script src={% static 'password.js' %} type="text/javascript" charset="utf-8" async defer></script>
+<script src={% static 'password.js' %} type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 {% block body %}
 {% if msg %}

@@ -7,7 +7,7 @@ from tradding.User import User,Customer
 from tradding.Goods import Goods
 from tradding.models import BrowseRecord,Search_Record,Dict,Stop,Goods_label,Label_goods,Goods_similarty,Order
 from tradding.models import Record_caculate_goods_id,Record_caculate_love_id,User_goods_level,ShoppingCartItem
-from django.db.models import Count,Max,Avg
+from django.db.models import Count,Max,Avg,Q,F
 from django.shortcuts import render_to_response,render,HttpResponse,Http404,HttpResponseRedirect,RequestContext
 import time,datetime
 
@@ -59,21 +59,65 @@ def recommend(request):
 
 def caculate_love_level(request):
 	if Record_caculate_love_id.objects.all().count():
-		max_record_id = Record_caculate_love_id.objects.all().aggregate(Max('max_record_id'))['max_record_id__max']
+		max_browse_id = Record_caculate_love_id.objects.all().aggregate(Max('max_browse_id'))['max_browse_id__max']
+		max_cart_id = Record_caculate_love_id.objects.all().aggregate(Max('max_cart_id'))['max_cart_id__max']
+		max_order_id = Record_caculate_love_id.objects.all().aggregate(Max('max_order_id'))['max_order_id__max']
 	else :
-		max_record_id=-1
-	all_records = BrowseRecord.objects.filter(id__gt=max_record_id).order_by("id")
-	for record in all_records:
-		new_love_level = User_goods_level(user_id=record.customer_id.user_id,goods_id=record.goods_id.goods_id,evaluation=5)
-		test = ShoppingCartItem.objects.filter(customer_id=record.customer_id,goods_id=record.goods_id)
-		if test:
-			new_love_level.evaluation=15
-		test = Order.objects.filter(user=record.customer_id,goods=record.goods_id)
-		if test:
-			new_love_level.evaluation=25
+		max_browse_id=-1
+		max_cart_id=-1
+		max_order_id=-1
+	all_browses = BrowseRecord.objects.filter(id__gt=max_browse_id).order_by("id")
+	for browse in all_browses:
+		new_love_level = User_goods_level(user_id=browse.customer_id.user_id,goods_id=browse.goods_id.goods_id,evaluation=5)
 		new_love_level.save()
-	max_record_id_now = BrowseRecord.objects.all().aggregate(Max('id'))['id__max']
-	number=max_record_id_now-max_record_id
-	new_record = Record_caculate_love_id(max_record_id=max_record_id_now,number=number)
+	max_browse_id_now = BrowseRecord.objects.all().aggregate(Max('id'))['id__max']
+
+	all_carts = ShoppingCartItem.objects.filter(id__gt=max_cart_id).order_by("id")
+	for cart in all_carts:
+		test = User_goods_level.objects.filter(user_id=cart.customer_id.user_id,goods_id=cart.goods_id.goods_id)
+		if test:
+			test[0].evaluation += 10
+			test[0].save()
+	max_cart_id_now = ShoppingCartItem.objects.all().aggregate(Max('id'))['id__max']
+
+	all_orders = Order.objects.filter(id__gt=max_order_id).order_by("id")
+	for order in all_orders:
+		test = User_goods_level.objects.filter(user_id=order.user.user_id,goods_id=order.goods.goods_id)
+		if test:
+			test[0].evaluation += 10
+			test[0].save()
+	max_order_id_now = Order.objects.all().aggregate(Max('id'))['id__max']
+	number=len(all_browses)+len(all_carts)+len(all_orders)
+	new_record = Record_caculate_love_id(max_browse_id=max_browse_id_now,max_cart_id=max_cart_id_now,max_order_id=max_order_id_now,number=number)
 	new_record.save()
-	return HttpResponse(str(max_record_id_now)+"hello"+str(number))
+	return HttpResponse("hello"+str(number)+"*"+str(all_browses)+"*"+str(all_carts)+"*"+str(all_orders))
+
+def recommend_user_goods(request):
+	if request.session.get('login',False):
+		username = request.session['username']
+		user = Customer.objects.get(username=username)
+		user_goods_levels = User_goods_level.objects.filter(user_id=user.user_id).order_by("-evaluation")[:3]
+		user_love_goods_ids = [u.goods_id for u in user_goods_levels]
+		candidate_goods_records = []
+		for goods_id in user_love_goods_ids:
+			related_goods = Goods_similarty.objects.filter(Q(small_goods_id=goods_id)|
+				Q(big_goods_id=goods_id)).order_by("-similarty")[:3]
+			for record in related_goods:
+				candidate_goods_records.append(record)
+		goods_record = sorted(candidate_goods_records,key=lambda goods:goods.similarty,reverse=True)[:3]
+		record_goods_ids = []
+		for record in goods_record:
+			record_goods_ids.append(record.small_goods_id)
+			record_goods_ids.append(record.big_goods_id)
+		result_goods_ids = set(record_goods_ids)-set(user_love_goods_ids)
+		highest_similarty_goods = [ Goods.objects.get(pk=goods_id) for goods_id in result_goods_ids ]
+	else:
+		username=''
+		highest_similarty_goods=''
+	return render_to_response("user_recommend.html",
+		{"username":username,"highest_similarty_goods":highest_similarty_goods
+		# ,'user_love_goods_ids':user_love_goods_ids,
+		# "candidate_goods_records":candidate_goods_records,"goods_record":goods_record
+		# ,"result_goods_ids":result_goods_ids
+		},
+		context_instance=RequestContext(request))

@@ -342,7 +342,7 @@ function submit_evaluation () {
 	order_id=document.getElementById("order_id").value;
 	service_evaluate = document.getElementById("service_evaluate").value;
 	goods_evaluate = document.getElementById("goods_evaluate").value;
-	alert(goods_evaluate);
+	// alert(goods_evaluate);
 	data.append('order_id',order_id);data.append('goods_evaluate',goods_evaluate);data.append('service_evaluate',service_evaluate);
 	$.ajax({
 		url: '/tradding/evaluate/add_evaluation',

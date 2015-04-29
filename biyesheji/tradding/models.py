@@ -113,5 +113,7 @@ class User_goods_level(models.Model):
 class Record_caculate_love_id(models.Model):
 	"""docstring for Record_caculate_goods_id"""
 	time = models.DateTimeField(auto_now_add=True)
-	max_record_id = models.CharField(max_length=20)
+	max_browse_id = models.CharField(max_length=20)
+	max_cart_id = models.CharField(max_length=20)
+	max_order_id = models.CharField(max_length=20)
 	number = models.CharField(max_length=20)
