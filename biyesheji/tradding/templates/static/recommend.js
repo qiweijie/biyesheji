@@ -1,5 +1,13 @@
 // recommend.js
 
+function key_onclick () {
+    var t = document.getElementById("label_key");
+    t.style.color="rgb(255, 255, 255)";
+}
+function key_onblur () {
+    var t = document.getElementById("label_key");
+    t.style.color="rgb(102, 102, 102)";
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {

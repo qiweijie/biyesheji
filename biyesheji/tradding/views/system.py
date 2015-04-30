@@ -135,6 +135,9 @@ def recommend_similar_goods(request):
 			record_goods_ids.append(record.big_goods_id)
 		result_goods_ids = set(record_goods_ids)-set([goods_id])
 		highest_similarty_goods = [ Goods.objects.get(pk=goods_id) for goods_id in result_goods_ids ]
+		if not highest_similarty_goods:			
+			hot_browsed = BrowseRecord.objects.values('goods_id').annotate(num=Count('customer_id')).order_by("-num")
+			highest_similarty_goods = [ Goods.objects.get(pk=g['goods_id']) for g in hot_browsed][:3]
 	return render_to_response("user_recommend.html",
 		{"highest_similarty_goods":highest_similarty_goods,"recommend_similar_goods":recommend_similar_goods},
 		context_instance=RequestContext(request))

@@ -56,7 +56,7 @@
 		    </div>
 		    <div class="search">
 		        <form form action="/tradding/search" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
-		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">{{key}}</label>
+		            <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);">{% for label in res %}{{label}} {%endfor%}</label>
 		            <input type="text" class="text" name="key" id="key_S" autocomplete="off" onclick="key_onclick();" onfocus="this.className='text';" onblur="key_onblur();" onbeforepaste="onpaste_search();">
 		            <input type="submit" id="search_btn" style="display:none">
 		            <input type="button" class="button" dd_name="搜索按钮" onclick="javascript:document.getElementById('search_btn').click();">

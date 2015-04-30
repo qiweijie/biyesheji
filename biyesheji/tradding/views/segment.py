@@ -46,6 +46,113 @@ def init_term(request):
 	# 	st.save()
 	return HttpResponse("ok")
 
+# def fenci(query):
+# 	res = [[]for i in range(3)]
+# 	res[0]=[]
+# 	res[1]=[]
+# 	res[2]=[]
+# 	res[1].append(query+'\n')
+# 	dt = Dict.objects.filter(name=query)
+# 	if  dt:
+# 		res[1].append(dt[0].name+'****')
+# 	query_length = len(query)
+# 	index = 0
+# 	max_length = 5
+# 	temp=u''
+# 	while index<query_length:
+# 		s = query[index:index+1]
+# 		temp = temp+s
+# 		res[1].append(temp+'//'+'\n')
+# 		index = index+1
+# 		if len(temp)<max_length and index<query_length:
+# 			continue
+# 		else:
+# 			t = temp
+# 			res[1].append(temp+'*'+'\n')
+# 			while True:
+# 				if len(temp)==0:
+# 					temp = t[1:]
+# 					# if index+1>query_length:
+# 					# 	t = temp
+# 					# 	res[1].append(temp+'*'+'\n')
+# 					# 	while True:
+# 					# 		if len(t)==0:
+# 					# 			break
+# 					# 		dt = Dict.objects.filter(name=temp)
+# 					# 		if dt:
+# 					# 			#in the dictionary
+# 					# 			# res[1].append(Dict.objects.get(name=temp).name+'&&')
+# 					# 			# not stopword
+# 					# 			res[2].append(temp)
+# 					# 			st = Stop.objects.filter(name=temp)
+# 					# 			if st:
+# 					# 				res[1].append(temp+'##'+'\n')
+# 					# 			else:
+# 					# 				res[0].append(temp)
+# 					# 				res[1].append(temp+'##'+'\n')
+# 					# 			temp = t[len(temp):len(t)]
+# 					# 			t = temp
+# 					# 			res[1].append(temp+'*'+'\n')
+# 					# 		else:
+# 					# 			#not in dictionary
+# 					# 			if len(temp)>0:
+# 					# 				temp = temp[0:len(temp)-1]
+# 					# 				res[1].append(temp+'%*'+'\n')
+# 					# else :
+# 					# 	break
+# 					break
+# 				dt = Dict.objects.filter(name=temp)
+# 				if dt:
+# 					#in the dictionary
+# 					# res[1].append(Dict.objects.get(name=temp).name+'&&')
+# 					# not stopword
+# 					res[2].append(temp)
+# 					st = Stop.objects.filter(name=temp)
+# 					if st:
+# 						res[1].append(temp+'##'+'\n')
+# 					else:
+# 						res[0].append(temp)
+# 						res[1].append(temp+'##'+'\n')
+# 					temp = t[len(temp):len(t)]
+# 					res[1].append(temp+'$*'+'\n')
+# 					if len(temp)!=0 and index+1>query_length:
+# 						t = temp
+# 						res[1].append(temp+'*'+'\n')
+# 						while True:
+# 							if len(temp)==0:
+# 								temp = t[1:]
+# 								continue
+# 							if len(t)==0:
+# 								break
+# 							dt = Dict.objects.filter(name=temp)
+# 							if dt:
+# 								#in the dictionary
+# 								# res[1].append(Dict.objects.get(name=temp).name+'&&')
+# 								# not stopword
+# 								res[2].append(temp)
+# 								st = Stop.objects.filter(name=temp)
+# 								if st:
+# 									res[1].append(temp+'##'+'\n')
+# 								else:
+# 									res[0].append(temp)
+# 									res[1].append(temp+'##'+'\n')
+# 								temp = t[len(temp):len(t)]
+# 								t = temp
+# 								res[1].append(temp+'*'+'\n')
+# 							else:
+# 								#not in dictionary
+# 								if len(temp)>0:
+# 									temp = temp[0:len(temp)-1]
+# 									res[1].append(temp+'%*'+'\n')
+# 					else:
+# 						break
+# 				else:
+# 					#not in dictionary
+# 					if len(temp)>0:
+# 						temp = temp[0:len(temp)-1]
+# 						res[1].append(temp+'%*'+'\n')
+# 	# Dict.objects.get(name='123sfsdf')			
+# 	return res
 def fenci(query):
 	res = [[]for i in range(3)]
 	res[0]=[]
@@ -59,6 +166,7 @@ def fenci(query):
 	index = 0
 	max_length = 5
 	temp=u''
+	t=u''
 	while index<query_length:
 		s = query[index:index+1]
 		temp = temp+s
@@ -70,13 +178,8 @@ def fenci(query):
 			t = temp
 			res[1].append(temp+'*'+'\n')
 			while True:
-				if len(temp)==0:
-					break
 				dt = Dict.objects.filter(name=temp)
 				if dt:
-					#in the dictionary
-					# res[1].append(Dict.objects.get(name=temp).name+'&&')
-					# not stopword
 					res[2].append(temp)
 					st = Stop.objects.filter(name=temp)
 					if st:
@@ -85,40 +188,33 @@ def fenci(query):
 						res[0].append(temp)
 						res[1].append(temp+'##'+'\n')
 					temp = t[len(temp):len(t)]
+					t=temp
 					res[1].append(temp+'$*'+'\n')
-					if len(temp)!=0 and index+1>query_length:
-						t = temp
-						res[1].append(temp+'*'+'\n')
-						while True:
-							if len(temp)==0:
-								break
-							dt = Dict.objects.filter(name=temp)
-							if dt:
-								#in the dictionary
-								# res[1].append(Dict.objects.get(name=temp).name+'&&')
-								# not stopword
-								res[2].append(temp)
-								st = Stop.objects.filter(name=temp)
-								if st:
-									res[1].append(temp+'##'+'\n')
-								else:
-									res[0].append(temp)
-									res[1].append(temp+'##'+'\n')
-								temp = t[len(temp):len(t)]
-								t = temp
-								res[1].append(temp+'*'+'\n')
-							else:
-								#not in dictionary
-								if len(temp)>0:
-									temp = temp[0:len(temp)-1]
-									res[1].append(temp+'%*'+'\n')
+					if index+1>query_length:
+						if len(temp)==0:
+							break
+						else:
+							continue
 					else:
 						break
+					# break
 				else:
 					#not in dictionary
 					if len(temp)>0:
 						temp = temp[0:len(temp)-1]
 						res[1].append(temp+'%*'+'\n')
+					if len(temp)==0:
+						temp = t[1:]
+						t=temp
+						res[1].append(temp+'~%*'+'\n')
+						if index+1>query_length:
+							if len(temp)==0:
+								break
+							else:
+								continue
+						else:
+							break
+						# break
 	# Dict.objects.get(name='123sfsdf')			
 	return res
 
@@ -127,7 +223,7 @@ def segment_title(request):
 		goods_id = request.POST['goods_id'] if 'goods_id' in request.POST else ''
 		if goods_id:
 			goods = Goods.objects.get(pk=goods_id)
-			title = goods.title
+			title = goods.title.replace(" ","")
 			res = fenci(title)
 			test = Goods_label.objects.filter(goods_id=goods_id)
 			if test:
@@ -150,6 +246,31 @@ def segment_title(request):
 			goods_label.save()
 			return HttpResponse(res)
 	else:
+		# goods_id = request.GET['goods_id'] if 'goods_id' in request.GET else ''
+		# if goods_id:
+		# 	goods = Goods.objects.get(pk=goods_id)
+		# 	title = goods.title.replace(" ","")
+		# 	res = fenci(title)
+		# 	test = Goods_label.objects.filter(goods_id=goods_id)
+		# 	if test:
+		# 		goods_label = test[0]
+		# 	else:
+		# 		goods_label = Goods_label()
+		# 		goods_label.goods_id = goods_id
+		# 		goods_label.label = "*_*"
+		# 	for label in res[0]:
+		# 		goods_label.add_goods_label(label)
+		# 		test = Label_goods.objects.filter(name=label)
+		# 		if test:#label exist
+		# 			test[0].add_goods_id(goods_id)
+		# 			test[0].save()
+		# 		else:#label not exist
+		# 			new_label_goods = Label_goods(name=label)
+		# 			new_label_goods.goods_id  = "*"
+		# 			new_label_goods.add_goods_id(goods_id)
+		# 			new_label_goods.save()
+		# 	goods_label.save()
+		# 	return render_to_response("test.html",{"res":res})
 		return HttpResponse("only post accepted!")
 def search(request):
 	key = request.GET['key'] if 'key' in request.GET else ''
@@ -187,7 +308,7 @@ def search(request):
 		user = Customer.objects.get(username=request.session['username'])
 		return render_to_response("search_result.html",{"key":key,'hot_browsed':hot_browsed,
 			'user_name':request.session['username'],'logout_url':request.session['logout_url'],
-			'user':user,"ordered_goods_list":ordered_goods_list})
+			'user':user,"ordered_goods_list":ordered_goods_list,"res":res[0]})
 	else:
 		user=''
 		return render_to_response("search_result.html",{"key":key,'hot_browsed':hot_browsed,'user':user,"ordered_goods_list":ordered_goods_list})
